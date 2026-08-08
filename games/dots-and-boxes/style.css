@@ -1,0 +1,55 @@
+.turn-banner {
+  margin-bottom: 14px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: var(--sky-light);
+  color: var(--sky);
+  font-size: 1.1rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.board {
+  display: grid;
+  gap: 0;
+  width: min(460px, 94vw);
+  background: #fdf9ef;
+  padding: 8px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #33505e;
+  margin: auto;
+}
+
+.edge {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+.edge::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  background: #c9d6db;
+}
+.edge:hover::after { background: var(--sky); }
+.edge.h::after { left: 0; right: 0; top: 50%; height: 5px; transform: translateY(-50%); }
+.edge.v::after { top: 0; bottom: 0; left: 50%; width: 5px; transform: translateX(-50%); }
+.edge.done { cursor: default; }
+.edge.done.p1::after { background: var(--coral); }
+.edge.done.p2::after { background: var(--sky); }
+.edge.done:hover::after { background: inherit; }
+
+.box {
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+.box.p1 { background: var(--coral-light); }
+.box.p2 { background: var(--sky-light); }

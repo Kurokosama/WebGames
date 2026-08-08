@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maze · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🌀 Maze</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Moves: <b id="moves">0</b></div>
+    <div class="stat">Time: <b id="time">0s</b></div>
+  </div>
+
+  <div class="game-area">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Use the <b>arrow keys</b> or <b>WASD</b> to move through the maze and reach the flag! You can’t walk through walls.</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Made It!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

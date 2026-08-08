@@ -1,0 +1,34 @@
+.turn-banner {
+  margin-bottom: 14px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: var(--sky-light);
+  color: var(--sky);
+  font-size: 1.1rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.board {
+  display: grid;
+  gap: 4px;
+  width: min(520px, 94vw);
+  padding: 10px;
+  background: #f0d9a8;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.cell {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 6px;
+  background: #f0d9a8;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.cell:hover { background: #e9d194; }
+.cell.black { background: radial-gradient(circle at 35% 35%, #555, #111 70%); }
+.cell.white { background: radial-gradient(circle at 35% 35%, #fff, #ccc 70%); }
+.cell.taken { cursor: default; }

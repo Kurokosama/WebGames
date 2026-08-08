@@ -1,0 +1,49 @@
+.play-area {
+  position: relative;
+  width: min(720px, 94vw);
+  height: 430px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #dceefb 0%, #fdf6ec 70%);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.balloon {
+  position: absolute;
+  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+  cursor: pointer;
+  box-shadow: inset -6px -8px 12px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.1s ease;
+}
+.balloon:hover { transform: scale(1.08); }
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  top: 14%;
+  left: 18%;
+  width: 22%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.string {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 34px;
+  background: rgba(90, 120, 130, 0.6);
+}
+
+.burst {
+  position: absolute;
+  font-size: 2.4rem;
+  pointer-events: none;
+  animation: burst-anim 0.4s ease forwards;
+}
+@keyframes burst-anim {
+  from { transform: scale(0.6); opacity: 1; }
+  to { transform: scale(1.6); opacity: 0; }
+}

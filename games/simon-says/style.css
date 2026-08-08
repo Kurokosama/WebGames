@@ -1,0 +1,36 @@
+.feedback {
+  margin-bottom: 18px;
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: var(--sky-light);
+  color: var(--sky);
+  font-size: 1.15rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  min-height: 3rem;
+  display: grid;
+  place-items: center;
+}
+
+.pad-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: min(360px, 88vw);
+}
+
+.pad {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 22px;
+  cursor: pointer;
+  opacity: 0.55;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.15);
+  transition: opacity 0.12s ease, transform 0.1s ease;
+}
+.pad:hover { opacity: 0.75; }
+.pad.active { opacity: 1; transform: scale(0.96); }
+.pad.green { background: #06d6a0; }
+.pad.red { background: #ff7e67; }
+.pad.yellow { background: #ffd166; }
+.pad.blue { background: #4cc9f0; }

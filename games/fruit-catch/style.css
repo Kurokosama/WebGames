@@ -1,0 +1,30 @@
+.play-area {
+  position: relative;
+  width: min(680px, 94vw);
+  height: 460px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #dceefb 0%, #eafaf4 60%, #d8f3ec 100%);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: none;
+}
+
+.basket {
+  position: absolute;
+  bottom: 12px;
+  font-size: 3rem;
+  width: 76px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition: left 0.05s linear;
+}
+
+.fruit {
+  position: absolute;
+  top: -50px;
+  font-size: 2rem;
+  pointer-events: none;
+}

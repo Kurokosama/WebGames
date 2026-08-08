@@ -1,0 +1,72 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: min(640px, 94vw);
+  margin-bottom: 18px;
+}
+
+.peg {
+  position: relative;
+  height: 260px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px;
+  transition: background 0.15s ease;
+}
+.peg:hover { background: rgba(255, 255, 255, 0.95); }
+.peg.selected { background: var(--cream-light); box-shadow: inset 0 0 0 3px var(--cream); }
+.peg.peg-done { background: var(--mint-light); }
+
+.peg::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 52px;
+  width: 10px;
+  border-radius: 5px;
+  background: #c9d6db;
+}
+.peg-base {
+  width: 86%;
+  height: 14px;
+  border-radius: 8px;
+  background: #8fa8b3;
+  z-index: 1;
+}
+
+.disk {
+  height: 30px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  z-index: 2;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.disk-0 { background: #ff7e67; }
+.disk-1 { background: #f6c453; }
+.disk-2 { background: #4cc9f0; }
+.disk-3 { background: #9b7edb; }
+.disk-4 { background: #4caf9b; }
+.disk-5 { background: #f47ba1; }
+
+.feedback {
+  min-height: 3rem;
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: var(--sky-light);
+  color: var(--sky);
+  font-size: 1.1rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+  max-width: 620px;
+  text-align: center;
+}

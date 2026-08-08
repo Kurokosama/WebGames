@@ -1,0 +1,23 @@
+.reaction-zone {
+  width: min(460px, 92vw);
+  height: 260px;
+  border: none;
+  border-radius: 22px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+  background: #ff7e67;
+  box-shadow: var(--shadow);
+  transition: background 0.1s ease;
+}
+.reaction-zone.waiting { background: #ff7e67; }
+.reaction-zone.ready { background: #06d6a0; animation: pulse 0.5s ease infinite alternate; }
+.reaction-zone.too-soon { background: #ffd166; color: #6b4e0a; }
+.reaction-zone.flashed { background: #9b7edb; }
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.03); }
+}

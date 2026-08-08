@@ -1,0 +1,27 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: min(480px, 92vw);
+}
+
+.hole {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, #8a5a3b, #5d3a1f);
+  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.mole {
+  font-size: 3.4rem;
+  transform: translateY(120%);
+  transition: transform 0.15s ease;
+  pointer-events: none;
+}
+.mole.show { transform: translateY(0); }
+.mole.whacked { transform: translateY(0) scale(1.2); }

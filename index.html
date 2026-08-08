@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kids Game Land · 30 Fun Games for Kids</title>
+<meta name="description" content="Kids Game Land - 30 simple and fun classic games for elementary school kids, all playable in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body class="lobby-page">
+
+<div class="floating-decor" aria-hidden="true">
+  <span class="cloud cloud-1">☁️</span>
+  <span class="cloud cloud-2">☁️</span>
+  <span class="star star-1">⭐</span>
+  <span class="star star-2">🌟</span>
+  <span class="leaf leaf-1">🍃</span>
+  <span class="leaf leaf-2">🍀</span>
+  <span class="cloud cloud-3">☁️</span>
+</div>
+
+<header class="lobby-header">
+  <h1 class="lobby-title">🎮 Kids Game Land</h1>
+  <p class="lobby-subtitle">36 fun &amp; easy games for curious kids — pick one and play!</p>
+</header>
+
+<main class="lobby-main">
+  <div class="game-grid" id="game-grid"></div>
+</main>
+
+<footer class="lobby-footer">Made with 💚 for kids · No ads · No tracking · Just games</footer>
+
+<script>
+  'use strict';
+
+  var GAMES = [
+    { slug: 'memory-match',        emoji: '🧠', name: 'Memory Match',        desc: 'Flip the cards and find all matching pairs!',            diff: 'easy' },
+    { slug: 'tic-tac-toe',         emoji: '⭕', name: 'Tic-Tac-Toe',         desc: 'Get three in a row before the computer does!',            diff: 'easy' },
+    { slug: 'rock-paper-scissors', emoji: '✊', name: 'Rock Paper Scissors', desc: 'Can you beat the computer? Rock, paper, scissors!',       diff: 'easy' },
+    { slug: 'guess-the-number',    emoji: '🔢', name: 'Guess the Number',    desc: 'Find my secret number with clever guessing!',             diff: 'easy' },
+    { slug: 'math-quiz',           emoji: '➕', name: 'Math Quiz',           desc: 'Solve quick math problems and build a streak!',           diff: 'easy' },
+    { slug: 'word-scramble',       emoji: '🔤', name: 'Word Scramble',      desc: 'Unscramble the letters and build the word!',              diff: 'easy' },
+    { slug: 'hangman',             emoji: '🙈', name: 'Hangman',            desc: 'Guess the secret word before you lose your hearts!',      diff: 'easy' },
+    { slug: 'reaction-test',       emoji: '⚡', name: 'Reaction Test',      desc: 'Click as fast as you can when the light turns green!',    diff: 'easy' },
+    { slug: 'snake',               emoji: '🐍', name: 'Snake',              desc: 'Eat the food, grow long, and do not bump into yourself!', diff: 'easy' },
+    { slug: 'tetris',              emoji: '🧩', name: 'Tetris',             desc: 'Stack the blocks and clear full lines!',                  diff: 'medium' },
+    { slug: '2048',                emoji: '🎯', name: '2048',               desc: 'Merge the tiles and reach the number 2048!',              diff: 'easy' },
+    { slug: 'pair-link',           emoji: '🍎', name: 'Pair Link',          desc: 'Connect matching pairs with a path to clear them!',       diff: 'medium' },
+    { slug: 'whack-a-mole',        emoji: '🔨', name: 'Whack-a-Mole',       desc: 'Whack the moles before they disappear!',                  diff: 'easy' },
+    { slug: 'tower-of-hanoi',      emoji: '🗼', name: 'Tower of Hanoi',     desc: 'Move all the disks to the last peg — one at a time!',     diff: 'medium' },
+    { slug: 'sliding-puzzle',      emoji: '🧊', name: 'Sliding Puzzle',     desc: 'Slide the tiles and put the numbers in order!',           diff: 'medium' },
+    { slug: 'fruit-catch',         emoji: '🍓', name: 'Fruit Catch',        desc: 'Move your basket and catch the falling fruit!',           diff: 'easy' },
+    { slug: 'simon-says',          emoji: '🎵', name: 'Simon Says',         desc: 'Watch the colors, then repeat the pattern!',              diff: 'easy' },
+    { slug: 'balloon-pop',         emoji: '🎈', name: 'Balloon Pop',        desc: 'Pop as many balloons as you can before time runs out!',   diff: 'easy' },
+    { slug: 'color-match',         emoji: '🌈', name: 'Color Match',        desc: 'Read the word and click the matching color!',             diff: 'easy' },
+    { slug: 'maze',                emoji: '🌀', name: 'Maze',               desc: 'Find your way through the maze to reach the flag!',       diff: 'medium' },
+    { slug: 'gomoku',              emoji: '🎱', name: 'Gomoku',             desc: 'Five in a row wins! Can you beat the computer?',          diff: 'medium' },
+    { slug: 'breakout',            emoji: '🧱', name: 'Breakout',           desc: 'Bounce the ball and smash every brick!',                 diff: 'easy' },
+    { slug: 'pong',                emoji: '🏓', name: 'Pong',               desc: 'Classic ping-pong — first to 5 points wins!',             diff: 'easy' },
+    { slug: 'minesweeper',         emoji: '💣', name: 'Minesweeper',       desc: 'Find the safe tiles and avoid the bombs!',               diff: 'medium' },
+    { slug: 'connect-four',        emoji: '🔴', name: 'Connect Four',      desc: 'Drop the discs and get four in a row!',                  diff: 'easy' },
+    { slug: 'sokoban',             emoji: '📦', name: 'Sokoban',           desc: 'Push the boxes onto the targets!',                       diff: 'medium' },
+    { slug: 'flappy-bird',         emoji: '🐦', name: 'Flappy Bird',       desc: 'Tap to flap through the gaps — don’t fall!',             diff: 'easy' },
+    { slug: 'dots-and-boxes',      emoji: '✏️', name: 'Dots &amp; Boxes',   desc: 'Draw lines to make more boxes than the computer!',        diff: 'easy' },
+    { slug: 'typing-race',         emoji: '⌨️', name: 'Typing Race',       desc: 'Type the falling words before they reach the ground!',    diff: 'easy' },
+    { slug: 'match-three',         emoji: '🍬', name: 'Match Three',       desc: 'Swap the treats to match three in a row!',               diff: 'easy' },
+    { slug: 'bubble-shooter',      emoji: '🫧', name: 'Bubble Shooter',    desc: 'Aim and shoot to pop 3 matching bubbles!',               diff: 'easy' },
+    { slug: 'doodle-jump',         emoji: '🐸', name: 'Doodle Jump',       desc: 'Bounce up the platforms and climb as high as you can!',  diff: 'easy' },
+    { slug: 'pac-man',             emoji: '👻', name: 'Pac-Man',           desc: 'Eat all the dots and dodge the ghosts!',                 diff: 'easy' },
+    { slug: 'space-invaders',      emoji: '👾', name: 'Space Invaders',    desc: 'Stop the invaders before they reach you!',               diff: 'easy' },
+    { slug: 'wordle',              emoji: '🟩', name: 'Wordle',            desc: 'Guess the secret 5-letter word in 6 tries!',             diff: 'easy' },
+    { slug: 'chess',               emoji: '♟️', name: 'Chess',             desc: 'Classic chess with full rules — beat the computer!',     diff: 'medium' }
+  ];
+
+  var COLORS = [
+    { bg: '#d8f3ec', main: '#4caf9b' },
+    { bg: '#dceefb', main: '#4a90c4' },
+    { bg: '#fff3d6', main: '#e0a800' },
+    { bg: '#ffe3dc', main: '#ff7e67' },
+    { bg: '#ece4fb', main: '#9b7edb' },
+    { bg: '#fde3ec', main: '#f47ba1' }
+  ];
+
+  var grid = document.getElementById('game-grid');
+  GAMES.forEach(function (g, i) {
+    var c = COLORS[i % COLORS.length];
+    var card = document.createElement('a');
+    card.className = 'game-card';
+    card.href = 'games/' + g.slug + '/';
+    card.style.setProperty('--card', c.main);
+    card.style.setProperty('--card-bg', c.bg);
+    card.innerHTML =
+      '<span class="card-icon">' + g.emoji + '</span>' +
+      '<span class="card-name">' + g.name + '</span>' +
+      '<span class="card-desc">' + g.desc + '</span>' +
+      '<span class="diff-tag ' + g.diff + '">' + g.diff + '</span>';
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>

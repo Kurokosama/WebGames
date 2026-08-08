@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tetris · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🧩 Tetris</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Score: <b id="score">0</b></div>
+    <div class="stat">Lines: <b id="lines">0</b></div>
+    <div class="stat">Level: <b id="level">1</b></div>
+  </div>
+
+  <div class="game-area tetris-layout">
+    <canvas id="board-canvas"></canvas>
+    <div class="side-panel">
+      <div class="next-label">Next</div>
+      <canvas id="next-canvas"></canvas>
+      <div class="controls-hint">
+        <div>⬅ ➡ Move</div>
+        <div>⬆ Rotate</div>
+        <div>⬇ Soft drop</div>
+        <div>Space Hard drop</div>
+        <div>P Pause</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Arrange the falling blocks to fill full rows — they disappear and you earn points!</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 Game Over</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

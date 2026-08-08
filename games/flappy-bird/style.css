@@ -1,0 +1,7 @@
+#canvas {
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  background: linear-gradient(180deg, #a8e6f7, #dff6e8 80%);
+  display: block;
+  cursor: pointer;
+}

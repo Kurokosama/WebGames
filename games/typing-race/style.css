@@ -1,0 +1,23 @@
+.play-area {
+  position: relative;
+  width: min(560px, 94vw);
+  height: 380px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #dceefb 0%, #fdf6ec 80%);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.falling-word {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: lowercase;
+  color: var(--ink);
+  font-family: var(--font);
+}
+.falling-word .typed { color: var(--mint); }

@@ -1,0 +1,6 @@
+#canvas {
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  background: #0d0d1a;
+  display: block;
+}

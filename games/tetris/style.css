@@ -1,0 +1,33 @@
+.tetris-layout {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#board-canvas {
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: #f2faf7;
+  display: block;
+}
+
+.side-panel { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.next-label { font-weight: 800; color: var(--ink-soft); font-size: 1rem; }
+#next-canvas {
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  background: #f2faf7;
+  display: block;
+}
+
+.controls-hint {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  font-weight: 600;
+}
