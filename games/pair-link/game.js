@@ -10,9 +10,11 @@ const DIFFS = {
 
 let state = null;
 let timerId = null;
+let feedbackTimer = null;
 
 function init(diff) {
   clearInterval(timerId);
+  clearTimeout(feedbackTimer);
   const { rows, cols } = DIFFS[diff];
   const pairs = (rows * cols) / 2;
   const chosen = shuffle(EMOJIS).slice(0, pairs);
@@ -30,6 +32,7 @@ function init(diff) {
   $('#feedback').textContent = 'Click two matching tiles that can be connected with a path!';
   $('#feedback').className = 'feedback';
   render();
+  if (!hasMove()) reshuffle();
   timerId = setInterval(() => {
     state.seconds++;
     $('#timer').textContent = state.seconds + 's';
@@ -99,7 +102,10 @@ function clickTile(r, c, tile) {
 function padCoords(r, c) { return { r: r + 1, c: c + 1 }; }
 
 function isFreePad(pr, pc, a, b) {
-  if ((pr === a.pr && pc === a.pc) || (pr === b.pr && pc === b.pc)) return true;
+  // `a` and `b` arrive here with their padded coordinates stored in r/c
+  // (canConnect overwrites them via padCoords). Checking a.pr/a.pc here would
+  // always be undefined, making every connect attempt fail.
+  if ((pr === a.r && pc === a.c) || (pr === b.r && pc === b.c)) return true;
   if (pr === 0 || pr === state.rows + 1 || pc === 0 || pc === state.cols + 1) return true;
   return state.board[pr - 1][pc - 1] === null;
 }
@@ -167,11 +173,46 @@ function reshuffle() {
       if (state.board[r][c] !== null) remaining.push(state.board[r][c]);
     }
   }
-  const shuffled = shuffle(remaining);
-  let i = 0;
-  for (let r = 0; r < state.rows; r++) {
-    for (let c = 0; c < state.cols; c++) {
-      if (state.board[r][c] !== null) state.board[r][c] = shuffled[i++];
+  // Randomize until at least one legal pair exists. A paired board always has
+  // a solution candidate, and the cap protects against pathological RNG.
+  for (let attempt = 0; attempt < 200; attempt++) {
+    const shuffled = shuffle(remaining);
+    let i = 0;
+    for (let r = 0; r < state.rows; r++) {
+      for (let c = 0; c < state.cols; c++) {
+        if (state.board[r][c] !== null) state.board[r][c] = shuffled[i++];
+      }
+    }
+    if (hasMove()) break;
+  }
+  if (!hasMove()) {
+    // Deterministic fallback: find any two geometrically connectable occupied
+    // cells, then swap values so they form a pair. Removing pairs preserves an
+    // even count for every remaining emoji, so a matching donor always exists.
+    const cells = [];
+    for (let r = 0; r < state.rows; r++) {
+      for (let c = 0; c < state.cols; c++) {
+        if (state.board[r][c] !== null) cells.push({ r, c });
+      }
+    }
+    let endpoints = null;
+    for (let i = 0; i < cells.length && !endpoints; i++) {
+      for (let j = i + 1; j < cells.length; j++) {
+        if (canConnect(cells[i], cells[j])) { endpoints = [cells[i], cells[j]]; break; }
+      }
+    }
+    if (endpoints) {
+      const [a, b] = endpoints;
+      const value = state.board[a.r][a.c];
+      const donor = cells.find((cell) =>
+        (cell.r !== a.r || cell.c !== a.c) &&
+        (cell.r !== b.r || cell.c !== b.c) &&
+        state.board[cell.r][cell.c] === value
+      );
+      if (donor) {
+        [state.board[b.r][b.c], state.board[donor.r][donor.c]] =
+          [state.board[donor.r][donor.c], state.board[b.r][b.c]];
+      }
     }
   }
   state.selected = null;
@@ -180,10 +221,11 @@ function reshuffle() {
 }
 
 function flashFeedback(text) {
+  clearTimeout(feedbackTimer);
   const el = $('#feedback');
   el.textContent = text;
   el.className = 'feedback warn';
-  setTimeout(() => {
+  feedbackTimer = setTimeout(() => {
     if (state) {
       el.textContent = 'Click two matching tiles that can be connected with a path!';
       el.className = 'feedback';

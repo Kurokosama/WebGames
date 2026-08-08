@@ -14,6 +14,7 @@ function init(diff) {
     diff,
     grid: Array.from({ length: ROWS }, () => Array(COLS).fill(0)),
     over: false,
+    thinking: false,
     aiTimer: null
   };
   $('#you').textContent = score.you;
@@ -33,17 +34,20 @@ function dropDisc(col, player) {
 }
 
 function playerDrop(col) {
-  if (state.over) return;
+  if (state.over || state.thinking) return;
   const row = dropDisc(col, P1);
   if (row === -1) return;
   render();
   if (checkWin(P1)) return win();
   if (isFull()) return draw();
+  state.thinking = true;
+  render();
   $('#turn').textContent = 'Computer is thinking… 🤔';
   state.aiTimer = setTimeout(aiTurn, 400);
 }
 
 function aiTurn() {
+  state.thinking = false;
   const col = aiMove();
   if (col === -1) return draw();
   dropDisc(col, P2);
@@ -142,7 +146,7 @@ function render() {
     const btn = document.createElement('button');
     btn.className = 'drop-btn';
     btn.textContent = '⬇';
-    btn.disabled = state.over || colHeight(c) >= ROWS;
+    btn.disabled = state.over || state.thinking || colHeight(c) >= ROWS;
     btn.addEventListener('click', () => playerDrop(c));
     drops.appendChild(btn);
   }

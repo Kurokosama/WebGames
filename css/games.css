@@ -76,6 +76,13 @@
 .stat b { color: var(--coral); font-weight: 800; }
 
 .game-area { width: 100%; display: flex; justify-content: center; }
+.game-area > * { max-width: 100%; }
+
+/* Canvas games keep their sharp internal resolution while fitting narrow screens. */
+.game-area canvas {
+  max-width: 100%;
+  height: auto;
+}
 
 .how-to-play {
   margin-top: 18px; max-width: 600px; text-align: center;
@@ -103,4 +110,30 @@
 @keyframes pop-in {
   from { transform: scale(0.7); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 680px) {
+  .game-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .game-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    font-size: 1.35rem;
+  }
+  .back-btn { grid-column: 1; grid-row: 2; }
+  .header-controls {
+    grid-column: 2;
+    grid-row: 2;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .btn { font-size: 0.9rem; padding: 8px 13px; }
+  .difficulty-select { font-size: 0.86rem; padding: 7px 30px 7px 12px; }
+  .game-main { padding: 16px 12px 32px; }
+  .stat { padding: 7px 14px; font-size: 0.98rem; }
+  .modal-box { padding: 28px 24px; }
 }

@@ -7,8 +7,10 @@ const DIFFS = {
 };
 
 let state = null;
+let feedbackTimer = null;
 
 function init(diff) {
+  clearTimeout(feedbackTimer);
   const n = DIFFS[diff].disks;
   state = {
     diff,
@@ -74,9 +76,10 @@ function checkWin() {
 }
 
 function flashFeedback(text) {
+  clearTimeout(feedbackTimer);
   const el = $('#feedback');
   el.textContent = text;
-  setTimeout(() => {
+  feedbackTimer = setTimeout(() => {
     if (state) $('#feedback').textContent = 'Click a peg to pick up its top disk, then click another peg to drop it!';
   }, 1500);
 }

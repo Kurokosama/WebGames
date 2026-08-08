@@ -130,7 +130,10 @@ function snapCell(x, y) {
     for (let dc = -1; dc <= 1; dc++) {
       const rr = r + dr;
       const cc = c + dc;
-      if (!inGrid(rr, cc) || bubbleAt(rr, cc)) continue;
+      // Must stay inside the playable board: `inGrid` only checks columns, so
+      // without the `rr >= state.rows` guard a shot landing at the bottom edge
+      // would snap to a fake row below the board and instantly game-over.
+      if (rr < 0 || rr >= state.rows || !inGrid(rr, cc) || bubbleAt(rr, cc)) continue;
       const d = Math.hypot(bubbleX(rr, cc) - x, bubbleY(rr) - y);
       if (d < bestD) { bestD = d; best = { r: rr, c: cc }; }
     }
@@ -273,8 +276,8 @@ function drawBubble(x, y, color) {
 
 canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
+  const mx = (e.clientX - rect.left) * (W / rect.width);
+  const my = (e.clientY - rect.top) * (H / rect.height);
   mouseAngle = Math.atan2(my - SHOOTER_Y, mx - W / 2);
   // keep pointing up
   if (mouseAngle > -0.1) mouseAngle = -0.1;

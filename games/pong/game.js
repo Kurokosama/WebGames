@@ -154,7 +154,7 @@ function draw() {
 
 canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
-  mouseY = e.clientY - rect.top;
+  mouseY = (e.clientY - rect.top) * (H / rect.height);
 });
 
 initGameFrame({

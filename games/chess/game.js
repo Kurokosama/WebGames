@@ -33,7 +33,9 @@ function findKing(board, color) {
 }
 
 function isAttacked(board, r, c, byColor) {
-  const dir = byColor === 'w' ? -1 : 1;
+  // Look backwards from the target square to the attacking pawn. White pawns
+  // move toward smaller row indexes, so a white attacker sits one row below.
+  const dir = byColor === 'w' ? 1 : -1;
   for (const dc of [-1, 1]) {
     const rr = r + dir, cc = c + dc;
     if (inB(rr, cc)) { const p = board[rr][cc]; if (p && typeOf(p) === 'p' && colorOf(p) === byColor) return true; }
@@ -92,12 +94,16 @@ function applyMove(board, from, to, castling, enPassant) {
     if (to.c - from.c === 2) { nb[to.r][to.c - 1] = nb[to.r][7]; nb[to.r][7] = null; }
     else if (to.c - from.c === -2) { nb[to.r][to.c + 1] = nb[to.r][0]; nb[to.r][0] = null; }
   }
-  if (typeOf(piece) === 'r') {
-    if (colorOf(piece) === 'w') { if (from.c === 7) newCastling.K = false; if (from.c === 0) newCastling.Q = false; }
-    else { if (from.c === 7) newCastling.k = false; if (from.c === 0) newCastling.q = false; }
-  }
-  if (to.c === 7) { if (colorOf(piece) === 'w') newCastling.K = false; else newCastling.k = false; }
-  if (to.c === 0) { if (colorOf(piece) === 'w') newCastling.Q = false; else newCastling.q = false; }
+  if (piece === 'R' && from.r === 7 && from.c === 7) newCastling.K = false;
+  if (piece === 'R' && from.r === 7 && from.c === 0) newCastling.Q = false;
+  if (piece === 'r' && from.r === 0 && from.c === 7) newCastling.k = false;
+  if (piece === 'r' && from.r === 0 && from.c === 0) newCastling.q = false;
+  // Capturing an unmoved rook on its home square also removes that side's
+  // castling right. This must be based on the captured square, not the mover.
+  if (to.r === 7 && to.c === 7 && captured === 'R') newCastling.K = false;
+  if (to.r === 7 && to.c === 0 && captured === 'R') newCastling.Q = false;
+  if (to.r === 0 && to.c === 7 && captured === 'r') newCastling.k = false;
+  if (to.r === 0 && to.c === 0 && captured === 'r') newCastling.q = false;
   if (typeOf(piece) === 'p' && (to.r === 0 || to.r === 7)) {
     nb[to.r][to.c] = colorOf(piece) === 'w' ? 'Q' : 'q';
   } else {
@@ -186,6 +192,7 @@ function legalMoves(board, color, castling, enPassant) {
 }
 
 function init(diff, mode) {
+  clearTimeout(state ? state.aiTimer : null);
   state = {
     diff,
     mode: mode || 'ai',

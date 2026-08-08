@@ -11,14 +11,17 @@ const LEN = 5;
 
 let state = null;
 let sessionWins = 0;
+let timers = [];
 
 function init(diff) {
+  clearTimers();
   state = {
     diff,
     answer: pick(WORDS[diff]).toUpperCase(),
     row: 0,
     current: '',
     done: false,
+    locked: false,
     keyStatus: {}
   };
   $('#progress').textContent = '0/6';
@@ -62,26 +65,27 @@ function render() {
 }
 
 function typeLetter(ch) {
-  if (state.done || state.current.length >= LEN) return;
+  if (state.done || state.locked || state.current.length >= LEN) return;
   state.current += ch;
   render();
 }
 
 function backspace() {
-  if (state.done || state.current.length === 0) return;
+  if (state.done || state.locked || state.current.length === 0) return;
   state.current = state.current.slice(0, -1);
   render();
 }
 
 function submit() {
-  if (state.done || state.current.length < LEN) return;
+  if (state.done || state.locked || state.current.length < LEN) return;
+  state.locked = true;
   const guess = state.current;
   const colors = evaluate(guess);
   const rowEl = $$('#grid .guess-row')[state.row];
   $$('.cell', rowEl).forEach((cell, c) => {
     cell.textContent = guess[c];
     cell.classList.remove('filled');
-    setTimeout(() => cell.classList.add(colors[c]), c * 180);
+    schedule(() => cell.classList.add(colors[c]), c * 180);
   });
   // update keyboard
   guess.split('').forEach((ch, i) => {
@@ -97,15 +101,29 @@ function submit() {
   state.current = '';
   $('#progress').textContent = `${state.row}/${TOTAL}`;
 
-  setTimeout(() => {
+  schedule(() => {
     if (guess === state.answer) {
       win();
     } else if (state.row >= TOTAL) {
       lose();
     } else {
+      state.locked = false;
       render();
     }
   }, LEN * 180 + 200);
+}
+
+function clearTimers() {
+  timers.forEach((timer) => clearTimeout(timer));
+  timers = [];
+}
+
+function schedule(fn, delay) {
+  const timer = setTimeout(() => {
+    timers = timers.filter((id) => id !== timer);
+    fn();
+  }, delay);
+  timers.push(timer);
 }
 
 function evaluate(guess) {

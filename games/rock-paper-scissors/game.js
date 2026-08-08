@@ -8,8 +8,11 @@ const MOVES = {
 
 const FIRST_TO = 5;
 let score = { you: 0, computer: 0, ties: 0 };
+let gameOver = false;
+let resultTimer = null;
 
 function play(player) {
+  if (gameOver) return;
   const keys = Object.keys(MOVES);
   const comp = pick(keys);
   $('#your-choice').textContent = MOVES[player].emoji;
@@ -33,18 +36,22 @@ function play(player) {
   $('#result').textContent = msg;
 
   if (score.you >= FIRST_TO) {
-    setTimeout(() => {
+    gameOver = true;
+    resultTimer = setTimeout(() => {
       burstConfetti();
       showModal('🎉 You Win the Match!', `You reached ${FIRST_TO} wins first. Awesome!`, 'Play Again', reset);
     }, 350);
   } else if (score.computer >= FIRST_TO) {
-    setTimeout(() => {
+    gameOver = true;
+    resultTimer = setTimeout(() => {
       showModal('😅 Computer Wins the Match!', `The computer reached ${FIRST_TO} wins first. Try again!`, 'Play Again', reset);
     }, 350);
   }
 }
 
 function reset() {
+  clearTimeout(resultTimer);
+  gameOver = false;
   score = { you: 0, computer: 0, ties: 0 };
   $('#you').textContent = 0;
   $('#computer').textContent = 0;

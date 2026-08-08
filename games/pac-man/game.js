@@ -61,12 +61,12 @@ function init(diff) {
 
   state = {
     diff, cfg, maze, dots,
-    pac: { r: 7, c: 6, dir: { ...DIRS.right }, nextDir: { ...DIRS.right }, progress: 0, speed: cfg.pac },
+    pac: { r: 7, c: 6, dir: { ...DIRS.right }, nextDir: { ...DIRS.right }, progress: 0, speed: cfg.pac, justLanded: true },
     ghosts: [
-      { r: 7, c: 8, dir: { ...DIRS.left }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[0], homeR: 7, homeC: 8, cooldown: 2.5 },
-      { r: 7, c: 9, dir: { ...DIRS.left }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[1], homeR: 7, homeC: 9, cooldown: 2.5 },
-      { r: 7, c: 10, dir: { ...DIRS.right }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[2], homeR: 7, homeC: 10, cooldown: 2.5 },
-      { r: 7, c: 11, dir: { ...DIRS.right }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[3], homeR: 7, homeC: 11, cooldown: 2.5 }
+      { r: 7, c: 8, dir: { ...DIRS.left }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[0], homeR: 7, homeC: 8, cooldown: 2.5, justLanded: true },
+      { r: 7, c: 9, dir: { ...DIRS.left }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[1], homeR: 7, homeC: 9, cooldown: 2.5, justLanded: true },
+      { r: 7, c: 10, dir: { ...DIRS.right }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[2], homeR: 7, homeC: 10, cooldown: 2.5, justLanded: true },
+      { r: 7, c: 11, dir: { ...DIRS.right }, progress: 0, speed: cfg.ghost, color: GHOST_COLORS[3], homeR: 7, homeC: 11, cooldown: 2.5, justLanded: true }
     ],
     score: 0,
     lives: 3,
@@ -90,16 +90,30 @@ function eatTile(r, c) {
 
 function updatePac(dt) {
   const p = state.pac;
-  // direction change at tile center
-  if (p.progress === 0) {
-    if (open(p.r + p.nextDir.dr, p.c + p.nextDir.dc)) p.dir = { ...p.nextDir };
-    else if (!open(p.r + p.dir.dr, p.c + p.dir.dc)) return; // blocked
+  // Direction change happens at a tile centre. Because progress accumulates as a
+  // float, it is never exactly 0, so we track "justLanded" (set right after a
+  // step completes, and initially true at spawn) instead of comparing to 0.
+  if (p.justLanded) {
+    if (open(p.r + p.nextDir.dr, p.c + p.nextDir.dc)) {
+      p.dir = { ...p.nextDir };
+      p.justLanded = false;
+    } else if (open(p.r + p.dir.dr, p.c + p.dir.dc)) {
+      // can't turn, but can keep going straight
+      p.justLanded = false;
+    } else {
+      // Fully blocked: stay centred on this tile and keep justLanded set so we
+      // re-check every frame (this is what lets Pac-Man respond to the player
+      // pressing a new direction while pinned against a wall).
+      p.progress = 0;
+      return;
+    }
   }
   p.progress += p.speed * (dt / 1000);
   while (p.progress >= 1) {
     p.progress -= 1;
     p.r += p.dir.dr;
     p.c += p.dir.dc;
+    p.justLanded = true;
     eatTile(p.r, p.c);
     checkGhostHit();
     if (state.over) return;
@@ -137,10 +151,17 @@ function updateGhost(ghost, dt) {
     ghost.cooldown -= dt / 1000;
     return;
   }
-  if (ghost.progress === 0) {
+  // Re-pick a direction at each tile centre (see updatePac for why we use a
+  // "justLanded" flag instead of comparing progress to 0).
+  if (ghost.justLanded) {
     const dir = chooseDir(ghost, openDirs(ghost));
-    if (!dir) return;
+    if (!dir) {
+      // dead end — stay put and re-try next frame
+      ghost.progress = 0;
+      return;
+    }
     ghost.dir = dir;
+    ghost.justLanded = false;
   }
   const speed = state.fright > 0 ? ghost.speed * 0.7 : ghost.speed;
   ghost.progress += speed * (dt / 1000);
@@ -148,6 +169,7 @@ function updateGhost(ghost, dt) {
     ghost.progress -= 1;
     ghost.r += ghost.dir.dr;
     ghost.c += ghost.dir.dc;
+    ghost.justLanded = true;
   }
 }
 
@@ -164,6 +186,9 @@ function checkGhostHit() {
     y: state.pac.r * TILE + TILE / 2 + state.pac.dir.dr * state.pac.progress * TILE
   };
   for (const ghost of state.ghosts) {
+    // Ghosts still spawning/respawning are intangible — Pac-Man can walk
+    // through them instead of instantly losing a life before play begins.
+    if (ghost.cooldown > 0) continue;
     const gp = ghostPix(ghost);
     if (Math.hypot(pp.x - gp.x, pp.y - gp.y) < TILE * 0.75) {
       if (state.fright > 0) {
@@ -175,6 +200,7 @@ function checkGhostHit() {
         ghost.progress = 0;
         ghost.dir = { ...DIRS.left };
         ghost.cooldown = 1.5;
+        ghost.justLanded = true;
       } else {
         loseLife();
       }
@@ -192,12 +218,13 @@ function loseLife() {
     showModal('😅 Game Over', `You scored ${state.score} points!`, 'Play Again', () => init(state.diff));
   } else {
     // reset positions
-    state.pac = { r: 7, c: 6, dir: { ...DIRS.right }, nextDir: { ...DIRS.right }, progress: 0, speed: state.cfg.pac };
+    state.pac = { r: 7, c: 6, dir: { ...DIRS.right }, nextDir: { ...DIRS.right }, progress: 0, speed: state.cfg.pac, justLanded: true };
     state.fright = 0;
     state.ghosts.forEach((g, i) => {
       g.r = g.homeR; g.c = g.homeC; g.progress = 0;
       g.dir = { ...(i < 2 ? DIRS.left : DIRS.right) };
       g.cooldown = 1.5;
+      g.justLanded = true;
     });
   }
 }
@@ -252,6 +279,8 @@ function draw() {
   // ghosts
   for (const ghost of state.ghosts) {
     const gp = ghostPix(ghost);
+    // spawning/respawning ghosts are semi-transparent to signal they are safe
+    ctx.globalAlpha = ghost.cooldown > 0 ? 0.45 : 1;
     ctx.fillStyle = state.fright > 0 ? '#6b8dff' : ghost.color;
     ctx.beginPath();
     ctx.arc(gp.x, gp.y - 4, 10, Math.PI, 0);
@@ -268,6 +297,7 @@ function draw() {
     ctx.arc(gp.x - 4, gp.y - 4, 3.4, 0, Math.PI * 2);
     ctx.arc(gp.x + 4, gp.y - 4, 3.4, 0, Math.PI * 2);
     ctx.fill();
+    ctx.globalAlpha = 1;
   }
 
   // pac-man

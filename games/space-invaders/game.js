@@ -25,7 +25,7 @@ function init(diff) {
   const cfg = DIFFS[diff];
   state = {
     diff, cfg,
-    player: { x: W / 2 - 22, w: 44, lives: 3 },
+    player: { x: W / 2 - 22, w: 44, lives: 3, hitCooldown: 0 },
     invaders: [],
     bullets: [],
     invBullets: [],
@@ -60,6 +60,7 @@ function loop(now) {
   if (!state.over) {
     // player movement
     const p = state.player;
+    p.hitCooldown = Math.max(0, p.hitCooldown - dt / 1000);
     if (keys.left) p.x -= 4.4 * (dt / 16.6);
     if (keys.right) p.x += 4.4 * (dt / 16.6);
     p.x = Math.max(8, Math.min(W - p.w - 8, p.x));
@@ -127,7 +128,7 @@ function loop(now) {
     // invader bullets vs player & shields
     for (const b of state.invBullets) {
       let hit = false;
-      if (rectHit(b, { x: p.x, y: H - 36, w: p.w, h: 18 }, p.w, 18)) {
+      if (p.hitCooldown === 0 && rectHit(b, { x: p.x, y: H - 36, w: p.w, h: 18 }, p.w, 18)) {
         hit = true;
         loseLife();
       } else {
@@ -160,7 +161,9 @@ function rectHit(a, b, bw, bh) {
 }
 
 function loseLife() {
+  if (state.player.hitCooldown > 0 || state.over) return;
   state.player.lives--;
+  state.player.hitCooldown = 1.2;
   $('#lives').textContent = '❤️'.repeat(Math.max(0, state.player.lives)) + '🖤'.repeat(Math.max(0, 3 - state.player.lives));
   if (state.player.lives <= 0) gameOver();
 }
@@ -187,6 +190,7 @@ function draw() {
   }
 
   // player
+  ctx.globalAlpha = state.player.hitCooldown > 0 && Math.floor(state.player.hitCooldown * 10) % 2 === 0 ? 0.35 : 1;
   ctx.fillStyle = '#4a90c4';
   ctx.beginPath();
   ctx.moveTo(state.player.x, H - 18);
@@ -194,6 +198,7 @@ function draw() {
   ctx.lineTo(state.player.x + state.player.w, H - 18);
   ctx.closePath();
   ctx.fill();
+  ctx.globalAlpha = 1;
 
   // shields
   for (const s of state.shields) {

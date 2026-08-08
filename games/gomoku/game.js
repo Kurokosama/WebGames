@@ -15,6 +15,7 @@ function init(diff) {
     diff,
     board: Array.from({ length: N }, () => Array(N).fill(EMPTY)),
     gameOver: false,
+    thinking: false,
     aiTimer: null
   };
   $('#you').textContent = score.you;
@@ -32,23 +33,26 @@ function render() {
       const cell = document.createElement('button');
       const v = state.board[r][c];
       cell.className = 'cell' + (v === BLACK ? ' black taken' : v === WHITE ? ' white taken' : '');
-      if (v === EMPTY && !state.gameOver) cell.addEventListener('click', () => playerMove(r, c));
+      if (v === EMPTY && !state.gameOver && !state.thinking) cell.addEventListener('click', () => playerMove(r, c));
       board.appendChild(cell);
     }
   }
 }
 
 function playerMove(r, c) {
-  if (state.gameOver || state.board[r][c] !== EMPTY) return;
+  if (state.gameOver || state.thinking || state.board[r][c] !== EMPTY) return;
   state.board[r][c] = BLACK;
   render();
   if (checkWin(BLACK)) return win();
   if (isFull()) return draw();
+  state.thinking = true;
+  render();
   $('#turn').textContent = 'Computer is thinking… 🤔';
   state.aiTimer = setTimeout(aiMove, 350);
 }
 
 function aiMove() {
+  state.thinking = false;
   const move = findAIMove();
   if (move === null) return draw();
   state.board[move.r][move.c] = WHITE;

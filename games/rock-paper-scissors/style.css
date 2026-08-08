@@ -57,3 +57,11 @@
 .move-btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 10px 24px rgba(76, 111, 128, 0.22); }
 .move-btn:active { transform: translateY(0) scale(0.98); }
 .move-emoji { font-size: 3rem; }
+
+@media (max-width: 420px) {
+  .vs-area { gap: 10px; }
+  .choice-emoji { width: 96px; height: 96px; font-size: 3rem; }
+  .vs-text { font-size: 1.25rem; }
+  .move-buttons { gap: 10px; }
+  .move-btn { padding: 14px 18px; }
+}

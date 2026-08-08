@@ -26,13 +26,17 @@ function startRound() {
   state.locked = false;
   state.ready = false;
   const delay = randInt(1400, 4200);
-  clearTimeout(goTimer);
-  goTimer = setTimeout(() => {
+  schedule(() => {
     state.ready = true;
     state.locked = false;
     roundStart = performance.now();
     setZone('ready', 'CLICK NOW! ⚡');
   }, delay);
+}
+
+function schedule(fn, delay) {
+  clearTimeout(goTimer);
+  goTimer = setTimeout(fn, delay);
 }
 
 function clickZone() {
@@ -50,16 +54,16 @@ function clickZone() {
     $('#avg').textContent = avg + 'ms';
     setZone('flashed', `⚡ ${ms}ms!`);
     if (state.round >= TOTAL) {
-      setTimeout(finish, 900);
+      schedule(finish, 900);
     } else {
-      setTimeout(startRound, 900);
+      schedule(startRound, 900);
     }
   } else {
     // too soon
     state.locked = true;
     setZone('too-soon', 'Too soon! Wait for green… 😅');
     clearTimeout(goTimer);
-    setTimeout(() => {
+    schedule(() => {
       state.locked = false;
       startRound();
     }, 1200);

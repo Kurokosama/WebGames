@@ -19,17 +19,20 @@ function init(diff) {
   clearInterval(timerId);
   const n = SIZES[diff];
   const total = n * n;
-  const board = Array.from({ length: total }, (_, i) => i); // value 0 = empty at last index
+  // Standard solved order: 1, 2, ... n²-1, followed by the empty tile (0).
+  const board = Array.from({ length: total }, (_, i) => (i + 1) % total);
   let empty = total - 1;
   let prev = -1;
   const shuffleMoves = 120 + n * 80;
-  for (let k = 0; k < shuffleMoves; k++) {
-    const options = neighbors(empty, n).filter((idx) => idx !== prev);
-    const next = pick(options);
-    [board[empty], board[next]] = [board[next], board[empty]];
-    prev = empty;
-    empty = next;
-  }
+  do {
+    for (let k = 0; k < shuffleMoves; k++) {
+      const options = neighbors(empty, n).filter((idx) => idx !== prev);
+      const next = pick(options);
+      [board[empty], board[next]] = [board[next], board[empty]];
+      prev = empty;
+      empty = next;
+    }
+  } while (board.every((v, i) => v === (i + 1) % total));
 
   state = { diff, n, board, empty, moves: 0, seconds: 0, done: false };
   $('#moves').textContent = '0';
@@ -50,7 +53,7 @@ function clickTile(idx) {
   state.moves++;
   $('#moves').textContent = state.moves;
   render();
-  if (state.board.every((v, i) => v === i)) win();
+  if (state.board.every((v, i) => v === (i + 1) % state.board.length)) win();
 }
 
 function win() {

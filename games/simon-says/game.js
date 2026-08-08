@@ -12,8 +12,10 @@ const SPEEDS = { easy: 950, medium: 700, hard: 480 };
 let state = null;
 let audioCtx = null;
 let sessionBest = 0;
+let timers = [];
 
 function init(diff) {
+  clearTimers();
   state = {
     diff,
     seq: [],
@@ -25,7 +27,21 @@ function init(diff) {
   $('#best').textContent = sessionBest;
   buildPads();
   setFeedback('Watch the colors… 👀');
-  setTimeout(() => nextRound(), 800);
+  schedule(nextRound, 800);
+}
+
+function clearTimers() {
+  timers.forEach((timer) => clearTimeout(timer));
+  timers = [];
+}
+
+function schedule(fn, delay) {
+  const timer = setTimeout(() => {
+    timers = timers.filter((id) => id !== timer);
+    fn();
+  }, delay);
+  timers.push(timer);
+  return timer;
 }
 
 function buildPads() {
@@ -59,9 +75,9 @@ function playSequence() {
     }
     flash(i, state.seq[i]);
     i++;
-    setTimeout(step, state.speed);
+    schedule(step, state.speed);
   };
-  setTimeout(step, 450);
+  schedule(step, 450);
 }
 
 function flash(i, idx) {
@@ -69,7 +85,7 @@ function flash(i, idx) {
   const el = pads[idx];
   el.classList.add('active');
   beep(PADS[idx].freq);
-  setTimeout(() => el.classList.remove('active'), state.speed * 0.62);
+  schedule(() => el.classList.remove('active'), state.speed * 0.62);
 }
 
 function padClick(idx) {
@@ -84,11 +100,13 @@ function padClick(idx) {
     sessionBest = Math.max(sessionBest, state.seq.length);
     $('#best').textContent = sessionBest;
     setFeedback('✅ Correct! Next round…');
-    setTimeout(nextRound, 800);
+    schedule(nextRound, 800);
   }
 }
 
 function gameOver() {
+  clearTimers();
+  state.playing = true;
   const rounds = state.seq.length - 1;
   showModal('😅 Game Over', `You completed ${rounds} round${rounds === 1 ? '' : 's'}!`, 'Play Again', () => init(state.diff));
 }

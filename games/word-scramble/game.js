@@ -8,6 +8,7 @@ const WORDS = {
 
 const TOTAL = 10;
 let state = null;
+let nextTimer = null;
 
 function scrambleWord(word) {
   const letters = word.split('');
@@ -21,10 +22,12 @@ function scrambleWord(word) {
 }
 
 function init(diff) {
+  clearTimeout(nextTimer);
   const words = shuffle(WORDS[diff]).slice(0, TOTAL);
   state = {
     diff,
     words,
+    total: words.length,
     index: 0,
     score: 0,
     answerLetters: [],
@@ -118,14 +121,14 @@ function checkAnswer() {
     $('#score').textContent = state.score;
     setFeedback('🎉 Correct! Well done!', 'correct');
     state.index++;
-    setTimeout(() => {
+    nextTimer = setTimeout(() => {
       if (state.index >= state.total) endRound();
       else loadRound();
     }, 900);
   } else {
     state.locked = true;
     setFeedback(`😅 Not quite — the word has ${word.length} letters. Try again!`, 'wrong');
-    setTimeout(() => {
+    nextTimer = setTimeout(() => {
       state.locked = false;
       // clear answer back to tiles
       const saved = state.answerLetters;

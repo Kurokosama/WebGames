@@ -1,0 +1,26 @@
+name: QA
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify catalog and page contracts
+        run: node scripts/verify-games.mjs && node scripts/verify-index.mjs
+      - name: Run gameplay regression tests
+        run: node scripts/regression-tests.mjs
+      - name: Check JavaScript syntax
+        run: |
+          for file in js/*.js games/*/*.js scripts/*.mjs; do
+            node --check "$file"
+          done

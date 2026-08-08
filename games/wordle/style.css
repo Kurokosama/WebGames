@@ -71,3 +71,14 @@
 .kb-key.correct { background: #06a05a; color: #fff; }
 .kb-key.present { background: #f9a825; color: #fff; }
 .kb-key.absent { background: #9aa8b0; color: #fff; }
+
+@media (max-width: 420px) {
+  .cell {
+    width: clamp(44px, 15vw, 56px);
+    height: clamp(44px, 15vw, 56px);
+    font-size: 1.5rem;
+  }
+  .kb-row { gap: min(5px, 1vw); }
+  .kb-key { width: min(38px, 8vw); font-size: 0.9rem; }
+  .kb-key.wide { width: min(58px, 13vw); font-size: 0.78rem; }
+}

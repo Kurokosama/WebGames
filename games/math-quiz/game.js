@@ -8,8 +8,10 @@ const DIFFS = {
 
 const TOTAL = 10;
 let state = null;
+let nextTimer = null;
 
 function init(diff) {
+  clearTimeout(nextTimer);
   state = {
     diff,
     total: TOTAL,
@@ -107,7 +109,7 @@ function choose(v, btn) {
   $('#best').textContent = state.best;
 
   state.index++;
-  setTimeout(() => {
+  nextTimer = setTimeout(() => {
     if (state.index >= state.total) endQuiz();
     else newQuestion();
   }, correct ? 700 : 1300);

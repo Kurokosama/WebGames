@@ -54,6 +54,12 @@ if (gameDirs.length === 0) {
 // 4. Slugs in the lobby match folders
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const slugsInIndex = [...indexHtml.matchAll(/slug:\s*'([^']+)'/g)].map((m) => m[1]);
+if (!indexHtml.includes(`${slugsInIndex.length} Fun Games for Kids`)) {
+  errors.push(`Lobby <title> does not reflect the ${slugsInIndex.length}-game catalog`);
+}
+if (!indexHtml.includes(`${slugsInIndex.length} simple and fun classic games`)) {
+  errors.push(`Lobby description does not reflect the ${slugsInIndex.length}-game catalog`);
+}
 for (const slug of slugsInIndex) {
   if (!gameDirs.includes(slug)) errors.push(`Lobby lists '${slug}' but no folder exists in games/`);
 }
@@ -82,6 +88,20 @@ for (const dir of gameDirs) {
     if (!html.includes('src="/js/common.js"')) errors.push(`${dir}: missing <script src="/js/common.js">`);
     for (const el of REQUIRED_ELEMENTS) {
       if (!html.includes(el)) errors.push(`${dir}: missing required element ${el}`);
+    }
+
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
+    const duplicateIds = ids.filter((id, i) => ids.indexOf(id) !== i);
+    for (const id of new Set(duplicateIds)) errors.push(`${dir}: duplicate id="${id}"`);
+
+    const jsPath = join(gameRoot, 'game.js');
+    if (existsSync(jsPath)) {
+      const js = readFileSync(jsPath, 'utf8');
+      // Check the root ID of literal selectors such as $('#board .cell').
+      const selectedIds = [...js.matchAll(/\$\('#([^' ]+)/g)].map((m) => m[1]);
+      for (const id of new Set(selectedIds)) {
+        if (!ids.includes(id)) errors.push(`${dir}: game.js selects missing #${id}`);
+      }
     }
   }
 }

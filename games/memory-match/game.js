@@ -10,9 +10,11 @@ const DIFFS = {
 
 let state = null;
 let timerId = null;
+let flipTimer = null;
 
 function init(diff) {
   clearInterval(timerId);
+  clearTimeout(flipTimer);
   const { cols, rows } = DIFFS[diff];
   const pairs = (cols * rows) / 2;
   const chosen = shuffle(EMOJIS).slice(0, pairs);
@@ -66,7 +68,7 @@ function flip(id) {
       state.cards[b].el.classList.add('matched');
       if (state.matched === state.cards.length / 2) win();
     } else {
-      setTimeout(() => {
+      flipTimer = setTimeout(() => {
         state.cards[a].el.classList.remove('open');
         state.cards[b].el.classList.remove('open');
         state.cards[a].el.textContent = '';
@@ -80,6 +82,7 @@ function flip(id) {
 
 function win() {
   clearInterval(timerId);
+  clearTimeout(flipTimer);
   burstConfetti();
   showModal('🎉 You Win!', `You found all pairs in ${state.moves} moves and ${state.seconds}s!`, 'Play Again', () => init(state.diff));
 }

@@ -7,6 +7,7 @@ let state = null;
 let score = { you: 0, computer: 0 };
 
 function init(diff) {
+  clearTimeout(state ? state.aiTimer : null);
   // edges: h[i][j] i in 0..ROWS, j in 0..COLS-1 ; v[i][j] i in 0..ROWS-1, j in 0..COLS
   state = {
     diff,
@@ -140,8 +141,6 @@ function aiMove() {
 }
 
 function wouldComplete(edge, player) {
-  const list = [];
-  const boxesTouching = [];
   const { type, i, j } = edge;
   // find boxes this edge belongs to
   const cand = [];

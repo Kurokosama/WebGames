@@ -8,6 +8,8 @@ let gameOver = false;
 let diff = 'medium';
 let score = { you: 0, draws: 0, computer: 0 };
 let aiTimer = null;
+let resultTimer = null;
+let aiThinking = false;
 
 const WIN_LINES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -18,6 +20,8 @@ const WIN_LINES = [
 function init(d) {
   if (d) diff = d;
   clearTimeout(aiTimer);
+  clearTimeout(resultTimer);
+  aiThinking = false;
   board = Array(9).fill(null);
   gameOver = false;
   $('#you').textContent = score.you;
@@ -34,18 +38,21 @@ function render() {
     const cell = document.createElement('button');
     cell.className = 'cell' + (val ? ' taken ' + (val === HUMAN ? 'x' : 'o') : '');
     cell.textContent = val === HUMAN ? '✕' : val === AI ? '◯' : '';
-    if (!val && !gameOver) cell.addEventListener('click', () => humanMove(i));
+    if (!val && !gameOver && !aiThinking) cell.addEventListener('click', () => humanMove(i));
     boardEl.appendChild(cell);
   });
 }
 
 function humanMove(i) {
-  if (gameOver || board[i]) return;
+  if (gameOver || aiThinking || board[i]) return;
   board[i] = HUMAN;
   if (checkEnd()) return;
+  aiThinking = true;
+  render();
   setTurn('Computer is thinking… 🤔');
   aiTimer = setTimeout(() => {
     const move = aiMove();
+    aiThinking = false;
     if (move !== null) {
       board[move] = AI;
       checkEnd();
@@ -92,11 +99,11 @@ function checkEnd() {
     if (winner.player === HUMAN) {
       score.you++;
       $('#you').textContent = score.you;
-      setTimeout(() => { burstConfetti(); showModal('🎉 You Win!', 'Great job, three in a row!', 'Play Again', () => init()); }, 400);
+      resultTimer = setTimeout(() => { burstConfetti(); showModal('🎉 You Win!', 'Great job, three in a row!', 'Play Again', () => init()); }, 400);
     } else {
       score.computer++;
       $('#computer').textContent = score.computer;
-      setTimeout(() => { showModal('😅 Computer Wins!', 'Nice try! Let’s go again.', 'Play Again', () => init()); }, 400);
+      resultTimer = setTimeout(() => { showModal('😅 Computer Wins!', 'Nice try! Let’s go again.', 'Play Again', () => init()); }, 400);
     }
     setTurn('');
     return true;
@@ -106,7 +113,7 @@ function checkEnd() {
     score.draws++;
     $('#draws').textContent = score.draws;
     setTurn('');
-    setTimeout(() => { showModal('🤝 It’s a Draw!', 'Nobody wins this time.', 'Play Again', () => init()); }, 400);
+    resultTimer = setTimeout(() => { showModal('🤝 It’s a Draw!', 'Nobody wins this time.', 'Play Again', () => init()); }, 400);
     return true;
   }
   setTurn('Your turn! (X)');

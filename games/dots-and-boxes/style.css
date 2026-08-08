@@ -45,7 +45,6 @@
 .edge.done { cursor: default; }
 .edge.done.p1::after { background: var(--coral); }
 .edge.done.p2::after { background: var(--sky); }
-.edge.done:hover::after { background: inherit; }
 
 .box {
   border-radius: 8px;

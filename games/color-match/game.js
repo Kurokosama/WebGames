@@ -15,6 +15,7 @@ const BASE = [
 const CHOICES = { easy: 4, medium: 5, hard: 6 };
 
 let state = null;
+let nextTimer = null;
 
 // Lerp a hex color toward white (factor > 0) or black (factor < 0).
 function shade(hex, factor) {
@@ -29,7 +30,8 @@ function shade(hex, factor) {
 }
 
 function init(diff) {
-  state = { diff, index: 0, score: 0, streak: 0, locked: false, target: null, options: [] };
+  clearTimeout(nextTimer);
+  state = { diff, index: 0, score: 0, streak: 0, locked: false, target: null, options: [], total: TOTAL };
   $('#score').textContent = '0';
   $('#streak').textContent = '0';
   newRound();
@@ -69,6 +71,7 @@ function renderOptions() {
   state.options.forEach((hex) => {
     const btn = document.createElement('button');
     btn.className = 'color-circle';
+    btn.dataset.hex = hex;
     btn.style.background = hex;
     btn.addEventListener('click', () => choose(hex, btn));
     wrap.appendChild(btn);
@@ -88,7 +91,7 @@ function choose(hex, btn) {
     state.streak = 0;
     btn.classList.add('wrong');
     $$('#options .color-circle').forEach((b) => {
-      if (b.style.background === state.target.hex) b.classList.add('correct');
+      if (b.dataset.hex === state.target.hex) b.classList.add('correct');
     });
   }
 
@@ -96,7 +99,7 @@ function choose(hex, btn) {
   $('#streak').textContent = state.streak;
 
   state.index++;
-  setTimeout(() => {
+  nextTimer = setTimeout(() => {
     if (state.index >= state.total) endRound();
     else newRound();
   }, 900);

@@ -22,9 +22,7 @@ function init(diff) {
     selected: null,
     over: false
   };
-  do {
-    state.grid = makeGrid();
-  } while (findMatches().size > 0);
+  reshuffle();
   $('#score').textContent = '0';
   $('#time').textContent = state.time + 's';
   countdown = setInterval(() => {
@@ -122,10 +120,9 @@ function hasMove() {
 }
 
 function reshuffle() {
-  let guard = 0;
   do {
     state.grid = makeGrid();
-  } while (findMatches().size > 0 || (!hasMove() && guard++ < 20));
+  } while (findMatches().size > 0 || !hasMove());
 }
 
 function clickTile(r, c) {
