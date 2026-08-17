@@ -32,6 +32,10 @@ const REQUIRED_ELEMENTS = [
   'class="btn back-btn"'
 ];
 
+// Third-party games integrated as-is (own structure, own assets). They are
+// exempt from the standard frame checks but must still have an index.html.
+const STANDALONE_GAMES = ['adarkroom', 'tower-defense'];
+
 const errors = [];
 
 // 1. Shared assets
@@ -63,15 +67,45 @@ if (!indexHtml.includes(`${slugsInIndex.length} simple and fun classic games`)) 
 for (const slug of slugsInIndex) {
   if (!gameDirs.includes(slug)) errors.push(`Lobby lists '${slug}' but no folder exists in games/`);
 }
+
+// 4b. Retro games menu (retro-games.html) slugs match folders
+const retroHtmlPath = join(root, 'retro-games.html');
+let slugsInRetro = [];
+if (existsSync(retroHtmlPath)) {
+  const retroHtml = readFileSync(retroHtmlPath, 'utf8');
+  slugsInRetro = [...retroHtml.matchAll(/slug:\s*'([^']+)'/g)].map((m) => m[1]);
+  for (const slug of slugsInRetro) {
+    if (!gameDirs.includes(slug)) errors.push(`Retro menu lists '${slug}' but no folder exists in games/`);
+  }
+}
+
+// Every game folder must be listed in the lobby or the retro menu
 for (const dir of gameDirs) {
-  if (!slugsInIndex.includes(dir)) {
-    errors.push(`Folder games/${dir} is not listed in the lobby index.html`);
+  if (!slugsInIndex.includes(dir) && !slugsInRetro.includes(dir)) {
+    errors.push(`Folder games/${dir} is not listed in the lobby index.html or retro-games.html`);
   }
 }
 
 // 3. Per-game checks
 for (const dir of gameDirs) {
   const gameRoot = join(gamesDir, dir);
+  const isStandalone = STANDALONE_GAMES.includes(dir);
+
+  // Standalone third-party games keep their own structure — only require
+  // that index.html exists and doesn't reference external tracking scripts.
+  if (isStandalone) {
+    const htmlPath = join(gameRoot, 'index.html');
+    if (!existsSync(htmlPath)) {
+      errors.push(`${dir}: missing required file index.html`);
+      continue;
+    }
+    const html = readFileSync(htmlPath, 'utf8');
+    if (/googletagmanager|google-analytics|adsbygoogle|pagead2/.test(html)) {
+      errors.push(`${dir}: still references external tracking/ads scripts`);
+    }
+    continue;
+  }
+
   for (const file of REQUIRED_GAME_FILES) {
     if (!existsSync(join(gameRoot, file))) {
       errors.push(`${dir}: missing required file ${file}`);
@@ -81,6 +115,7 @@ for (const dir of gameDirs) {
   const htmlPath = join(gameRoot, 'index.html');
   if (existsSync(htmlPath)) {
     const html = readFileSync(htmlPath, 'utf8');
+
     for (const asset of REQUIRED_ASSETS) {
       if (!html.includes(asset)) errors.push(`${dir}: missing reference to ${asset}`);
     }
@@ -98,8 +133,11 @@ for (const dir of gameDirs) {
     if (existsSync(jsPath)) {
       const js = readFileSync(jsPath, 'utf8');
       // Check the root ID of literal selectors such as $('#board .cell').
+      // Skip dynamic ID prefixes (e.g. $('#found-' + i) → 'found-') which are
+      // constructed at runtime and can't be validated statically.
       const selectedIds = [...js.matchAll(/\$\('#([^' ]+)/g)].map((m) => m[1]);
       for (const id of new Set(selectedIds)) {
+        if (id.endsWith('-')) continue; // dynamic ID prefix
         if (!ids.includes(id)) errors.push(`${dir}: game.js selects missing #${id}`);
       }
     }
@@ -114,5 +152,5 @@ if (errors.length) {
   process.exit(1);
 } else {
   console.log(`\n✅ All checks passed — ${gameDirs.length} game folders verified.`);
-  console.log(`   Slugs in lobby: ${slugsInIndex.length} · Folders: ${gameDirs.length}\n`);
+  console.log(`   Slugs in lobby: ${slugsInIndex.length} · Retro: ${slugsInRetro.length} · Folders: ${gameDirs.length}\n`);
 }

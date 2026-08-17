@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="theme-color" content="#FFF"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta property="og:type" content="WebGane" />
+	<meta property="og:title" content="Tower Defense 塔防" />
+	<meta property="og:author" content="Victor Ribeiro" />
+	<meta property="og:description" content="A tower defense written in vanilla JavaScript — 经典策略塔防" />
+	<title>🗼 塔防 · 大型游戏</title>
+	<link rel="stylesheet" href="css/main.css" />
+	<link rel="icon" href="favicon.png" sizes="256x256"/>
+	<link rel="apple-touch-icon" href="favicon.png" />
+	<style>
+		/* Back button for Kids Game Land integration */
+		.td-back {
+			position: fixed; top: 14px; left: 14px; z-index: 9999;
+			display: inline-flex; align-items: center; gap: 8px;
+			padding: 9px 18px; border-radius: 999px;
+			background: rgba(20, 20, 20, 0.82); color: #eee;
+			text-decoration: none; font-family: sans-serif; font-size: 14px; font-weight: 700;
+			box-shadow: 0 4px 14px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15);
+			transition: transform 0.15s ease, background 0.15s ease;
+		}
+		.td-back:hover { transform: translateY(-2px); background: rgba(40, 40, 40, 0.92); }
+	</style>
+</head>
+<body>
+	<a class="td-back" href="/retro-games.html">← 返回怀旧游戏</a>
+	<!-- <script src="js/aux.js"></script> //-->
+	<script src="js/Mapping.js"></script>
+	<script src="js/Enemy.js"></script>
+	<script src="js/Airplane.js"></script>
+	<script src="js/Tank.js"></script>
+	<script src="js/Turret.js"></script>
+	<script src="js/TankTurret.js"></script>
+	<script src="js/DoubleTurret.js"></script>
+	<script src="js/MissileLauncher.js"></script>
+	<script src="js/DoubleMissileLauncher.js"></script>
+	<script src="js/Bullet.js"></script>
+	<script src="js/Missile.js"></script>
+	<script src="js/FX.js"></script>
+	<script src="js/MusicManager.js"></script>
+	<script src="js/SoundManager.js"></script>
+	<script src="js/TimeManager.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>怀旧游戏 · 大孩子 &amp; 成年人</title>
+<meta name="description" content="怀旧游戏合集 — 90后童年回忆 + 大型深度游戏">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<style>
+  .retro-header { text-align: center; padding: 48px 20px 10px; position: relative; z-index: 1; }
+  .retro-title { font-size: 3rem; font-weight: 800; color: var(--ink); letter-spacing: 1px; }
+  .retro-subtitle { font-size: 1.2rem; color: var(--ink-soft); margin-top: 8px; }
+  .retro-badge {
+    display: inline-block; margin-top: 12px; padding: 6px 18px; border-radius: 999px;
+    background: linear-gradient(135deg, #ff7e67, #f47ba1); color: #fff;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .retro-main { position: relative; z-index: 1; max-width: 1220px; margin: 0 auto; padding: 24px 24px 60px; }
+  .retro-section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.5rem; font-weight: 800; color: var(--ink);
+    margin: 34px 0 18px;
+  }
+  .retro-section-title::after {
+    content: ''; flex: 1; height: 3px; border-radius: 3px;
+    background: linear-gradient(90deg, var(--mint), transparent);
+  }
+  .retro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .retro-card {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 26px 18px 20px;
+    text-decoration: none; color: var(--ink);
+    box-shadow: var(--shadow);
+    border: 3px solid transparent;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative; overflow: hidden;
+  }
+  .retro-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--card, var(--mint)), var(--card-bg, var(--mint-light)));
+  }
+  .retro-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 28px rgba(76,111,128,0.22); border-color: var(--card, var(--mint)); }
+  .retro-card:active { transform: translateY(-2px) scale(0.99); }
+  .retro-icon {
+    width: 90px; height: 90px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 2.8rem;
+    background: var(--card-bg, var(--mint-light));
+    margin-bottom: 14px;
+    transition: transform 0.18s ease;
+  }
+  .retro-card:hover .retro-icon { transform: scale(1.12) rotate(-6deg); }
+  .retro-name { font-size: 1.3rem; font-weight: 800; }
+  .retro-desc { font-size: 0.92rem; color: var(--ink-soft); margin-top: 6px; line-height: 1.4; min-height: 2.6em; }
+  .retro-tag {
+    display: inline-block; margin-top: 10px; padding: 3px 14px; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px;
+    background: var(--card-bg, var(--mint-light)); color: var(--card, var(--mint));
+  }
+  .back-link {
+    display: inline-block; margin-top: 20px; padding: 10px 24px; border-radius: 999px;
+    background: var(--white); color: var(--ink); text-decoration: none; font-weight: 700;
+    box-shadow: var(--shadow); transition: transform 0.15s ease;
+  }
+  .back-link:hover { transform: translateY(-2px); }
+</style>
+</head>
+<body class="lobby-page">
+
+<div class="floating-decor" aria-hidden="true">
+  <span class="cloud cloud-1">☁️</span>
+  <span class="cloud cloud-2">☁️</span>
+  <span class="star star-1">⭐</span>
+  <span class="star star-2">🌟</span>
+  <span class="leaf leaf-1">🍃</span>
+  <span class="leaf leaf-2">🍀</span>
+</div>
+
+<header class="retro-header">
+  <h1 class="retro-title">🕹️ 怀旧游戏</h1>
+  <p class="retro-subtitle">给大孩子 &amp; 成年人的游戏合集</p>
+  <span class="retro-badge">📺 那些年我们一起玩过的游戏</span>
+</header>
+
+<main class="retro-main">
+  <h2 class="retro-section-title">📺 90后童年回忆</h2>
+  <div class="retro-grid" id="retro-grid"></div>
+
+  <h2 class="retro-section-title">🎮 大型游戏 · 深度畅玩</h2>
+  <div class="retro-grid" id="big-grid"></div>
+
+  <div style="text-align:center; margin-top: 32px;">
+    <a class="back-link" href="/">← 返回主菜单</a>
+  </div>
+</main>
+
+<footer class="lobby-footer">Made with 💚 · 怀旧游戏 · No ads · No tracking</footer>
+
+<script>
+  'use strict';
+
+  var RETRO_GAMES = [
+    { slug: 'solitaire',          emoji: '🃏', name: '纸牌接龙',     desc: '经典的 Klondike 纸牌接龙，把四组牌从 A 排到 K！',       tag: '经典' },
+    { slug: 'pinball',           emoji: '🎯', name: '弹珠台',       desc: '控制挡板弹射钢珠，击中目标得分，童年街机回忆！',       tag: '街机' },
+    { slug: 'chinese-checkers',  emoji: '⭐', name: '中国跳棋',     desc: '六角星棋盘，跳子过桥，先把棋子送到对面！',           tag: '棋类' },
+    { slug: 'minesweeper-classic', emoji: '💣', name: '扫雷经典版', desc: 'Windows 经典扫雷，标记地雷，揭开安全区域！',         tag: '经典' },
+    { slug: 'gomoku-classic',    emoji: '⚫', name: '五子棋经典版', desc: '黑白对弈，五子连珠获胜，挑战电脑 AI！',              tag: '棋类' },
+    { slug: 'sokoban-classic',   emoji: '📦', name: '推箱子经典版', desc: '把箱子推到指定位置，经典仓库搬运工！',               tag: '益智' },
+    { slug: 'snake-classic',     emoji: '🐍', name: '贪吃蛇经典版', desc: '最经典的贪吃蛇，吃苹果变长，别撞墙！',               tag: '经典' },
+    { slug: 'tetris-classic',    emoji: '🧱', name: '俄罗斯方块经典版', desc: '旋转方块消除行，速度越来越快，童年必备！',       tag: '经典' }
+  ];
+
+  var BIG_GAMES = [
+    { slug: 'adarkroom',     emoji: '🏕️', name: '黑暗小屋',     desc: '深度文字冒险 RPG，从火堆开始一路探索到太空！',     tag: 'RPG' },
+    { slug: 'tower-defense', emoji: '🗼', name: '塔防',         desc: '建造炮塔，抵御一波波敌人的进攻！',               tag: '策略' },
+    { slug: 'battleship',    emoji: '🚢', name: '海战棋',       desc: '布置舰队，与电脑展开经典海战！',                 tag: '策略' },
+    { slug: 'fruit-ninja',   emoji: '🍉', name: '水果忍者',     desc: '滑动切水果，避开炸弹，挑战最高连击！',           tag: '动作' }
+  ];
+
+  var COLORS = [
+    { bg: '#ffe3dc', main: '#ff7e67' },
+    { bg: '#dceefb', main: '#4a90c4' },
+    { bg: '#ece4fb', main: '#9b7edb' },
+    { bg: '#fff3d6', main: '#e0a800' },
+    { bg: '#d8f3ec', main: '#4caf9b' },
+    { bg: '#fde3ec', main: '#f47ba1' }
+  ];
+
+  function renderCards(gridId, games) {
+    var grid = document.getElementById(gridId);
+    games.forEach(function (g, i) {
+      var c = COLORS[i % COLORS.length];
+      var card = document.createElement('a');
+      card.className = 'retro-card';
+      card.href = 'games/' + g.slug + '/';
+      card.style.setProperty('--card', c.main);
+      card.style.setProperty('--card-bg', c.bg);
+      card.innerHTML =
+        '<span class="retro-icon">' + g.emoji + '</span>' +
+        '<span class="retro-name">' + g.name + '</span>' +
+        '<span class="retro-desc">' + g.desc + '</span>' +
+        '<span class="retro-tag">' + g.tag + '</span>';
+      grid.appendChild(card);
+    });
+  }
+
+  renderCards('retro-grid', RETRO_GAMES);
+  renderCards('big-grid', BIG_GAMES);
+</script>
+</body>
+</html>

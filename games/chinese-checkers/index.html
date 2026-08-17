@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国跳棋 · 额外游戏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/retro-games.html">🕹️ 怀旧游戏</a>
+  <h1 class="game-title" id="game-title">⭐ 中国跳棋</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 重新开始</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">当前: <b id="current-player">红方</b></div>
+    <div class="stat">步数: <b id="moves">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <p class="how-to-play">💡 玩法: 点击己方棋子选中，再点击目标位置移动。可以跳到相邻空位，也可以连续跳过其他棋子。先把10颗棋子全部送到对面三角区域获胜！</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 胜利！</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">再来一局</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

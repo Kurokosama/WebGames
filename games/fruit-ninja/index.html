@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>水果忍者 · 大型游戏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/retro-games.html">🕹️ 怀旧游戏</a>
+  <h1 class="game-title" id="game-title">🍉 水果忍者</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 新游戏</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">分数: <b id="score">0</b></div>
+    <div class="stat">连击: <b id="combo">0</b></div>
+    <div class="stat">生命: <b id="lives">❤️❤️❤️</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="fruit-canvas-wrap">
+      <canvas id="game-canvas" width="900" height="560"></canvas>
+      <div class="fruit-overlay hidden" id="fruit-overlay">
+        <div class="fruit-overlay-box">
+          <h2 id="fruit-overlay-title">游戏结束</h2>
+          <p id="fruit-overlay-text"></p>
+          <button class="btn play-btn" id="fruit-restart-btn">再来一局</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 玩法: 在水果上滑动（或按住拖动鼠标）来切水果！避开 💣 炸弹，漏掉 3 个水果就结束。连续切中可触发连击加分！</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 恭喜通关！</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">再来一局</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

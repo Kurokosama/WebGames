@@ -73,10 +73,20 @@ function makeHarness(slug) {
   };
   let timerId = 0;
   const activeTimers = new Set();
+  const storage = new Map();
+  const localStorageMock = {
+    getItem: (key) => (storage.has(key) ? storage.get(key) : null),
+    setItem: (key, value) => storage.set(key, String(value)),
+    removeItem: (key) => storage.delete(key),
+    clear: () => storage.clear()
+  };
   const context = {
     console,
     Math: Object.create(Math),
     performance: { now: () => 1000 },
+    localStorage: localStorageMock,
+    addEventListener() {},
+    removeEventListener() {},
     document: {
       createElement: () => new FakeElement(),
       addEventListener() {},
@@ -125,12 +135,21 @@ function run(context, source) {
 const tests = [];
 function test(name, fn) { tests.push({ name, fn }); }
 
-test('all 36 game scripts initialize without runtime errors', () => {
-  const slugs = readFileSync(join(root, 'index.html'), 'utf8')
-    .matchAll(/slug:\s*'([^']+)'/g);
-  const games = Array.from(slugs, (match) => match[1]);
-  assert.equal(games.length, 36);
-  for (const slug of games) makeHarness(slug);
+test('all game scripts initialize without runtime errors', () => {
+  const readSlugs = (file) => {
+    const html = readFileSync(join(root, file), 'utf8');
+    return Array.from(html.matchAll(/slug:\s*'([^']+)'/g), (match) => match[1]);
+  };
+  const games = [
+    ...readSlugs('index.html'),
+    ...readSlugs('retro-games.html')
+  ];
+  // Standalone third-party games (adarkroom, tower-defense) have their own
+  // structure and no game.js — they are smoke-tested in the browser instead.
+  const standalone = ['adarkroom', 'tower-defense'];
+  const toTest = games.filter((slug) => !standalone.includes(slug));
+  assert.equal(toTest.length, 46);
+  for (const slug of toTest) makeHarness(slug);
 });
 
 test('sliding puzzle tracks the visible empty tile and solves in standard order', () => {

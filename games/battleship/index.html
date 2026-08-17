@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海战棋 · 大型游戏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/retro-games.html">🕹️ 怀旧游戏</a>
+  <h1 class="game-title" id="game-title">🚢 海战棋</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 新游戏</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">回合: <b id="turn">你</b></div>
+    <div class="stat">命中: <b id="hits">0</b></div>
+    <div class="stat">击沉: <b id="sunk">0 / 5</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="battleship-layout">
+      <div class="board-wrap">
+        <h3 class="board-title">🎯 敌方海域 <small>点击开火</small></h3>
+        <div class="board" id="enemy-board"></div>
+      </div>
+      <div class="board-wrap">
+        <h3 class="board-title">🛡️ 我方海域</h3>
+        <div class="board" id="player-board"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-panel" id="phase-panel">
+    <p class="phase-text" id="phase-text">🚢 布置舰队：点击格子放置舰船，或直接开始战斗</p>
+    <div class="phase-actions">
+      <button class="btn play-btn" id="auto-place-btn">🎲 随机布置</button>
+      <button class="btn play-btn" id="start-btn">⚔️ 开始战斗</button>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 玩法: 布置你的舰队后，点击敌方海域开火。先击沉对方全部 5 艘舰船者获胜！舰船: 航母(5) · 战列舰(4) · 巡洋舰(3) · 潜艇(3) · 驱逐舰(2)</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 恭喜获胜！</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">再来一局</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

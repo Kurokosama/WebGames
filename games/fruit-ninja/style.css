@@ -1,0 +1,56 @@
+/* ============================================================
+   Fruit Ninja 水果忍者 — game styles
+   ============================================================ */
+.fruit-canvas-wrap {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 3px solid var(--coral);
+  background: linear-gradient(180deg, #bfe9ff 0%, #e8f7ff 55%, #d9f2c9 100%);
+  touch-action: none;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+.fruit-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 30, 40, 0.55);
+  backdrop-filter: blur(3px);
+}
+.fruit-overlay.hidden { display: none; }
+
+.fruit-overlay-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 40px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 340px;
+}
+.fruit-overlay-box h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.fruit-overlay-box p {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .fruit-canvas-wrap { border-width: 2px; }
+}

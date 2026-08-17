@@ -1,0 +1,7 @@
+/* Gomoku Classic - 五子棋经典版 */
+#canvas {
+  display: block; margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  cursor: crosshair;
+}

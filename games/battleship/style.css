@@ -1,0 +1,104 @@
+/* ============================================================
+   Battleship 海战棋 — game styles
+   ============================================================ */
+.battleship-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.board-wrap {
+  text-align: center;
+}
+
+.board-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.board-title small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 34px);
+  grid-template-rows: repeat(10, 34px);
+  gap: 2px;
+  background: var(--sky-light);
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 3px solid var(--sky);
+}
+
+.cell {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: #eaf6ff;
+  border: 1px solid #cfe6f5;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+  user-select: none;
+}
+.cell:hover { transform: scale(1.08); }
+
+/* Enemy board cells */
+#enemy-board .cell { background: #eaf6ff; }
+#enemy-board .cell.hit { background: #ff7e67; color: #fff; cursor: default; }
+#enemy-board .cell.miss { background: #d8e8f5; color: #7a9bb5; cursor: default; }
+#enemy-board .cell.sunk { background: #c2452f; color: #fff; cursor: default; }
+#enemy-board .cell:hover { transform: scale(1.08); }
+
+/* Player board cells */
+#player-board .cell { cursor: default; }
+#player-board .cell.ship { background: #4caf9b; border-color: #3a8f7e; }
+#player-board .cell.hit { background: #ff7e67; color: #fff; }
+#player-board .cell.miss { background: #d8e8f5; color: #7a9bb5; }
+#player-board .cell.sunk { background: #c2452f; color: #fff; }
+
+/* Placement mode */
+#player-board .cell.placeable { cursor: pointer; }
+#player-board .cell.placeable:hover { background: #b8e6d8; transform: scale(1.08); }
+#player-board .cell.place-preview { background: #ffd166; border-color: #e0a800; }
+
+.phase-panel {
+  margin-top: 18px;
+  text-align: center;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.phase-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.phase-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.phase-actions .btn { min-width: 130px; }
+
+/* Responsive */
+@media (max-width: 720px) {
+  .board { grid-template-columns: repeat(10, 26px); grid-template-rows: repeat(10, 26px); gap: 1px; padding: 5px; }
+  .cell { width: 26px; height: 26px; font-size: 12px; }
+  .battleship-layout { gap: 16px; }
+}
