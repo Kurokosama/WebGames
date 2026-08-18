@@ -1,0 +1,201 @@
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.game-header h1 {
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* 上传区域 */
+.upload-area {
+  background: #1a1a2e;
+  border: 2px dashed #4a4a6a;
+  border-radius: 12px;
+  padding: 40px 20px;
+  transition: border-color 0.3s;
+}
+
+.upload-area.dragover {
+  border-color: #00d4ff;
+  background: #1e1e3a;
+}
+
+.upload-icon {
+  font-size: 4em;
+  margin-bottom: 10px;
+}
+
+.upload-area h2 {
+  margin: 10px 0;
+  color: #fff;
+}
+
+.upload-area p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+#rom-file {
+  display: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* 游戏推荐 */
+.game-suggestions {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.game-suggestions h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.suggestion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.suggestion-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85em;
+  color: #ccc;
+}
+
+.game-icon {
+  font-size: 1.8em;
+}
+
+/* 游戏区域 */
+.game-area {
+  margin-top: 20px;
+}
+
+.game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-small {
+  background: #2a2a4a;
+  color: #fff;
+  border: 1px solid #4a4a6a;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+.btn-small:hover {
+  background: #3a3a5a;
+}
+
+.rom-name {
+  color: #00d4ff;
+  font-size: 0.9em;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nes-container {
+  width: 512px;
+  height: 480px;
+  margin: 0 auto;
+  border: 3px solid #333;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.nes-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  image-rendering: pixelated;
+}
+
+.controls-info {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.controls-info span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #aaa;
+}
+
+/* 错误提示 */
+.error-msg {
+  background: rgba(255, 50, 50, 0.1);
+  border: 1px solid #ff4444;
+  color: #ff6666;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .suggestion-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nes-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 256/240;
+  }
+
+  .controls-info {
+    gap: 8px;
+  }
+
+  .controls-info span {
+    font-size: 0.75em;
+    padding: 4px 8px;
+  }
+}

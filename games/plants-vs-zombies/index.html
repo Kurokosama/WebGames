@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="植物大战僵尸超级无敌版 — 9 岁小男孩天马行空设计的爽快塔防游戏。" />
+    <meta name="theme-color" content="#558b2f" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E" />
+    <title>植物大战僵尸超级无敌版</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- HUD Layer -->
+      <div id="ui-layer">
+        <div id="sun-counter">
+          <span id="sun-icon">☀️</span>
+          <span id="sun-amount">∞</span>
+        </div>
+        <button id="sound-toggle" data-tip="音效开关">🔊</button>
+        <button id="home-btn" data-tip="返回首页">🏠</button>
+
+        <div id="seed-row">
+          <div id="seed-bank">
+          <div class="seed-packet" data-plant="peashooter">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="crown-pea"><i class="cw-leaf"></i><i class="cw-head"></i><i class="cw-barrel"></i><i class="cw-eye"></i><i class="cw-crown"></i><i class="cw-stem"></i><i class="cw-foot l"></i><i class="cw-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="sunflower">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🌻</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="wallnut">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🌰</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="iceshooter">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="ice-pea"><i class="ip-crystal a"></i><i class="ip-crystal b"></i><i class="ip-crystal c"></i><i class="ip-head"></i><i class="ip-barrel"></i><i class="ip-eye l"></i><i class="ip-eye r"></i><i class="ip-stem"></i><i class="ip-foot l"></i><i class="ip-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="doubleshooter">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="leaf-pea"><i class="lp-leaf a"></i><i class="lp-leaf b"></i><i class="lp-leaf c"></i><i class="lp-head"></i><i class="lp-barrel"></i><i class="lp-brow l"></i><i class="lp-brow r"></i><i class="lp-eye l"></i><i class="lp-eye r"></i><i class="lp-stem"></i><i class="lp-foot l"></i><i class="lp-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="cherry">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🍒</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="potato">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="potato-mine armed"><i class="pm-knob"></i><i class="pm-rod"></i><i class="pm-body"></i><i class="pm-eye l"></i><i class="pm-eye r"></i><i class="pm-mouth"></i><i class="pm-dirt"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="glue">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🧿</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="obsidian">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🗿</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="pitcher">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="super-pult"><i class="sp-cabbage"></i><i class="sp-melon"></i><i class="sp-corn"></i><i class="sp-stump"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="gatling">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🔫</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="waterdrop">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="ice-pea drop"><i class="ip-head"></i><i class="ip-barrel"></i><i class="ip-eye l"></i><i class="ip-eye r"></i><i class="ip-drop"></i><i class="ip-dribble"></i><i class="ip-stem"></i><i class="ip-foot l"></i><i class="ip-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="corncannon">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🌽</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="primitivepea">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="skull-pea"><i class="sk-head"></i><i class="sk-barrel"></i><i class="sk-eye"></i><i class="sk-skull"></i><i class="sk-frill"></i><i class="sk-horn top"></i><i class="sk-horn side"></i><i class="sk-socket"></i><i class="sk-collar"></i><i class="sk-foot l"></i><i class="sk-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="triplepea">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="triple-pea"><i class="tp-pea top"><i class="tp-leaf"></i><i class="tp-ball"></i><i class="tp-barrel"></i><i class="tp-eye"></i></i><i class="tp-pea mid"><i class="tp-leaf"></i><i class="tp-ball"></i><i class="tp-barrel"></i><i class="tp-eye"></i></i><i class="tp-pea bot"><i class="tp-leaf"></i><i class="tp-ball"></i><i class="tp-barrel"></i><i class="tp-eye"></i></i><i class="tp-stem"></i><i class="tp-foot l"></i><i class="tp-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="nutbowling">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🥥</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="cabbagepult">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="cabbage-pult"><i class="cp-cabbage"></i><i class="cp-base"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="magnetshroom">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">🧲</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="supermg">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="helmet-pea"><i class="hp-collar"></i><i class="hp-head"></i><i class="hp-barrel"></i><i class="hp-brow l"></i><i class="hp-brow r"></i><i class="hp-eye l"></i><i class="hp-eye r"></i><i class="hp-helmet"></i><i class="hp-badge"></i><i class="hp-strap"></i><i class="hp-stem"></i><i class="hp-foot l"></i><i class="hp-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="elecmg">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="helmet-pea elec-pea"><i class="hp-collar"></i><i class="hp-head"></i><i class="hp-barrel"></i><i class="hp-brow l"></i><i class="hp-brow r"></i><i class="hp-eye l"></i><i class="hp-eye r"></i><i class="hp-helmet"></i><i class="hp-badge"></i><i class="hp-strap"></i><i class="hp-stem"></i><i class="hp-foot l"></i><i class="hp-foot r"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="iceshroom">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="ice-shroom"><span class="is-cap">🍄</span><span class="is-ice"></span></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="doomshroom">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="doom-shroom"><span class="ds-cap"></span><span class="ds-stem"></span></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="sunemperor">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="sun-emperor"><span class="se-nut se-small"><i class="se-petal l"></i><i class="se-petal r"></i></span><span class="se-nut se-big"><i class="se-petal l"></i><i class="se-petal r"></i></span></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="peabomb">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="pea-bomb"><i class="pb-stem"></i><span class="pb-face l">🌿</span><span class="pb-face r">🌱</span></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="torchwood">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="torch-wood"><i class="tw-flame"></i><i class="tw-stump"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="fumeshroom">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="fume-shroom"><i class="fs-bulb"></i><i class="fs-spout"></i><i class="fs-base"></i><i class="fs-eye l"></i><i class="fs-eye r"></i><i class="fs-mouth"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="trophypult">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="trophy-pult"><i class="tp-cup">🏆</i><i class="tp-board"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="nukecherry">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="nuke-cherry"><i class="nc-cap"></i><i class="nc-stem"></i><span class="nc-cherry">🍒</span></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="squash">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="squash-fruit"><i class="sq-body"></i><i class="sq-eye l"></i><i class="sq-eye r"></i><i class="sq-stem"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="kernelpult">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="kernel-pult"><i class="kp-barrel"></i><i class="kp-corn"></i><i class="kp-base"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="melonpult">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="melon-pult"><i class="mp-barrel"></i><i class="mp-melon"></i><i class="mp-base"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="house">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="house-plant"><i class="hp-roof"></i><i class="hp-wall"><i class="hp-win"></i><i class="hp-door"></i></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="plantfood">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">💚</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="redfood">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon">❤️</div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div class="seed-packet" data-plant="glove">
+            <div class="cooldown-overlay"></div>
+            <div class="seed-icon"><span class="glove-tool"><i class="gl-palm"></i><i class="gl-thumb"></i><i class="gl-cuff"></i></span></div>
+            <div class="seed-cost">0</div>
+          </div>
+          <div id="shovel-btn" class="seed-packet">
+            <div class="seed-icon">🪏</div>
+            <div class="seed-cost">铲</div>
+          </div>
+          <div id="plant-count-ctrl">
+            <button id="plant-count-dec">−</button>
+            <input id="plant-count-input" type="number" min="1" max="1000000" value="1" />
+            <button id="plant-count-inc">+</button>
+          </div>
+          </div>
+        </div>
+
+        <div id="level-progress">
+          <div id="progress-bar">
+            <div id="progress-fill"></div>
+            <span id="flag-marker">🚩</span>
+          </div>
+          <div id="wave-stats"></div>
+        </div>
+      </div>
+
+      <!-- Game World -->
+      <div id="game-board">
+        <div id="background-layer"></div>
+        <div id="grid-layer"></div>
+        <div id="entity-layer"></div>
+        <div id="projectile-layer"></div>
+      </div>
+
+      <!-- Overlays -->
+      <div id="start-screen" class="overlay">
+        <h1>植物大战僵尸超级无敌版</h1>
+        <p class="subtitle">僵尸大军等你来战!</p>
+        <div class="start-tabs">
+          <button class="tab-btn active" data-tab="howto">怎么玩</button>
+          <button class="tab-btn" data-tab="settings">游戏设置</button>
+        </div>
+
+        <div class="tab-content" id="tab-howto">
+          <div class="how-to-play">
+            <ul>
+              <li>☀️ 收集阳光（仅展示，植物全免费）</li>
+              <li>🃏 每关开打前先选卡：可以全选，也可以一张都不选</li>
+              <li>🌱 点种子卡 → 点草坪格种植（左边 3 列蓝草坪一样能种）</li>
+              <li>🪏 铲子可移除已种的植物</li>
+              <li>🧤 手套：点一下抓起植物（连它的升级一起），再点一格放下 · Esc 放回原处</li>
+              <li>📈 只有 ⚡ 超级电能机枪豌豆越打越狠：一发比一发强 15%（上限 18000）</li>
+              <li>🚜 每行一台割草机，突防自动清场</li>
+              <li>🤖 <b>报纸将王</b> — 普通模式唯一的敌人，血量 6400 万</li>
+              <li>　└ 每波放 20 只僵尸（从弱到强），每只 800 血、头顶显示血量</li>
+              <li>　└ 放僵尸时无敌够不着；放完会低头 8 秒，趁机打他</li>
+              <li>🌻 <b>向日葵</b> — 持续产阳光</li>
+              <li>🌱 <b>豌豆射手</b> — 同行直射</li>
+              <li>🌰 <b>坚果墙</b> — 高血量肉盾</li>
+              <li>❄️ <b>寒冰射手</b> — 命中减速 30%；打中报纸将王把他停住 2 秒</li>
+              <li>🌿 <b>双发射手</b> — 一次两颗豌豆</li>
+              <li>🍒 <b>樱桃炸弹</b> — 0.8 秒 3×3 秒杀</li>
+              <li>🥔 <b>土豆地雷</b> — 3 秒后踩中即炸</li>
+              <li>🧿 <b>黑胶神</b> — 穿行黑胶，近乎冻结</li>
+              <li>🗿 <b>黑曜石战神</b> — 上中下三行扫射</li>
+              <li>🥬🍉🌽 <b>超级投手</b> — 卷心菜 / 西瓜 / 玉米三个投手摞在一起</li>
+              <li>　└ 抛出三合一子弹 240 伤，砸中后在同一排里<b>一直弹</b>，把这排弹空了才落地</li>
+              <li>　└ 绿叶素：对全场每个目标各来一发巨大的三合一，2400 伤，穿越障碍物</li>
+              <li>💧 <b>水滴</b> — 每秒一发，无视护盾秒杀</li>
+              <li>🌽 <b>玉米炮</b> — 自动追踪连续轰炸</li>
+              <li>🔫 <b>机枪炮台</b> — 4 连射扫三行</li>
+              <li>🌟 <b>原始豌豆</b> — 70 伤 + 眩晕击退</li>
+              <li>🌳 <b>三重豌豆</b> — 三行各一颗</li>
+              <li>🥥 <b>坚果保龄</b> — 2 秒后沿行碾压</li>
+              <li>🥬 <b>卷心菜投手</b> — 每 0.8 秒抛一颗，越过障碍物砸头，40 伤</li>
+              <li>🧲 <b>磁力菇</b> — 每 1.5 秒击退全场僵尸，再吸到自己这一行</li>
+              <li>🪖 <b>超级机枪</b> — 0.5 秒 6 连发；喂绿叶素 +1 连，大招 2 秒里每点一下再 +1</li>
+              <li>⚡ <b>超级电能机枪豌豆</b> — 0.5 秒 6 连发青色电能弹，无限贯穿</li>
+              <li>　└ 对僵尸无限点伤害；打将王 1800 起步（随递增涨到 18000）</li>
+              <li>　└ 每 5 轮自动散射 150 颗，每散射一次连发数永久 +1</li>
+              <li>🍄 <b>寒冰菇</b> — 每 5 秒全场寒冰爆炸：2 点伤害 + 冻住 5 秒（含报纸将王）</li>
+              <li>　└ 绿叶素放冰暴：冻 10 秒，且这株的间隔永久 −1 秒（最低 1 秒）</li>
+              <li>　└ 将王被冻住时不放僵尸也不换阶段，站在原地随便打</li>
+              <li>☠️ <b>毁灭菇</b> — 每 5 秒紫色蘑菇云：全场 1800 点伤害</li>
+              <li>　└ 种下后自己会一直慢慢长大（每秒 +4%），没有上限</li>
+              <li>　└ 每喂一次绿叶素，伤害永久 +1800、个头再窜一截</li>
+              <li>👑 <b>阳光帝果</b> — 血量无限的黄坚果，头顶还顶一颗小坚果</li>
+              <li>　└ 空手点它花 500 阳光：回满血 + 在前面那一格攒一颗黄色保龄球</li>
+              <li>　└ 3 秒后滚出去；滚之前每点一下这颗球更大一圈，滚完下一颗从最小重来</li>
+              <li>　└ 绿叶素大招：五行一起滚出 40 颗最小号保龄球</li>
+              <li>🌿🌱 <b>豌豆炸弹</b> — 种下 3 秒后自爆，100 颗豌豆围两圈一起射出去</li>
+              <li>　└ 绿叶素：满地召唤会射豌豆的植物；红叶素：改射樱桃子弹</li>
+              <li>🔥 <b>火炬树桩</b> — 豌豆类子弹穿过它变红，伤害 ×2</li>
+              <li>　└ 每喂一次绿叶素换一种彩虹色、倍率翻倍：红2→蓝4→紫8→橙16→黄32→绿64→青128</li>
+              <li>🏠 <b>房子</b> — 只能盖在棋盘左边的蓝色区域，一格一栋</li>
+              <li>　└ 绿叶素：草坪上随机一格冒出 🎁 礼物盒，空手点开变成随机植物（房子除外）</li>
+              <li>💨 <b>大喷菇</b> — 本行前面三格有僵尸就喷紫雾，把这三格熏一遍，每只 70</li>
+              <li>　└ 绿叶素：连喷 3 秒，每 0.3 秒再熏一次，每次 100</li>
+              <li>🏆 <b>奖杯投手</b> — 每 5 秒往草坪抛一个奖杯，落地等你点</li>
+              <li>　└ 80% 金杯 = 点一下直接通关；20% <b>铜杯</b> = 点一下直接输</li>
+              <li>☢️ <b>核爆樱桃</b> — 种下 3 秒自爆：红色巨型蘑菇云 + 一圈扩散的红烟</li>
+              <li>　└ 红烟扫到的僵尸头上再炸一朵小蘑菇云，1800 点</li>
+              <li>　└ 体型越大甩出的二次烟越多：普通 1 · 路障 2 · 铁桶 3 · 铁门 4 · 将王 6</li>
+              <li>　└ 绿叶素：满地召唤会爆炸的植物（樱桃 / 土豆 / 毁灭菇 / 豌豆炸弹）</li>
+              <li>🍈 <b>倭瓜</b> — 血量无限；<b>前后</b> 3 格有僵尸就盯 3 秒 → 朝它跳一格 → 飞起来砸下去</li>
+              <li>　└ 低头的报纸将王也砸，一下一万点</li>
+              <li>　└ 压扁落点那一格的僵尸；砸完跳回原位，不会碎</li>
+              <li>　└ 绿叶素：满场乱跳，随机砸死 5 只僵尸再跳回原位</li>
+              <li>🌽 <b>玉米投手</b> — 抛越过障碍物的黄油：50 伤 + 把僵尸定住 5 秒</li>
+              <li>　└ 绿叶素：几只僵尸就几块巨型黄油（100 伤）；红叶素：红樱桃 1500 伤</li>
+              <li>🍉 <b>西瓜投手</b> — 每 1.2 秒抛一颗越过障碍物的西瓜，100 伤</li>
+              <li>　└ 绿叶素：变西瓜狙击炮，几只僵尸就几发巨型西瓜（700 伤）</li>
+              <li>　└ 红叶素：几只僵尸就几颗巨型红樱桃，落地一万伤</li>
+              <li>💚 <b>绿叶素</b> — 点植物开 2 秒大招（攻速 ×20）</li>
+              <li>❤️ <b>红叶素</b> — 点植物：它打 5 秒小红樱桃（每颗 1000），到点恢复</li>
+            </ul>
+            <div class="shortcuts">
+              <b>快捷键：</b>
+              <kbd>Space</kbd> 暂停
+              <kbd>F</kbd> 植物攻速 ×3
+              <kbd>G</kbd> 僵尸加速 ×3
+              <kbd>H</kbd> 僵尸减速 ×3（将王节奏也慢 ×3）
+              <kbd>J</kbd> 将王低头节奏 ×3
+              <kbd>Esc</kbd> 取消选择
+              <kbd>🏠</kbd> 返回首页
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content hidden" id="tab-settings">
+          <div class="settings-panel">
+            <div class="setting-row">
+              <span class="setting-label">初始阳光</span>
+              <div class="btn-group" id="sun-setting">
+                <button class="opt-btn" data-value="50">50</button>
+                <button class="opt-btn" data-value="150">150</button>
+                <button class="opt-btn active" data-value="300">300</button>
+                <button class="opt-btn" data-value="Infinity">无限</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span class="setting-label">总波数</span>
+              <div class="btn-group" id="wave-setting">
+                <button class="opt-btn" data-value="3">3 波</button>
+                <button class="opt-btn active" data-value="6">6 波</button>
+                <button class="opt-btn" data-value="9">9 波</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span class="setting-label">僵尸数量</span>
+              <div class="btn-group" id="zombie-count-setting">
+                <button class="opt-btn" data-value="0.5">少</button>
+                <button class="opt-btn active" data-value="1">正常</button>
+                <button class="opt-btn" data-value="2">多</button>
+                <button class="opt-btn" data-value="4">超多</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span class="setting-label">僵尸速度</span>
+              <div class="speed-inline">
+                <input type="range" id="zombie-speed" min="0.5" max="3" step="0.5" value="1" />
+                <span id="speed-label">正常</span>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span class="setting-label">全屏随机子弹</span>
+              <div class="btn-group" id="random-bullets-setting">
+                <button class="opt-btn active" data-value="false">关</button>
+                <button class="opt-btn" data-value="true">开</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mode-select">
+          <button id="start-btn" class="mode-btn normal-btn">🌿 普通版</button>
+          <button id="start-fusion-btn" class="mode-btn fusion-btn">⚗️ 融合版</button>
+          <button id="start-wanderer-btn" class="mode-btn wanderer-btn">👾 游荡者</button>
+        </div>
+      </div>
+
+      <div id="game-over-screen" class="overlay hidden">
+        <h1>僵尸吃掉了你的脑子!</h1>
+        <button id="restart-btn">重新开始</button>
+      </div>
+
+      <div id="victory-screen" class="overlay hidden">
+        <h1>胜利!</h1>
+        <p class="subtitle">你成功击退了所有僵尸!</p>
+        <button id="play-again-btn">再来一局</button>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

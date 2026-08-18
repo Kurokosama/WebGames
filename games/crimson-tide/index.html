@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crimson Tide — RTS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== MENU ROOT ===================== -->
+<div id="menu-root">
+  <canvas id="menu-bg"></canvas>
+
+  <!-- HOME -->
+  <section id="screen-home" class="screen">
+    <div class="home-vignette"></div>
+    <div class="home-inner">
+      <img src="assets/logo.svg" class="home-logo" alt="Crimson Tide emblem"/>
+      <h1 class="title" data-text="CRIMSON TIDE">CRIMSON&nbsp;TIDE</h1>
+      <div class="subtitle"><span>REAL-TIME STRATEGY</span><i></i><span>COMMAND THE BATTLEFIELD</span></div>
+      <nav class="main-menu">
+        <button id="btn-campaign" class="menu-btn primary"><span class="mb-ic">🎖</span><span class="mb-txt">Campaign<small>Six-mission war story</small></span><span class="mb-arrow">▸</span></button>
+        <button id="btn-skirmish" class="menu-btn"><span class="mb-ic">⚔</span><span class="mb-txt">Skirmish<small>Battle the AI</small></span><span class="mb-arrow">▸</span></button>
+        <button id="btn-settings" class="menu-btn"><span class="mb-ic">⚙</span><span class="mb-txt">Settings<small>Options &amp; keybinds</small></span><span class="mb-arrow">▸</span></button>
+        <button id="btn-howto" class="menu-btn"><span class="mb-ic">❔</span><span class="mb-txt">How to Play<small>Learn the ropes</small></span><span class="mb-arrow">▸</span></button>
+      </nav>
+      <div class="home-foot">
+        <span class="faction-dot allies">●</span> Allies
+        <span class="faction-dot soviet">●</span> Soviet
+        <span class="faction-dot empire">●</span> Empire
+        <span class="foot-sep">·</span> open-source · github.com/AscendRyan/opensource-rts-game
+      </div>
+    </div>
+  </section>
+
+  <!-- SKIRMISH SETUP -->
+  <section id="screen-skirmish" class="screen">
+    <div class="panel-screen">
+      <h2 class="ph">⚔ Skirmish Setup</h2>
+      <div class="setup-block"><label>Choose your Faction</label><div id="sk-factions" class="factions"></div></div>
+      <div class="setup-row">
+        <div class="setup-block"><label>Enemies</label><div id="sk-enemies" class="chips"></div></div>
+        <div class="setup-block"><label>Difficulty</label><div id="sk-diff" class="chips"></div></div>
+        <div class="setup-block"><label>Fog of War</label><div id="sk-fog" class="chips"></div></div>
+      </div>
+      <div class="screen-actions">
+        <button class="menu-btn back-home">◀ Back</button>
+        <button id="sk-start" class="menu-btn primary">▶ Start Battle</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGN -->
+  <section id="screen-campaign" class="screen">
+    <div class="panel-screen">
+      <h2 class="ph">🎖 Campaign</h2>
+      <p class="screen-desc">Six escalating missions across three factions. Win to unlock the next.</p>
+      <div id="cmp-list" class="mission-list"></div>
+      <div class="screen-actions"><button class="menu-btn back-home">◀ Back</button></div>
+    </div>
+  </section>
+
+  <!-- BRIEFING -->
+  <section id="screen-briefing" class="screen">
+    <div class="panel-screen brief">
+      <h2 id="brief-title" class="ph">Mission</h2>
+      <div id="brief-faction" class="brief-faction"></div>
+      <div class="brief-box"><p id="brief-text"></p></div>
+      <div id="brief-enemies" class="brief-enemies"></div>
+      <div class="screen-actions">
+        <button id="brief-back" class="menu-btn">◀ Back</button>
+        <button id="brief-start" class="menu-btn primary">▶ Deploy</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="screen-settings" class="screen">
+    <div class="panel-screen">
+      <h2 class="ph">⚙ Settings</h2>
+      <div class="settings-grid">
+        <div class="setting"><label>Default Difficulty</label><div id="set-diff" class="chips"></div></div>
+        <div class="setting"><label>Fog of War</label><div id="set-fog" class="chips"></div></div>
+        <div class="setting"><label>Game Speed</label><div id="set-speed" class="chips"></div></div>
+        <div class="setting"><label>Edge Scrolling</label><div id="set-edge" class="chips"></div></div>
+        <div class="setting"><label>Scroll Speed</label><div id="set-scroll" class="chips"></div></div>
+        <div class="setting"><label>Always Show Health Bars</label><div id="set-hp" class="chips"></div></div>
+      </div>
+      <div class="screen-actions">
+        <button class="menu-btn back-home">◀ Back</button>
+        <button id="btn-keybinds" class="menu-btn">⌨ Keybindings</button>
+        <button id="btn-reset-progress" class="menu-btn danger">⟲ Reset Campaign</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEYBINDS -->
+  <section id="screen-keybinds" class="screen">
+    <div class="panel-screen">
+      <h2 class="ph">⌨ Keybindings</h2>
+      <p class="screen-desc">Click a key, then press the new binding.</p>
+      <div id="kb-list" class="kb-list"></div>
+      <div class="screen-actions">
+        <button class="menu-btn" onclick="showScreen('settings')">◀ Back</button>
+        <button id="kb-reset" class="menu-btn danger">⟲ Defaults</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <section id="screen-howto" class="screen">
+    <div class="panel-screen">
+      <h2 class="ph">❔ How to Play</h2>
+      <div class="howto">
+        <p><b>Goal:</b> Build a base, raise an army, and destroy every enemy force.</p>
+        <p><b>Economy:</b> Build a <b>Power Plant</b>, then an <b>Ore Refinery</b> (comes with a Harvester). Harvesters mine golden ore and convert it to credits. Keep power positive or production slows.</p>
+        <p><b>Tech tree:</b> Refinery → War Factory → Tech Lab unlocks heavy units &amp; advanced defenses.</p>
+        <p><b>Combat:</b> Units have armor types (infantry / vehicle / air). Weapons deal bonus or reduced damage by type — pair the right counters. Units gain <b>veterancy</b> from kills (▴ Veteran, ▴▴ Elite).</p>
+        <p><b>Controls:</b> <b>WASD/arrows</b> or screen edges scroll · <b>Left-drag</b> box-select · <b>Right-click</b> move/attack/harvest · <b>Q</b> select army · <b>F</b> attack-move · <b>X</b> stop · <b>P</b> pause · <b>Esc</b> cancel. Click a build card, then click the map to place a structure.</p>
+        <p><b>Factions:</b> Allies (prism &amp; stealth), Soviet (heavy armor &amp; tesla), Empire (fast mechs &amp; wave-force).</p>
+      </div>
+      <div class="screen-actions"><button class="menu-btn back-home">◀ Back</button></div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="screen-result" class="screen">
+    <div class="panel-screen result-card">
+      <h1 id="res-title" class="win">VICTORY</h1>
+      <p id="res-text"></p>
+      <div class="screen-actions">
+        <button id="res-next" class="menu-btn primary hidden">▶ Next Mission</button>
+        <button id="res-retry" class="menu-btn">⟲ Retry</button>
+        <button id="res-menu" class="menu-btn">⌂ Main Menu</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== IN-GAME HUD ===================== -->
+<div id="hud" class="hidden">
+  <canvas id="game"></canvas>
+
+  <div id="topbar">
+    <div class="res" id="credits-box"><span class="ic">⛁</span><span id="credits">0</span><span id="credits-cap" class="cap"></span></div>
+    <div class="res" id="power-box"><span class="ic">⚡</span><span id="power">0</span>/<span id="power-max">0</span></div>
+    <div class="res"><span class="ic">⌬</span><span id="unit-count">0</span></div>
+    <div class="res" id="faction-name"></div>
+    <div class="spacer"></div>
+    <div class="res" id="status-msg">Destroy all enemy forces</div>
+    <button id="btn-pause" class="hud-btn">⏸</button>
+    <button id="btn-quit" class="hud-btn">⏻</button>
+  </div>
+
+  <div id="sidebar">
+    <div id="minimap-wrap"><canvas id="minimap" width="200" height="200"></canvas></div>
+    <div id="tabs">
+      <button class="tab active" data-tab="build">🏗 Build</button>
+      <button class="tab" data-tab="units">⚔ Units</button>
+    </div>
+    <div id="build-list" class="panel"></div>
+    <div id="unit-list" class="panel hidden"></div>
+    <div id="sel-info"></div>
+  </div>
+
+  <div id="tooltip" class="hidden"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/render.js"></script>
+<script src="js/input.js"></script>
+<script src="js/menu.js"></script>
+</body>
+</html>

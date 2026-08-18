@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retro Racers - 2 Multiplayer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: white;
+            user-select: none;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+        }
+        canvas {
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            background-color: #2c3e50;
+        }
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .p1-stats { color: #ff4757; text-align: left; }
+        .p2-stats { color: #1e90ff; text-align: right; }
+        .nitro-bar {
+            margin-top: 8px;
+            width: 120px;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .nitro-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f1c40f, #f39c12);
+            transition: width 0.1s ease;
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+        }
+        .center-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            text-shadow: 3px 3px 0 #000;
+        }
+        #countdown {
+            font-size: 150px;
+            color: #f1c40f;
+            display: none;
+        }
+        #winScreen {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 50px;
+            border-radius: 15px;
+            border: 2px solid #fff;
+            pointer-events: auto;
+            z-index: 10;
+        }
+        #winTitle { font-size: 50px; margin-bottom: 20px; color: #f1c40f; }
+        .btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: background 0.2s, transform 0.1s;
+            margin: 5px;
+        }
+        .btn:hover { background: #ccc; transform: translateY(-2px); }
+        #pauseScreen {
+            display: none;
+            font-size: 80px;
+            color: white;
+            letter-spacing: 10px;
+        }
+        #replayIndicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.9);
+            color: black;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            display: none;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 14px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        /* INTRO VIDEO + FADE (معدّل عشان البكسلة) */
+        #introVideo {
+            position: fixed;
+            inset: 0;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            background: #000;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            image-rendering: auto;
+        }
+        #introVideo.show {
+            opacity: 1;
+        }
+        #skipIntro {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.8);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #skipIntro.show {
+            opacity: 1;
+        }
+
+        /* MAIN MENU */
+        #mainMenu {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, #444 0%, #111 45%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: auto;
+        }
+        #menuTitle {
+            font-size: 52px;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #f1c40f;
+        }
+        #menuSubtitle {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(220px, 260px));
+            gap: 12px 18px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .menu-btn {
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 24px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+            transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
+            text-align: center;
+        }
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(243, 156, 18, 0.9);
+            filter: brightness(1.05);
+        }
+        .menu-small {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .menu-keys {
+            font-size: 13px;
+            color: #ccc;
+            text-align: center;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<!-- INTRO -->
+<video id="introVideo"
+       src="assets/intro.mp4"
+       autoplay
+       muted
+       playsinline>
+</video>
+<button id="skipIntro" onclick="endIntro()">Skip</button>
+
+<div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- AUDIO ELEMENTS -->
+    <audio id="sndEngine" src="sounds/engine_loop.mp3" preload="auto" loop></audio>
+    <audio id="sndStart"  src="sounds/start_beep.mp3" preload="auto"></audio>
+    <audio id="sndCrash"  src="sounds/crash.wav" preload="auto"></audio>
+    <audio id="sndNitro"  src="sounds/nitro.wav" preload="auto"></audio>
+
+    <div id="mainMenu">
+        <div id="menuTitle">RETRO RACERS</div>
+        <div id="menuSubtitle">2 Multiplayer • Nitro • Drift • Replay</div>
+
+        <div class="menu-buttons">
+            <button class="menu-btn" onclick="selectTrackAndStart('classic')">Classic Circuit</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('super_oval')">Super Oval</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('snake')">The Snake</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('square_city')">Square City</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('hairpin')">Hairpin Turns</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('xcross')">The X-Cross</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('narrow_hell')">Narrow Hell</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('spiral')">The Spiral</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('island')">Island Hopping</button>
+            <button class="menu-btn" onclick="selectTrackAndStart('finale')">Grand Finale</button>
+        </div>
+
+        <div class="menu-small">
+            Tip: Laps start from 0 and increase only after a full lap (checkpoint then finish).
+        </div>
+        <div class="menu-small">
+            Powerups (tile 4) are empty for now. You can add effects later on any track.
+        </div>
+        <br>
+        <div class="menu-keys">
+            P1: WASD + Space (Drift) + Left Shift (Nitro)<br>
+            P2: Arrows + Right Shift (Drift/Nitro) + P (Pause)
+        </div>
+    </div>
+
+    <div class="ui-layer">
+        <div class="hud-top">
+            <div class="p1-stats" id="p1Hud">
+                PLAYER 1<br>
+                <span style="font-size:30px">0 km/h</span><br>
+                Lap 0/3
+                <div class="nitro-bar">
+                    <div id="n1" class="nitro-fill" style="width:100%"></div>
+                </div>
+            </div>
+            <div class="p2-stats" id="p2Hud">
+                PLAYER 2<br>
+                <span style="font-size:30px">0 km/h</span><br>
+                Lap 0/3
+                <div class="nitro-bar">
+                    <div id="n2" class="nitro-fill" style="width:100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="replayIndicator">REPLAY</div>
+
+        <div class="center-screen" id="countdown">3</div>
+        <div class="center-screen" id="pauseScreen">PAUSED</div>
+
+        <div class="center-screen" id="winScreen">
+            <div id="winTitle">PLAYER 1 WINS!</div>
+            <button class="btn" onclick="game.restart()">Play Again</button>
+            <br><br>
+            <button class="btn" onclick="game.startReplay()">Watch Replay</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <strong>P1:</strong> WASD + Space (Drift) + Left Shift (Nitro)<br>
+        <strong>P2:</strong> Arrows + Right Shift (Drift/Nitro) + P (Pause)
+    </div>
+</div>
+
+<script>
+/* INTRO FADE IN/OUT */
+function endIntro() {
+    const v = document.getElementById('introVideo');
+    const btn = document.getElementById('skipIntro');
+    if (!v) return;
+
+    v.classList.remove('show');
+    if (btn) btn.classList.remove('show');
+
+    setTimeout(() => {
+        v.pause();
+        v.style.display = 'none';
+        if (btn) btn.style.display = 'none';
+    }, 800);
+}
+
+window.addEventListener('load', () => {
+    const v = document.getElementById('introVideo');
+    const btn = document.getElementById('skipIntro');
+    if (!v) return;
+
+    requestAnimationFrame(() => {
+        v.classList.add('show');
+        if (btn) btn.classList.add('show');
+    });
+
+    v.addEventListener('ended', endIntro);
+});
+
+/* ====== GAME CODE ====== */
+const TILE_SIZE = 64;
+const MAP_WIDTH = 30;
+const MAP_HEIGHT = 20;
+
+function createMap(fill = 0) {
+    return Array(MAP_HEIGHT).fill().map(() => Array(MAP_WIDTH).fill(fill));
+}
+
+const TRACKS = {
+    classic: {
+        name: "Classic Circuit",
+        map: (function(){
+            let m1 = createMap(2);
+            for(let y=1; y<19; y++) for(let x=1; x<29; x++) m1[y][x] = 0;
+            for(let x=2; x<28; x++) { m1[2][x]=1; m1[17][x]=1; }
+            for(let y=2; y<18; y++) { m1[y][2]=1; m1[y][27]=1; }
+            m1[12][2]=3; m1[13][2]=3; m1[14][2]=3;
+            return m1;
+        })(),
+        start: { x: 2.5, y: 13.5 },
+        checkpointZone: { xMinTiles: 25, xMaxTiles: 28, yMinTiles: 2, yMaxTiles: 5 },
+        finishZone: { xMinTiles: 1, xMaxTiles: 5, yMinTiles: 11, yMaxTiles: 16 },
+        powerups: []
+    },
+    super_oval: {
+        name: "Super Oval",
+        map: (function(){
+            let m2 = createMap(0);
+            for(let y=0; y<MAP_HEIGHT; y++) { m2[y][0]=2; m2[y][MAP_WIDTH-1]=2; }
+            for(let x=0; x<MAP_WIDTH; x++) { m2[0][x]=2; m2[MAP_HEIGHT-1][x]=2; }
+            for(let x=2; x<28; x++) {
+                m2[2][x]=1; m2[3][x]=1; m2[4][x]=1;
+                m2[15][x]=1; m2[16][x]=1; m2[17][x]=1;
+            }
+            for(let y=2; y<18; y++) {
+                m2[y][2]=1; m2[y][3]=1; m2[y][4]=1;
+                m2[y][25]=1; m2[y][26]=1; m2[y][27]=1;
+            }
+            m2[10][2]=3; m2[10][3]=3; m2[10][4]=3;
+            return m2;
+        })(),
+        start: { x: 3.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 24, xMaxTiles: 28, yMinTiles: 2, yMaxTiles: 6 },
+        finishZone: { xMinTiles: 1, xMaxTiles: 6, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    snake: {
+        name: "The Snake",
+        map: (function(){
+            let m3 = createMap(0);
+            for(let y=0; y<20;y++) { m3[y][0]=2; m3[y][29]=2;}
+            for(let x=0;x<30;x++){m3[0][x]=2; m3[19][x]=2;}
+            for(let x=1; x<29; x++) m3[2][x] = 1;
+            for(let x=1; x<29; x++) m3[17][x] = 1;
+            for(let y=2; y<18; y++) m3[y][1] = 1;
+            for(let y=2; y<18; y++) m3[y][28] = 1;
+            for(let x=4; x<26; x++) m3[6][x] = 1;
+            for(let x=4; x<26; x++) m3[10][x] = 1;
+            for(let x=4; x<26; x++) m3[14][x] = 1;
+            for(let y=2; y<7; y++) m3[y][25] = 1;
+            for(let y=6; y<11; y++) m3[y][4] = 1;
+            for(let y=10; y<15; y++) m3[y][25] = 1;
+            for(let y=14; y<18; y++) m3[y][4] = 1;
+            m3[10][1]=3; m3[11][1]=3;
+            return m3;
+        })(),
+        start: { x: 1.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 24, xMaxTiles: 28, yMinTiles: 6, yMaxTiles: 15 },
+        finishZone: { xMinTiles: 0, xMaxTiles: 4, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    square_city: {
+        name: "Square City",
+        map: (function(){
+            let m4 = createMap(0);
+            for(let x=1;x<29;x++) { m4[1][x]=2; m4[18][x]=2; m4[2][x]=1; m4[17][x]=1; }
+            for(let y=1;y<19;y++) { m4[y][1]=2; m4[y][28]=2; m4[y][2]=1; m4[y][27]=1; }
+            for(let x=8; x<22; x++) { m4[8][x]=1; m4[11][x]=1; }
+            for(let y=8; y<12; y++) { m4[y][8]=1; m4[y][21]=1; }
+            for(let y=2; y<9; y++) m4[y][15] = 1;
+            for(let y=11; y<18; y++) m4[y][15] = 1;
+            m4[12][2]=3; m4[13][2]=3;
+            return m4;
+        })(),
+        start: { x: 2.5, y: 12.5 },
+        checkpointZone: { xMinTiles: 14, xMaxTiles: 17, yMinTiles: 2, yMaxTiles: 9 },
+        finishZone: { xMinTiles: 1, xMaxTiles: 5, yMinTiles: 11, yMaxTiles: 16 },
+        powerups: []
+    },
+    hairpin: {
+        name: "Hairpin Turns",
+        map: (function(){
+            let m5 = createMap(2);
+            for(let y=1; y<19; y++) { m5[y][2]=1; m5[y][27]=1; }
+            for(let x=2; x<28; x++) { m5[1][x]=1; m5[18][x]=1; }
+            for(let y=4; y<16; y+=4) {
+                for(let x=2; x<24; x++) m5[y][x]=1;
+                for(let x=6; x<28; x++) m5[y+2][x]=1;
+                m5[y+1][23]=1; m5[y+1][24]=1;
+                m5[y+3][5]=1; m5[y+3][6]=1;
+            }
+            m5[10][2]=3; m5[11][2]=3;
+            return m5;
+        })(),
+        start: { x: 2.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 20, xMaxTiles: 27, yMinTiles: 4, yMaxTiles: 16 },
+        finishZone: { xMinTiles: 1, xMaxTiles: 5, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    xcross: {
+        name: "The X-Cross",
+        map: (function(){
+            let m6 = createMap(0);
+            for(let x=1;x<29;x++) { m6[1][x]=1; m6[18][x]=1; }
+            for(let y=1;y<19;y++) { m6[y][1]=1; m6[y][28]=1; }
+            for(let i=0; i<12; i++) {
+                m6[4+i][5+i] = 1; m6[4+i][6+i] = 1;
+                m6[15-i][24-i] = 1; m6[15-i][23-i] = 1;
+            }
+            m6[10][1]=3; m6[11][1]=3;
+            return m6;
+        })(),
+        start: { x: 1.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 10, xMaxTiles: 22, yMinTiles: 4, yMaxTiles: 16 },
+        finishZone: { xMinTiles: 0, xMaxTiles: 4, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    narrow_hell: {
+        name: "Narrow Hell",
+        map: (function(){
+            let m7 = createMap(2);
+            for(let x=1; x<29; x++) { m7[1][x]=1; m7[18][x]=1; }
+            for(let y=1; y<19; y++) { m7[y][1]=1; m7[y][28]=1; }
+            for(let x=5; x<25; x++) m7[9][x]=1;
+            for(let x=5; x<25; x++) m7[10][x]=1;
+            m7[5][5]=1; m7[6][5]=1; m7[7][5]=1; m7[8][5]=1;
+            m7[11][24]=1; m7[12][24]=1; m7[13][24]=1; m7[14][24]=1;
+            m7[12][1]=3;
+            return m7;
+        })(),
+        start: { x: 1.5, y: 12.5 },
+        checkpointZone: { xMinTiles: 5, xMaxTiles: 25, yMinTiles: 8, yMaxTiles: 11 },
+        finishZone: { xMinTiles: 0, xMaxTiles: 4, yMinTiles: 10, yMaxTiles: 14 },
+        powerups: []
+    },
+    spiral: {
+        name: "The Spiral",
+        map: (function(){
+            let m8 = createMap(2);
+            for(let x=1; x<29; x++) m8[1][x]=1;
+            for(let y=1; y<19; y++) m8[y][28]=1;
+            for(let x=1; x<29; x++) m8[18][x]=1;
+            for(let y=4; y<19; y++) m8[y][1]=1;
+            for(let x=1; x<26; x++) m8[4][x]=1;
+            for(let y=4; y<16; y++) m8[y][25]=1;
+            for(let x=4; x<26; x++) m8[15][x]=1;
+            for(let y=7; y<16; y++) m8[y][4]=1;
+            for(let x=4; x<22; x++) m8[7][x]=1;
+            m8[2][1]=1; m8[3][1]=1;
+            m8[10][1]=3;
+            return m8;
+        })(),
+        start: { x: 1.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 20, xMaxTiles: 28, yMinTiles: 7, yMaxTiles: 15 },
+        finishZone: { xMinTiles: 0, xMaxTiles: 4, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    island: {
+        name: "Island Hopping",
+        map: (function(){
+            let m9 = createMap(0);
+            for(let x=0; x<30; x++) { m9[0][x]=2; m9[19][x]=2; }
+            for(let y=0; y<20; y++) { m9[y][0]=2; m9[y][29]=2; }
+            for(let y=2; y<18; y+=2) for(let x=2; x<28; x+=2) {
+                if((x+y)%4 === 0) m9[y][x] = 2;
+                else m9[y][x] = 1;
+            }
+            for(let x=1; x<29; x++) { m9[1][x]=1; m9[18][x]=1; }
+            for(let y=1; y<19; y++) { m9[y][1]=1; m9[y][28]=1; }
+            m9[10][1]=3;
+            return m9;
+        })(),
+        start: { x: 1.5, y: 10.5 },
+        checkpointZone: { xMinTiles: 10, xMaxTiles: 26, yMinTiles: 2, yMaxTiles: 18 },
+        finishZone: { xMinTiles: 0, xMaxTiles: 4, yMinTiles: 8, yMaxTiles: 13 },
+        powerups: []
+    },
+    finale: {
+        name: "Grand Finale",
+        map: (function(){
+            let m10 = createMap(2);
+            for(let x=2; x<28; x++) { m10[2][x]=1; m10[17][x]=1; }
+            for(let y=2; y<18; y++) { m10[y][2]=1; m10[y][27]=1; }
+            for(let x=2; x<28; x++) m10[10][x]=1;
+            for(let y=2; y<18; y++) m10[y][15]=1;
+            m10[10][15]=2;
+            m10[10][14]=1; m10[10][16]=1; m10[9][15]=1; m10[11][15]=1;
+            m10[12][2]=3;
+            return m10;
+        })(),
+        start: { x: 2.5, y: 12.5 },
+        checkpointZone: { xMinTiles: 14, xMaxTiles: 17, yMinTiles: 2, yMaxTiles: 18 },
+        finishZone: { xMinTiles: 1, xMaxTiles: 5, yMinTiles: 10, yMaxTiles: 14 },
+        powerups: []
+    }
+};
+
+let CURRENT_TRACK_KEY = 'classic';
+
+class ReplayManager {
+    constructor() {
+        this.frames = [];
+        this.playing = false;
+        this.index = 0;
+    }
+    record(input) { this.frames.push(JSON.parse(JSON.stringify(input.keys))); }
+    startPlayback() { this.playing = true; this.index = 0; }
+    getFrameInput() {
+        if (this.index >= this.frames.length) {
+            this.playing = false;
+            return null;
+        }
+        return this.frames[this.index++];
+    }
+    reset() { this.frames = []; this.playing = false; this.index = 0; }
+}
+
+class InputHandler {
+    constructor() {
+        this.keys = {};
+        window.addEventListener('keydown', (e) => this.keys[e.code] = true);
+        window.addEventListener('keyup', (e) => this.keys[e.code] = false);
+    }
+    isDown(code) { return !!this.keys[code]; }
+}
+
+class Camera {
+    constructor(width, height) {
+        this.x = 0;
+        this.y = 0;
+        this.width = width;
+        this.height = height;
+        this.zoom = 1;
+        this.shakeStrength = 0;
+    }
+    update(p1, p2) {
+        const midX = (p1.x + p2.x)/2;
+        const midY = (p1.y + p2.y)/2;
+        const dx = Math.abs(p1.x - p2.x);
+        const dy = Math.abs(p1.y - p2.y);
+        const avgSpeed = (Math.abs(p1.speed)+Math.abs(p2.speed))/2;
+        const targetZoom = Math.min(1.6, Math.max(0.5,
+            Math.min(this.width/(dx+200), this.height/(dy+200))
+        ) * (1 - avgSpeed/100));
+        this.zoom += (targetZoom - this.zoom)*0.05;
+        this.x += (midX - this.x)*0.1;
+        this.y += (midY - this.y)*0.1;
+        if(this.shakeStrength > 0) this.shakeStrength *= 0.9;
+        if(this.shakeStrength < 0.5) this.shakeStrength = 0;
+    }
+    shake(amount) { this.shakeStrength = amount; }
+    apply(ctx) {
+        ctx.save();
+        const shakeX = (Math.random() - 0.5) * this.shakeStrength;
+        const shakeY = (Math.random() - 0.5) * this.shakeStrength;
+        ctx.translate(this.width / 2 + shakeX, this.height / 2 + shakeY);
+        ctx.scale(this.zoom, this.zoom);
+        ctx.translate(-this.x, -this.y);
+    }
+    restore(ctx) { ctx.restore(); }
+}
+
+class Particle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y + 15;
+        this.vx = (Math.random() - 0.5) * 6;
+        this.vy = (Math.random() - 0.5) * 2;
+        this.life = 40;
+        this.maxLife = 40;
+        this.size = Math.random() * 4 + 2;
+        this.color = '#888';
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.15;
+        this.life--;
+        this.size *= 0.98;
+        return this.life > 0;
+    }
+    draw(ctx) {
+        ctx.save();
+        const alpha = this.life / this.maxLife;
+        ctx.globalAlpha = alpha * alpha;
+        ctx.fillStyle = this.color || (this.life>20 ? '#888' : '#444');
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+class SoundManager {
+    constructor() {
+        this.engine = document.getElementById('sndEngine');
+        this.start  = document.getElementById('sndStart');
+        this.crash  = document.getElementById('sndCrash');
+        this.nitro  = document.getElementById('sndNitro');
+    }
+    playOne(audio, volume = 1) {
+        if (!audio) return;
+        const s = audio.cloneNode();
+        s.volume = volume;
+        s.play().catch(()=>{});
+    }
+    playStart() { this.playOne(this.start, 0.8); }
+    playCrash() { this.playOne(this.crash, 0.9); }
+    playNitro() { this.playOne(this.nitro, 0.7); }
+    updateEngine(carSpeed) {
+        if (!this.engine) return;
+        const sp = Math.min(Math.abs(carSpeed) / 25, 1);
+        this.engine.volume = 0.15 + sp * 0.2;
+        this.engine.playbackRate = 0.8 + sp * 0.7;
+    }
+    startEngine() {
+        if (!this.engine) return;
+        this.engine.volume = 0.2;
+        this.engine.loop = true;
+        this.engine.play().catch(()=>{});
+    }
+    stopEngine() {
+        if (!this.engine) return;
+        this.engine.pause();
+        this.engine.currentTime = 0;
+    }
+}
+
+class Car {
+    constructor(x, y, color, controls, name) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.ctrl = controls;
+        this.name = name;
+
+        this.angle = -Math.PI / 2;
+        this.speed = 0;
+        this.maxSpeed = 30;
+        this.accel = 0.2;
+        this.friction = 0.96;
+        this.turnSpeed = 0.07;
+
+        this.vx = 0;
+        this.vy = 0;
+
+        this.nitro = 100;
+        this.maxNitro = 100;
+        this.usingNitro = false;
+        this.nitroPower = 1.6;
+        this._nitroJustPlayed = false;
+
+        this.lap = 0;
+        this.totalLaps = 3;
+        this.finished = false;
+
+        this.hasPassedCheckpoint = false;
+        this.wasInFinishZone = false;
+        this.wasInCheckpointZone = false;
+
+        this.checkpointZone = null;
+        this.finishZone = null;
+    }
+
+    isInZone(zone) {
+        if (!zone) return false;
+        return (
+            this.x >= zone.xMin &&
+            this.x <= zone.xMax &&
+            this.y >= zone.yMin &&
+            this.y <= zone.yMax
+        );
+    }
+
+    update(input, mapData, camera) {
+        if (this.finished) {
+            this.speed *= 0.9;
+            this.x += this.vx;
+            this.y += this.vy;
+            return;
+        }
+
+        this.usingNitro = input.isDown(this.ctrl.nitro) && this.nitro > 0;
+
+        if (this.usingNitro && !this._nitroJustPlayed && this.nitro > 0) {
+            game.sound.playNitro();
+            this._nitroJustPlayed = true;
+        }
+        if (!this.usingNitro) {
+            this._nitroJustPlayed = false;
+        }
+
+        const isDrifting = input.isDown(this.ctrl.drift);
+
+        if (isDrifting && Math.random() < 0.5) {
+            const p = new Particle(this.x, this.y);
+            p.color = this.speed > 10 ? '#f1c40f' : '#888';
+            game.particles.push(p);
+        }
+
+        const tileX = Math.floor(this.x / TILE_SIZE);
+        const tileY = Math.floor(this.y / TILE_SIZE);
+        let tile = 0;
+        if (tileX >= 0 && tileX < MAP_WIDTH && tileY >= 0 && tileY < MAP_HEIGHT) {
+            tile = mapData[tileY][tileX];
+        }
+
+        if (mapData[tileY]?.[tileX] === 4) {
+            this.nitro = this.maxNitro;
+            mapData[tileY][tileX] = 1;
+        }
+
+        const boost = this.usingNitro ? this.nitroPower : 1;
+
+        if (input.isDown(this.ctrl.up)) {
+            this.vx += Math.cos(this.angle) * this.accel * boost;
+            this.vy += Math.sin(this.angle) * this.accel * boost;
+        } else if (input.isDown(this.ctrl.down)) {
+            this.vx += Math.cos(this.angle) * this.accel * -0.5 * boost;
+            this.vy += Math.sin(this.angle) * this.accel * -0.5 * boost;
+        }
+
+        if (Math.abs(this.speed) > 0.1) {
+            const dir = this.speed > 0 ? 1 : -1;
+            if (input.isDown(this.ctrl.left)) this.angle -= this.turnSpeed * dir;
+            if (input.isDown(this.ctrl.right)) this.angle += this.turnSpeed * dir;
+        }
+
+        if (tile === 0 && Math.random() < 0.6) {
+            game.particles.push(new Particle(this.x + (Math.random()-0.5)*20, this.y + 15));
+        }
+
+        let drag = this.friction;
+        let currentMaxSpeed = this.maxSpeed;
+        if (tile === 0) {
+            drag = 0.90;
+            currentMaxSpeed = 5;
+            if (Math.abs(this.speed) > 4) camera.shake(2);
+        } else if (tile === 1) {
+            currentMaxSpeed = 30;
+            drag = 0.97;
+        }
+
+        this.vx *= drag;
+        this.vy *= drag;
+
+        const c = Math.cos(this.angle);
+        const s = Math.sin(this.angle);
+        const vForward = this.vx * c + this.vy * s;
+        const vRight = this.vx * -s + this.vy * c;
+
+        const grip = isDrifting ? 0.97 : 0.8;
+        const newVRight = vRight * grip;
+
+        this.vx = vForward * c - newVRight * s;
+        this.vy = vForward * s + newVRight * c;
+
+        this.speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+        const dot = this.vx * Math.cos(this.angle) + this.vy * Math.sin(this.angle);
+        if (dot < 0) this.speed *= -1;
+
+        const nextX = this.x + this.vx;
+        const nextY = this.y + this.vy;
+
+        if (this.checkWall(nextX, nextY, mapData)) {
+            game.sound.playCrash();
+            this.vx *= -0.5;
+            this.vy *= -0.5;
+            this.speed *= -0.5;
+            camera.shake(8);
+
+            for(let i=0;i<5;i++){
+                const spark = new Particle(this.x, this.y);
+                spark.vx = (Math.random()-0.5)*10;
+                spark.vy = (Math.random()-0.5)*10;
+                spark.size = Math.random()*3+2;
+                spark.color = '#f39c12';
+                spark.life = 20;
+                game.particles.push(spark);
+            }
+        } else {
+            this.x += this.vx;
+            this.y += this.vy;
+        }
+
+        const inCheckpoint = this.isInZone(this.checkpointZone);
+        if (inCheckpoint && !this.wasInCheckpointZone) {
+            this.hasPassedCheckpoint = true;
+        }
+        this.wasInCheckpointZone = inCheckpoint;
+
+        const inFinish = this.isInZone(this.finishZone);
+        if (inFinish && !this.wasInFinishZone) {
+            if (this.hasPassedCheckpoint && !this.finished) {
+                this.lap++;
+                this.hasPassedCheckpoint = false;
+                if (this.lap >= this.totalLaps) {
+                    this.finished = true;
+                    game.finish(this.name);
+                }
+            }
+        }
+        this.wasInFinishZone = inFinish;
+
+        if (this.usingNitro) {
+            this.nitro -= 1.5;
+            if (this.nitro < 0) this.nitro = 0;
+        } else {
+            this.nitro += 0.4;
+            if (this.nitro > this.maxNitro) this.nitro = this.maxNitro;
+        }
+
+        const speedMag = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+        if (speedMag > currentMaxSpeed) {
+            const factor = currentMaxSpeed / speedMag;
+            this.vx *= factor;
+            this.vy *= factor;
+            this.speed = currentMaxSpeed;
+        }
+    }
+
+    checkWall(x, y, map) {
+        const r = 10;
+        const points = [[r,r], [-r,r], [r,-r], [-r,-r]];
+        for(let p of points) {
+            const tx = Math.floor((x + p[0]) / TILE_SIZE);
+            const ty = Math.floor((y + p[1]) / TILE_SIZE);
+            if (tx < 0 || tx >= MAP_WIDTH || ty < 0 || ty >= MAP_HEIGHT) return true;
+            if (map[ty][tx] === 2) return true;
+        }
+        return false;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        if (this.usingNitro) {
+            ctx.save();
+            ctx.strokeStyle = '#f1c40f33';
+            ctx.lineWidth = 3;
+            for(let i=0; i<3; i++){
+                ctx.beginPath();
+                ctx.moveTo(-10-i*2, 0);
+                ctx.lineTo(-40-i*5, 0);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(-12, -8, 28, 16);
+
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(-14 + 3, -7);
+        ctx.lineTo(14 - 3, -7);
+        ctx.quadraticCurveTo(14, -7, 14, -7 + 3);
+        ctx.lineTo(14, 7 - 3);
+        ctx.quadraticCurveTo(14, 7, 14 - 3, 7);
+        ctx.lineTo(-14 + 3, 7);
+        ctx.quadraticCurveTo(-14, 7, -14 + 3, 7 - 3);
+        ctx.lineTo(-14, -7 + 3);
+        ctx.quadraticCurveTo(-14, -7, -14 + 3, -7);
+        ctx.fill();
+
+        ctx.fillStyle = "#222";
+        ctx.fillRect(-5, -6, 10, 12);
+
+        ctx.fillStyle = "#ffe600";
+        ctx.fillRect(11, -6, 3, 3);
+        ctx.fillRect(11, 3, 3, 3);
+
+        ctx.fillStyle = (this.speed < 0 ) ? "#ff0000" : "#550000";
+        ctx.fillRect(-14, -6, 2, 3);
+        ctx.fillRect(-14, 3, 2, 3);
+
+        if (this.usingNitro && Math.random() < 0.8) {
+            ctx.fillStyle = "#ff6b35";
+            ctx.beginPath();
+            ctx.moveTo(16, -2 + (Math.random()-0.5)*2);
+            ctx.lineTo(24, -6 + (Math.random()-0.5)*4);
+            ctx.lineTo(28, 0 + (Math.random()-0.5)*2);
+            ctx.lineTo(22, 4 + (Math.random()-0.5)*2);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffd23f";
+            ctx.beginPath();
+            ctx.arc(20, 0, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+}
+
+class Game {
+    constructor() {
+        this.canvas = document.getElementById('gameCanvas');
+        this.ctx = this.canvas.getContext('2d');
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+
+        this.input = new InputHandler();
+        this.camera = new Camera(this.canvas.width, this.canvas.height);
+        this.particles = [];
+
+        this.replay = new ReplayManager();
+        this.isReplay = false;
+
+        this.sound = new SoundManager();
+
+        this.elP1Hud = document.getElementById('p1Hud');
+        this.elP2Hud = document.getElementById('p2Hud');
+        this.elN1 = document.getElementById('n1');
+        this.elN2 = document.getElementById('n2');
+        this.elCountdown = document.getElementById('countdown');
+        this.elWinScreen = document.getElementById('winScreen');
+        this.elWinTitle = document.getElementById('winTitle');
+        this.elPauseScreen = document.getElementById('pauseScreen');
+        this.elReplayIndicator = document.getElementById('replayIndicator');
+        this.elMainMenu = document.getElementById('mainMenu');
+
+        this.state = 'MENU';
+
+        this.loadTrack(CURRENT_TRACK_KEY);
+        this.resetCars();
+
+        this.lastTime = 0;
+        requestAnimationFrame((t) => this.loop(t));
+    }
+
+    loadTrack(key) {
+        this.currentTrack = TRACKS[key];
+        this.map = this.currentTrack.map.map(row => [...row]);
+        for (const p of this.currentTrack.powerups) {
+            if (this.map[p.y] && typeof this.map[p.y][p.x] !== 'undefined') {
+                this.map[p.y][p.x] = 4;
+            }
+        }
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        if(this.camera) {
+            this.camera.width = this.canvas.width;
+            this.camera.height = this.canvas.height;
+        }
+    }
+
+    resetCars() {
+        const t = this.currentTrack;
+        const sx = t.start.x * TILE_SIZE;
+        const sy = t.start.y * TILE_SIZE;
+
+        this.p1 = new Car(sx, sy, '#ff4757',
+            { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', drift: 'Space', nitro: 'ShiftLeft' },
+            'PLAYER 1');
+
+        this.p2 = new Car(sx, sy, '#1e90ff',
+            { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight', drift: 'ShiftRight', nitro: 'ShiftRight' },
+            'PLAYER 2');
+
+        const cz = this.currentTrack.checkpointZone;
+        const fz = this.currentTrack.finishZone;
+
+        const checkpointZone = {
+            xMin: cz.xMinTiles * TILE_SIZE,
+            xMax: cz.xMaxTiles * TILE_SIZE,
+            yMin: cz.yMinTiles * TILE_SIZE,
+            yMax: cz.yMaxTiles * TILE_SIZE
+        };
+
+        const finishZone = {
+            xMin: fz.xMinTiles * TILE_SIZE,
+            xMax: fz.xMaxTiles * TILE_SIZE,
+            yMin: fz.yMinTiles * TILE_SIZE,
+            yMax: fz.yMaxTiles * TILE_SIZE
+        };
+
+        this.p1.checkpointZone = checkpointZone;
+        this.p2.checkpointZone = checkpointZone;
+        this.p1.finishZone = finishZone;
+        this.p2.finishZone = finishZone;
+
+        this.p1.lap = 0;
+        this.p2.lap = 0;
+        this.p1.finished = false;
+        this.p2.finished = false;
+
+        this.p1.hasPassedCheckpoint = false;
+        this.p2.hasPassedCheckpoint = false;
+
+        this.p1.wasInCheckpointZone = false;
+        this.p2.wasInCheckpointZone = false;
+        this.p1.wasInFinishZone = false;
+        this.p2.wasInFinishZone = false;
+    }
+
+    startSequence() {
+        this.state = 'COUNTDOWN';
+        this.elWinScreen.style.display = 'none';
+        this.elPauseScreen.style.display = 'none';
+        this.elCountdown.style.display = 'block';
+        this.elReplayIndicator.style.display = 'none';
+
+        let count = 3;
+        this.elCountdown.innerText = count;
+
+        const timer = setInterval(() => {
+            count--;
+            if (count > 0) this.elCountdown.innerText = count;
+            else if (count === 0) this.elCountdown.innerText = 'GO!';
+            else {
+                clearInterval(timer);
+                this.elCountdown.style.display = 'none';
+                this.state = 'RACING';
+                this.sound.playStart();
+                this.sound.startEngine();
+            }
+        }, 1000);
+    }
+
+    startReplay() {
+        this.resetCars();
+        this.loadTrack(CURRENT_TRACK_KEY);
+        this.particles = [];
+        this.isReplay = true;
+        this.state = 'RACING';
+        this.replay.startPlayback();
+        this.elWinScreen.style.display = 'none';
+        this.elReplayIndicator.style.display = 'block';
+        this.sound.startEngine();
+    }
+
+    restart() {
+        this.resetCars();
+        this.loadTrack(CURRENT_TRACK_KEY);
+        this.particles = [];
+        this.replay.reset();
+        this.isReplay = false;
+        this.elReplayIndicator.style.display = 'none';
+        this.startSequence();
+    }
+
+    finish(winnerName) {
+        if(this.state === 'FINISHED') return;
+        this.state = 'FINISHED';
+        this.sound.stopEngine();
+        this.elWinTitle.innerText = winnerName + " WINS!";
+        this.elWinScreen.innerHTML = `
+            <div>${winnerName} WINS!</div>
+            <button class="btn" onclick="game.restart()">Play Again</button>
+            <br><br>
+            <button class="btn" onclick="game.startReplay()">Watch Replay</button>
+        `;
+        this.elWinScreen.style.display = 'block';
+        this.elReplayIndicator.style.display = 'none';
+    }
+
+    loop(timestamp) {
+        const dt = (timestamp - this.lastTime) / 1000;
+        this.lastTime = timestamp;
+
+        if (this.input.keys['KeyP']) {
+            this.input.keys['KeyP'] = false;
+            if (this.state === 'RACING' || this.state === 'FINISHED') {
+                this.state = (this.state === 'RACING') ? 'PAUSED' : 'RACING';
+                this.elPauseScreen.style.display = (this.state === 'PAUSED') ? 'block' : 'none';
+            }
+        }
+
+        if (this.state !== 'PAUSED' && this.state !== 'MENU') {
+            let activeInput = this.input;
+            if (this.isReplay) {
+                const frame = this.replay.getFrameInput();
+                if (frame) {
+                    activeInput = { keys: frame, isDown: (code) => !!frame[code] };
+                } else {
+                    this.isReplay = false;
+                    this.state = 'FINISHED';
+                    this.elReplayIndicator.style.display = 'none';
+                    this.sound.stopEngine();
+                    return;
+                }
+            } else if (this.state === 'RACING') {
+                this.replay.record(this.input);
+            }
+
+            if (this.state === 'RACING' || this.state === 'FINISHED') {
+                this.p1.update(activeInput, this.map, this.camera);
+                this.p2.update(activeInput, this.map, this.camera);
+            }
+
+            if (this.state === 'RACING') {
+                const avg = (Math.abs(this.p1.speed) + Math.abs(this.p2.speed)) / 2;
+                this.sound.updateEngine(avg);
+            }
+
+            this.camera.update(this.p1, this.p2);
+        }
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+            if (!this.particles[i].update()) {
+                this.particles.splice(i, 1);
+            }
+        }
+
+        this.draw();
+        this.updateUI();
+        requestAnimationFrame((t) => this.loop(t));
+    }
+
+    updateUI() {
+        const p1Speed = Math.round(Math.abs(this.p1.speed) * 10);
+        const p2Speed = Math.round(Math.abs(this.p2.speed) * 10);
+
+        const p1LapDisplay = Math.min(this.p1.lap, this.p1.totalLaps);
+        const p2LapDisplay = Math.min(this.p2.lap, this.p2.totalLaps);
+
+        this.elP1Hud.innerHTML =
+            `PLAYER 1<br><span style="font-size:30px">${p1Speed} km/h</span><br>Lap ${p1LapDisplay}/${this.p1.totalLaps}
+             <div class="nitro-bar"><div id="n1" class="nitro-fill" style="width:${this.p1.nitro / this.p1.maxNitro * 100}%"></div></div>`;
+
+        this.elP2Hud.innerHTML =
+            `PLAYER 2<br><span style="font-size:30px">${p2Speed} km/h</span><br>Lap ${p2LapDisplay}/${this.p2.totalLaps}
+             <div class="nitro-bar"><div id="n2" class="nitro-fill" style="width:${this.p2.nitro / this.p2.maxNitro * 100}%"></div></div>`;
+
+        this.elN1 = document.getElementById('n1');
+        this.elN2 = document.getElementById('n2');
+    }
+
+    draw() {
+        this.ctx.fillStyle = '#111';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.camera.apply(this.ctx);
+
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+            for (let x = 0; x < MAP_WIDTH; x++) {
+                const tile = this.map[y][x];
+                const px = x * TILE_SIZE;
+                const py = y * TILE_SIZE;
+
+                if (tile === 0) {
+                    this.ctx.fillStyle = '#27ae60';
+                    this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                    this.ctx.fillStyle = '#2ecc71';
+                    this.ctx.fillRect(px+10, py+10, 8, 8);
+                    this.ctx.fillRect(px+40, py+30, 6, 6);
+                } else if (tile === 1) {
+                    this.ctx.fillStyle = '#555';
+                    this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                    this.ctx.fillStyle = '#777';
+                    this.ctx.fillRect(px, py, TILE_SIZE, 2);
+                    this.ctx.fillRect(px, py+62, TILE_SIZE, 2);
+                } else if (tile === 2) {
+                    this.ctx.fillStyle = '#c0392b';
+                    this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                    this.ctx.fillStyle = '#e74c3c';
+                    this.ctx.fillRect(px+4, py+4, TILE_SIZE-8, TILE_SIZE-8);
+                } else if (tile === 3) {
+                    this.ctx.fillStyle = '#fff';
+                    this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                    this.ctx.fillStyle = '#000';
+                    for(let i=0; i<4; i++) for(let j=0; j<4; j++) {
+                        if ((i+j)%2!==0) this.ctx.fillRect(px + i*16, py + j*16, 16, 16);
+                    }
+                } else if (tile === 4) {
+                    this.ctx.shadowColor = "#9b59b6";
+                    this.ctx.shadowBlur = 20;
+                    this.ctx.fillStyle = "#9b59b6";
+                    this.ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                    this.ctx.shadowBlur = 0;
+                    this.ctx.fillStyle = "#fff";
+                    this.ctx.beginPath();
+                    this.ctx.arc(px+32, py+32, 12, 0, Math.PI*2);
+                    this.ctx.fill();
+
+                    this.ctx.shadowColor = "#fff";
+                    this.ctx.shadowBlur = 10 + Math.sin(Date.now()*0.01)*3;
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+                }
+            }
+        }
+
+        this.p1.draw(this.ctx);
+        this.p2.draw(this.ctx);
+
+        for (let particle of this.particles) {
+            particle.draw(this.ctx);
+        }
+
+        this.camera.restore(this.ctx);
+    }
+}
+
+const game = new Game();
+
+window.addEventListener('load', () => {
+    ['sndEngine','sndStart','sndCrash','sndNitro'].forEach(id => {
+        const a = document.getElementById(id);
+        if (a) a.load();
+    });
+});
+
+function selectTrackAndStart(key) {
+    CURRENT_TRACK_KEY = key;
+    game.loadTrack(key);
+    game.restart();
+    game.elMainMenu.style.display = 'none';
+}
+</script>
+</body>
+</html>

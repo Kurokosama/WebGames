@@ -34,7 +34,7 @@ const REQUIRED_ELEMENTS = [
 
 // Third-party games integrated as-is (own structure, own assets). They are
 // exempt from the standard frame checks but must still have an index.html.
-const STANDALONE_GAMES = ['adarkroom', 'tower-defense'];
+const STANDALONE_GAMES = ['adarkroom', 'tower-defense', 'battle-city', 'xiangqi', 'doudizhu', 'klotski', 'nes-emulator', 'monopoly', 'mahjong', 'ludo', 'cluedo', 'spider-solitaire', 'checkers', 'sudoku', 'retro-racers', 'dungeon-crawl', 'blackjack', 'backgammon', '8-ball-pool', 'gin-rummy', 'darts', 'bowling', 'crimson-tide', 'plants-vs-zombies', 'minecraft', 'genesis-emulator'];
 
 const errors = [];
 

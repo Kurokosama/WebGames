@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NES 模拟器 - 经典红白机游戏</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/games.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <div class="game-header">
+      <h1>🎮 NES 红白机模拟器</h1>
+      <p class="subtitle">上传你的 .nes ROM 文件，重温经典！</p>
+    </div>
+
+    <!-- ROM 上传区域 -->
+    <div id="upload-area" class="upload-area">
+      <div class="upload-icon">📼</div>
+      <h2>选择游戏 ROM</h2>
+      <p>点击或拖拽 .nes 文件到此处</p>
+      <input type="file" id="rom-file" accept=".nes">
+      <button id="upload-btn" class="btn-primary">选择 ROM 文件</button>
+      <div class="game-suggestions">
+        <h3>🕹️ 经典游戏推荐</h3>
+        <div class="suggestion-grid">
+          <div class="suggestion-item">
+            <span class="game-icon">🔫</span>
+            <span>魂斗罗</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">🍄</span>
+            <span>超级玛丽</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">🐝</span>
+            <span>小蜜蜂</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">🦍</span>
+            <span>大金刚</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">👾</span>
+            <span>坦克大战</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">⚔️</span>
+            <span>勇者斗恶龙</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">🏃</span>
+            <span>魂斗罗力量</span>
+          </div>
+          <div class="suggestion-item">
+            <span class="game-icon">🌟</span>
+            <span>星之卡比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 游戏区域 -->
+    <div id="game-area" class="game-area" style="display:none;">
+      <div class="game-toolbar">
+        <button id="btn-reset" class="btn-small">🔄 重置</button>
+        <button id="btn-pause" class="btn-small">⏸️ 暂停</button>
+        <button id="btn-new-game" class="btn-small">📼 换游戏</button>
+        <span id="rom-name" class="rom-name"></span>
+      </div>
+      <div id="nes" class="nes-container"></div>
+      <div class="controls-info">
+        <span>⬆️⬇️⬅️➡️ 方向键</span>
+        <span>X = A键</span>
+        <span>Z = B键</span>
+        <span>Enter = Start</span>
+        <span>Ctrl = Select</span>
+      </div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="error-msg" class="error-msg" style="display:none;"></div>
+  </div>
+
+  <script src="https://unpkg.com/jsnes@2/dist/jsnes.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

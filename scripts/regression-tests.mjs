@@ -144,9 +144,9 @@ test('all game scripts initialize without runtime errors', () => {
     ...readSlugs('index.html'),
     ...readSlugs('retro-games.html')
   ];
-  // Standalone third-party games (adarkroom, tower-defense) have their own
+  // Standalone third-party games have their own
   // structure and no game.js — they are smoke-tested in the browser instead.
-  const standalone = ['adarkroom', 'tower-defense'];
+  const standalone = ['adarkroom', 'tower-defense', 'battle-city', 'xiangqi', 'doudizhu', 'klotski', 'nes-emulator', 'monopoly', 'mahjong', 'ludo', 'cluedo', 'spider-solitaire', 'checkers', 'sudoku', 'retro-racers', 'dungeon-crawl', 'blackjack', 'backgammon', '8-ball-pool', 'gin-rummy', 'darts', 'bowling', 'crimson-tide', 'plants-vs-zombies', 'minecraft', 'genesis-emulator'];
   const toTest = games.filter((slug) => !standalone.includes(slug));
   assert.equal(toTest.length, 46);
   for (const slug of toTest) makeHarness(slug);

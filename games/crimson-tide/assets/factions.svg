@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#23402c" flood-opacity="0.25"/></filter>
+  </defs>
+  <rect width="720" height="220" rx="16" fill="#f3f8f2"/>
+
+  <!-- Allies -->
+  <g transform="translate(120,96)" filter="url(#s)">
+    <circle r="62" fill="#ffffff" stroke="#4f9dff" stroke-width="4"/>
+    <circle r="44" fill="#eaf3ff"/>
+    <polygon points="0,-34 10,-10 36,-10 15,6 23,32 0,16 -23,32 -15,6 -36,-10 -10,-10" fill="#4f9dff"/>
+  </g>
+  <text x="120" y="190" text-anchor="middle" font-size="18" font-weight="800" fill="#2f6fb0">ALLIES</text>
+  <text x="120" y="208" text-anchor="middle" font-size="11" fill="#5a7a90">Prism &amp; Stealth</text>
+
+  <!-- Soviet -->
+  <g transform="translate(360,96)" filter="url(#s)">
+    <circle r="62" fill="#ffffff" stroke="#ff5b5b" stroke-width="4"/>
+    <circle r="44" fill="#ffeaea"/>
+    <path d="M-8,-32 L8,-32 L8,-8 L30,-8 L30,8 L8,8 L8,32 L-8,32 L-8,8 L-30,8 L-30,-8 L-8,-8 Z" fill="#ff5b5b" transform="rotate(45)"/>
+    <circle r="9" fill="#fff"/>
+  </g>
+  <text x="360" y="190" text-anchor="middle" font-size="18" font-weight="800" fill="#d23a3a">SOVIET</text>
+  <text x="360" y="208" text-anchor="middle" font-size="11" fill="#9a5a5a">Tesla &amp; Heavy Armor</text>
+
+  <!-- Empire -->
+  <g transform="translate(600,96)" filter="url(#s)">
+    <circle r="62" fill="#ffffff" stroke="#e0a020" stroke-width="4"/>
+    <circle r="44" fill="#fff6e0"/>
+    <circle r="20" fill="#ffce4a"/>
+    <g stroke="#e0a020" stroke-width="5" stroke-linecap="round">
+      <line x1="0" y1="-40" x2="0" y2="-26"/><line x1="0" y1="40" x2="0" y2="26"/>
+      <line x1="-40" y1="0" x2="-26" y2="0"/><line x1="40" y1="0" x2="26" y2="0"/>
+      <line x1="-28" y1="-28" x2="-18" y2="-18"/><line x1="28" y1="28" x2="18" y2="18"/>
+      <line x1="-28" y1="28" x2="-18" y2="18"/><line x1="28" y1="-28" x2="18" y2="-18"/>
+    </g>
+  </g>
+  <text x="600" y="190" text-anchor="middle" font-size="18" font-weight="800" fill="#c08810">EMPIRE</text>
+  <text x="600" y="208" text-anchor="middle" font-size="11" fill="#9a7a30">Wave-Force &amp; Mechs</text>
+</svg>
