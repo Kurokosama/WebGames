@@ -13,6 +13,12 @@
  *   3. each games/<slug>/index.html -> canonical + description + OG tags
  *   4. robots.txt, sitemap.xml, css/common.css (.sr-only utility)
  *
+ * Meta descriptions are owned by THIS site: a description belongs to the page as
+ * presented here, not to the vendored game. Vendored pages therefore have their
+ * own description replaced by the catalog copy in index.html (the originals stay
+ * in git history). The one exception is DESC_OVERRIDES below, used where a page
+ * is titled in another language and needs a matching description.
+ *
  * Usage: node scripts/generate-seo.mjs [--base https://example.com/repo]
  */
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -157,6 +163,13 @@ if (existsSync(retroPath)) {
 }
 
 // ----------------------------------------------------------- game pages
+/* Pages whose own description wins over the catalog copy. Both of these are
+ * titled in Chinese, so an English description would not match the page. */
+const DESC_OVERRIDES = {
+  klotski: '華容道 Klotski Âne rouge 箱入り娘 Red Donkey javascript game algorithm',
+  'plants-vs-zombies': '植物大战僵尸超级无敌版 — 9 岁小男孩天马行空设计的爽快塔防游戏。'
+};
+
 const descBySlug = new Map(games.map((g) => [g.slug, g.desc]));
 let patched = 0;
 for (const slug of readdirSync(join(root, 'games'), { withFileTypes: true })
@@ -167,8 +180,9 @@ for (const slug of readdirSync(join(root, 'games'), { withFileTypes: true })
   // Exactly one description per page: drop whatever is there (a leftover from an
   // earlier run, or the vendored game's own) and use the catalog copy instead.
   html = html.replace(/[ \t]*<meta\s+name="description"[^>]*>[ \t]*\r?\n?/g, '');
-  const desc = plain(descBySlug.get(slug)
-    || 'Play this classic game for free in your browser on Kids Game Land — no ads, no sign-ups.');
+  const desc = DESC_OVERRIDES[slug]
+    || plain(descBySlug.get(slug)
+      || 'Play this classic game for free in your browser on Kids Game Land — no ads, no sign-ups.');
   const title = (html.match(/<title>([^<]*)<\/title>/) || [, slug])[1];
   const { open, close } = MARK('games');
   const block = [

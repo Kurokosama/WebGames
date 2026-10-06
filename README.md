@@ -190,6 +190,8 @@ A separate menu of **36 games for older kids & adults** — 28 classic retro gam
 
 > The twenty-six third-party games (`adarkroom`, `tower-defense`, `battle-city`, `xiangqi`, `doudizhu`, `klotski`, `nes-emulator`, `monopoly`, `mahjong`, `ludo`, `cluedo`, `spider-solitaire`, `checkers`, `sudoku`, `retro-racers`, `dungeon-crawl`, `blackjack`, `backgammon`, `8-ball-pool`, `gin-rummy`, `darts`, `bowling`, `crimson-tide`, `plants-vs-zombies`, `minecraft`, `genesis-emulator`) are integrated as-is with their own structure and licenses. They are exempt from the standard game-frame checks in `verify-games.mjs` (see the `STANDALONE_GAMES` list).
 
+> **A note on meta tags.** `scripts/generate-seo.mjs` writes the page `<title>`, description, canonical and Open Graph tags for every page. A meta description describes *the page as it appears on this site*, so the vendored pages' own descriptions are replaced with the catalog copy from `index.html` — the originals remain in git history, and each project is still credited above and in its own `LICENSE`. The only exceptions are the two pages titled in Chinese (`klotski`, `plants-vs-zombies`), which keep a matching Chinese description via the `DESC_OVERRIDES` table in that script. The script is idempotent, so re-running it never stacks duplicate tags.
+
 ## 🚀 Play it locally
 
 The site uses root-relative asset paths (e.g. `/css/common.css`), so it must be served over HTTP — not opened directly via `file://`.
