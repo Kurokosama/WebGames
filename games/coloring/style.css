@@ -1,0 +1,49 @@
+/* Coloring Book — crayon palette + clickable SVG regions */
+.palette {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.crayon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.crayon:hover { transform: scale(1.12) rotate(-6deg); }
+.crayon.active { border-color: var(--ink); transform: scale(1.2); }
+
+.picture-wrap {
+  width: min(420px, 92vw);
+  aspect-ratio: 1 / 1;
+  background: #fffdf6;
+  border: 6px solid var(--cream);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+#picture { width: 100%; height: 100%; display: block; }
+
+#picture .region {
+  cursor: pointer;
+  stroke: #4a4a4a;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  transition: opacity 0.12s ease;
+}
+#picture .region:hover { opacity: 0.75; }
+
+.tools {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}

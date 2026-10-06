@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higher or Lower (Cards) · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/higher-lower/">
+<meta name="description" content="Guess if the next card is higher or lower — build a streak!">
+<meta property="og:title" content="Higher or Lower (Cards) · Kids Game Land">
+<meta property="og:description" content="Guess if the next card is higher or lower — build a streak!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/higher-lower/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🃏 Higher or Lower (Cards)</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Current card: <b id="current-card">—</b></div>
+    <div class="stat">Streak: <b id="streak">0</b></div>
+    <div class="stat">Best streak: <b id="best-streak">0</b></div>
+    <div class="stat">Cards left: <b id="cards-left">51</b></div>
+  </div>
+  <div class="game-area">
+    <div class="hl-stage">
+      <div class="card" id="play-card">
+        <span class="card-corner top"><span class="card-rank" id="play-rank">A</span><span class="card-suit" id="play-suit">♠</span></span>
+        <span class="card-big-suit" id="play-big-suit">♠</span>
+        <span class="card-corner bottom"><span class="card-rank">A</span><span class="card-suit">♠</span></span>
+      </div>
+      <div class="hl-deck">
+        <div class="card card-back" id="deck-card">
+          <span class="back-emoji">🃏</span>
+        </div>
+        <p class="deck-note" id="deck-note">Tap Higher or Lower to flip the next card!</p>
+      </div>
+    </div>
+    <div class="guess-row">
+      <button class="btn guess-btn guess-higher" id="guess-higher">⬆️ Higher</button>
+      <button class="btn guess-btn guess-lower" id="guess-lower">⬇️ Lower</button>
+    </div>
+    <p class="feedback" id="feedback">Guess whether the next card is higher or lower.</p>
+  </div>
+  <p class="how-to-play">💡 How to play: A real 52-card deck is shuffled. Cards go from Ace (lowest) to King (highest). Guess if the next card is higher or lower — every right guess adds to your streak. A tie ends the streak, so start a new game and try to beat your best!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

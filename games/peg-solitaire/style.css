@@ -1,0 +1,111 @@
+/* Peg Solitaire — cozy wooden board with colourful pegs */
+
+/* Stack the board above its Undo button (shared .game-area is a row flex). */
+.game-area {
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.wood-board {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  width: min(520px, 100%);
+  padding: 16px;
+  background:
+    repeating-linear-gradient(90deg, rgba(122, 84, 48, 0.14) 0 3px, transparent 3px 26px),
+    linear-gradient(160deg, #c98f56, #a96f3d 55%, #8f5a2e);
+  border: 6px solid #7c5027;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), inset 0 2px 10px rgba(255, 240, 214, 0.35);
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.12s ease, box-shadow 0.18s ease;
+}
+.cell.off-board {
+  visibility: hidden;
+}
+
+/* Empty hole: a dark recess in the wood */
+.hole {
+  background: radial-gradient(circle at 50% 45%, #5f3a1c, #4a2c14 70%);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.45);
+}
+.hole:hover { transform: scale(1.05); }
+.hole:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+
+/* Peg: a glossy candy button */
+.hole.has-peg {
+  background: radial-gradient(circle at 35% 30%, #ffe9f2, var(--pink) 65%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), inset 0 -3px 6px rgba(120, 40, 80, 0.35);
+}
+.hole.has-peg:nth-child(3n + 2) {
+  background: radial-gradient(circle at 35% 30%, #e8fbff, var(--sky) 65%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), inset 0 -3px 6px rgba(30, 80, 120, 0.35);
+}
+.hole.has-peg:nth-child(3n) {
+  background: radial-gradient(circle at 35% 30%, #eafff4, var(--mint) 65%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), inset 0 -3px 6px rgba(20, 100, 70, 0.35);
+}
+
+/* Selected peg + possible landing spots */
+.hole.selected {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 4px var(--cream), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+.hole.target {
+  background: radial-gradient(circle at 50% 45%, #6f4522, #553317 70%);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.45), 0 0 0 3px var(--coral);
+  animation: target-pulse 1s ease-in-out infinite;
+}
+@keyframes target-pulse {
+  0%, 100% { box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.45), 0 0 0 3px var(--coral); }
+  50% { box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.45), 0 0 0 6px var(--coral); }
+}
+
+.hole.landed { animation: peg-land 0.35s ease; }
+@keyframes peg-land {
+  0% { transform: scale(1.35); }
+  60% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.wood-board.won { animation: board-glow 0.7s ease; }
+@keyframes board-glow {
+  0% { box-shadow: var(--shadow); }
+  50% { box-shadow: 0 0 28px rgba(255, 126, 103, 0.65); }
+  100% { box-shadow: var(--shadow); }
+}
+
+.board-tools {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+.undo-btn {
+  background: var(--lavender);
+  color: var(--ink);
+}
+.undo-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 680px) {
+  .wood-board {
+    gap: 4px;
+    padding: 10px;
+    border-width: 4px;
+    width: 100%;
+  }
+  .hole.selected { transform: scale(1.08); }
+}

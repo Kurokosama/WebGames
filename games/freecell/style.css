@@ -1,0 +1,158 @@
+/* FreeCell — 🃏 card table (game-specific visuals only) */
+#board {
+  --cw: 62px;
+  --ch: 88px;
+  --overlap: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  max-width: 620px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+#top-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
+}
+#top-row .gap { width: 26px; }
+
+/* Empty parking spots */
+.slot {
+  width: var(--cw);
+  height: var(--ch);
+  border-radius: 12px;
+  border: 2px dashed rgba(76, 111, 128, 0.28);
+  background: rgba(255, 255, 255, 0.45);
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.free-cell { background: var(--mint-light); border-color: rgba(76, 175, 155, 0.45); }
+.foundation { background: var(--cream-light); border-color: rgba(246, 196, 83, 0.55); }
+.foundation::after {
+  content: attr(data-suit);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6rem;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.slot.targetable { border-color: var(--coral); background: var(--coral-light); }
+.slot.armed { animation: slot-pulse 1.2s ease-in-out infinite; }
+@keyframes slot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* Tableau columns */
+#tableau {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.col {
+  width: var(--cw);
+  min-height: var(--ch);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+}
+.col::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cw);
+  height: var(--ch);
+  border-radius: 12px;
+  border: 2px dashed rgba(76, 111, 128, 0.22);
+  background: rgba(255, 255, 255, 0.4);
+  z-index: 0;
+}
+
+/* Cards */
+.card {
+  width: var(--cw);
+  height: var(--ch);
+  margin-top: calc(-1 * var(--overlap));
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.col .card:first-child { margin-top: 0; }
+
+.card-face {
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+  border: 2px solid rgba(76, 111, 128, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(76, 111, 128, 0.18);
+  display: flex;
+  flex-direction: column;
+  padding: 5px 7px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.card-face.red { color: #d9435a; }
+.card-face.black { color: #2f4a56; }
+
+.card-rank { font-size: 1rem; }
+.card-suit {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.card:hover .card-face { box-shadow: 0 6px 14px rgba(76, 111, 128, 0.28); }
+.card.selected { transform: translateY(-4px); }
+.card.selected .card-face {
+  border-color: var(--coral);
+  background: var(--coral-light);
+  box-shadow: 0 8px 18px rgba(255, 126, 103, 0.4);
+}
+.card.movable .card-face { border-color: var(--mint); }
+.card.just-landed .card-face { animation: land-pop 0.35s ease; }
+@keyframes land-pop {
+  from { transform: scale(1.12) rotate(2deg); }
+  to { transform: scale(1) rotate(0deg); }
+}
+
+/* Win helper: show how many cards a group move can carry */
+#move-hint {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  #board { --cw: 52px; --ch: 74px; --overlap: 28px; padding: 8px; }
+  #top-row .gap { width: 14px; }
+  .card-suit { font-size: 1.15rem; }
+  .card-rank { font-size: 0.9rem; }
+  .foundation::after { font-size: 1.3rem; }
+}
+
+@media (max-width: 420px) {
+  #board { --cw: 44px; --ch: 64px; --overlap: 24px; }
+  #top-row { gap: 6px; }
+  #tableau { gap: 6px; }
+}

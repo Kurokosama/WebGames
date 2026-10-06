@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 Asteroids · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/asteroids/">
+<meta name="description" content="Classic arcade — shoot the asteroids, don’t get hit!">
+<meta property="og:title" content="🚀 Asteroids · Kids Game Land">
+<meta property="og:description" content="Classic arcade — shoot the asteroids, don’t get hit!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/asteroids/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🚀 Asteroids</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Score: <b id="score">0</b></div>
+    <div class="stat">Lives: <b id="lives">3</b></div>
+    <div class="stat">Best: <b id="best">0</b></div>
+    <div class="stat">Level: <b id="level">1</b></div>
+  </div>
+
+  <div class="game-area">
+    <canvas id="canvas" width="640" height="560"></canvas>
+  </div>
+
+  <div class="touch-controls">
+    <button class="tc-btn" data-act="left" aria-label="Rotate left">↺</button>
+    <button class="tc-btn" data-act="thrust" aria-label="Thrust">🔥</button>
+    <button class="tc-btn" data-act="right" aria-label="Rotate right">↻</button>
+    <button class="tc-btn fire" data-act="fire" aria-label="Fire">💥</button>
+  </div>
+
+  <p class="how-to-play">💡 How to play: <b>←</b>/<b>→</b> to rotate, <b>↑</b> to thrust, <b>Space</b> to shoot (or tap the buttons). Split the asteroids into smaller pieces and clear the field! When you clear all the rocks, a tougher level begins.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

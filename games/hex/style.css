@@ -1,0 +1,90 @@
+/* Hex — game-specific visuals (shared classes/vars come from common.css + games.css) */
+
+.game-area {
+  --hex-w: clamp(28px, 6vw, 46px);
+  --hex-h: calc(var(--hex-w) / 0.866);
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Pointy-top hexagons, each row shifted half a cell so they tile like a real Hex board */
+.hex-board {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--hex-h) * 0.75);
+  padding: 18px 22px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(198, 214, 255, 0.45));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 100%;
+}
+
+.hex-row {
+  display: flex;
+  gap: 3px;
+  padding-left: calc(var(--hex-w) * var(--shift) / 2);
+}
+
+.hex-cell {
+  width: var(--hex-w);
+  height: var(--hex-h);
+  border: 0;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.85);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  font-family: var(--font);
+}
+
+.hex-cell:hover:not(.taken) { transform: scale(1.12); filter: brightness(1.06); }
+.hex-cell:focus-visible { outline: 3px solid var(--lavender); outline-offset: 2px; }
+
+.hex-cell.you { background: var(--coral); }
+.hex-cell.cpu { background: var(--sky); }
+.hex-cell.taken { cursor: default; }
+
+.hex-cell.hint { background: rgba(255, 209, 102, 0.55); }
+
+.hex-cell.winning {
+  animation: hex-pop 0.35s ease both, hex-glow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes hex-pop {
+  0% { transform: scale(0.55); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes hex-glow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.35); }
+}
+
+.legend {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legend .dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend .dot.you { background: var(--coral); }
+.legend .dot.cpu { background: var(--sky); }
+
+@media (max-width: 560px) {
+  .game-area { --hex-w: clamp(24px, 8.5vw, 34px); }
+  .hex-board { padding: 12px 14px; }
+  .legend { font-size: 0.85rem; }
+}

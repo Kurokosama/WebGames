@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Yahtzee · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400,600,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/yahtzee/">
+<meta name="description" content="Roll five dice and fill your scorecard!">
+<meta property="og:title" content="🎯 Yahtzee · Kids Game Land">
+<meta property="og:description" content="Roll five dice and fill your scorecard!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/yahtzee/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🎯 Yahtzee</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Round: <b id="round">1 / 8</b></div>
+    <div class="stat">Total: <b id="total">0</b></div>
+    <div class="stat">Best: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="yahtzee-stage">
+      <div class="dice-row" id="dice-row"></div>
+
+      <p class="rolls-left">Rolls left: <b id="rolls-left">3</b> · tap a die to keep it</p>
+
+      <button class="btn roll-btn" id="roll-btn">🎲 Roll the Dice</button>
+
+      <p class="feedback" id="feedback">Roll the dice, then tap a scorecard box.</p>
+
+      <div class="scorecard" id="scorecard"></div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Roll up to 3 times each round. Tap a die to <b>keep</b> it for the next roll. When you like your dice, tap an empty scorecard box to bank your points — every box can be used <b>once</b>. Fill 8 boxes and see if you beat your best score!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

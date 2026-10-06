@@ -1,0 +1,5 @@
+# Kids Game Land — free browser games
+User-agent: *
+Allow: /
+
+Sitemap: https://kurokosama.github.io/WebGames/sitemap.xml

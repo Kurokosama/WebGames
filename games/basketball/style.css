@@ -1,0 +1,5 @@
+/* Basketball Shoot */
+.game-area canvas { border-radius: 20px; box-shadow: var(--shadow); touch-action: none; display: block; }
+.controls { display: flex; gap: 18px; align-items: center; margin-top: 18px; flex-wrap: wrap; justify-content: center; }
+.controls label { font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.controls input[type=range] { width: 130px; accent-color: var(--coral); }

@@ -1,0 +1,38 @@
+/* Pyramid Solitaire */
+.pyramid, .stock-row { display: flex; justify-content: center; }
+.pyramid { flex-direction: column; gap: 4px; margin-bottom: 24px; align-items: center; }
+.prow { display: flex; justify-content: center; gap: 4px; }
+
+.card {
+  width: 58px; height: 82px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.12);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 4px 6px; font-weight: 800; font-size: 0.95rem;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.card.red { color: #e03131; }
+.card.back { background: linear-gradient(135deg,#4a90c4,#3a6ea5); color: transparent; cursor: default; }
+.card.back:hover { transform: none; }
+.card.picked { outline: 3px solid var(--coral); transform: translateY(-4px); }
+
+.stock-row { gap: 20px; margin-bottom: 20px; align-items: flex-end; }
+.pile-box { text-align: center; }
+.pile-label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink-soft); margin-top: 6px; }
+
+.stack, .waste, .removed {
+  min-width: 58px; min-height: 82px;
+  border-radius: 8px;
+  border: 2px dashed rgba(91,122,134,0.4);
+  background: rgba(255,255,255,0.4);
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.removed { flex-wrap: wrap; max-width: 150px; min-height: 82px; padding: 4px; }
+.removed .card { width: 34px; height: 46px; font-size: 0.65rem; cursor: default; }
+
+@media (max-width: 560px) {
+  .card { width: 44px; height: 64px; font-size: 0.8rem; }
+  .stack, .waste, .removed { min-width: 44px; min-height: 64px; }
+}

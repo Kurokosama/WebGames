@@ -1,0 +1,107 @@
+/* ============================================================
+   Connect the Dots — game-specific visuals
+   ============================================================ */
+.dots-board {
+  width: 100%;
+  max-width: 640px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 16px 18px;
+}
+
+#board {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Hidden picture: the fill only appears once every dot is connected. */
+.reveal-shape {
+  fill: var(--cream-light);
+  stroke: rgba(91, 122, 134, 0.35);
+  stroke-width: 3;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.reveal-shape.revealed { opacity: 1; }
+
+/* Thick colourful crayon lines, drawn in with a quick animation. */
+.segment {
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: draw-line 0.45s ease forwards;
+}
+@keyframes draw-line {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Big friendly dots with their numbers */
+.dot { cursor: pointer; }
+.dot circle {
+  fill: #fff;
+  stroke: #c9d6dd;
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+.dot text {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.dot.next circle {
+  fill: var(--coral-light);
+  stroke: var(--coral);
+  stroke-width: 4;
+  animation: dot-pulse 1.2s ease-in-out infinite;
+}
+.dot.next text { fill: var(--coral); }
+
+.dot.done circle { fill: var(--mint-light); stroke: var(--mint); }
+.dot.done text { fill: #2f7d6b; }
+
+.dot.wrong circle { fill: var(--coral-light); stroke: var(--coral); animation: dot-shake 0.4s ease; }
+
+.dot.revealed-dot circle { fill: var(--white); stroke: var(--lavender); }
+.dot.revealed-dot text { fill: var(--lavender); }
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+}
+@keyframes dot-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+/* Kid-friendly feedback line under the board */
+.message {
+  margin-top: 12px;
+  min-height: 1.6em;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.message.bad { color: var(--coral); }
+.message.good { color: #2f7d6b; }
+
+@media (max-width: 680px) {
+  .dots-board { padding: 10px 10px 12px; }
+  .segment { stroke-width: 7; }
+  .dot circle { stroke-width: 2.5; }
+  .dot.next circle { stroke-width: 3.5; }
+  .dot text { font-size: 14px; }
+  .message { font-size: 0.95rem; }
+}

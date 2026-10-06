@@ -1,0 +1,171 @@
+/* ============================================================
+   Mancala — game-specific styles
+   ============================================================ */
+.mancala-board {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, #fff3e0, var(--white));
+  box-shadow: var(--shadow);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pits {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 260px;
+}
+
+.pit {
+  font-family: var(--font);
+  position: relative;
+  width: 96px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border: 3px solid rgba(76, 111, 128, 0.18);
+  border-radius: 22px;
+  background: var(--white);
+  cursor: default;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.player-row .pit {
+  background: linear-gradient(180deg, #eaf6ff, var(--white));
+  cursor: pointer;
+}
+
+.player-row .pit.clickable:hover {
+  transform: translateY(-4px);
+  border-color: var(--sky);
+  box-shadow: 0 6px 14px rgba(76, 111, 128, 0.22);
+}
+
+.player-row .pit.clickable:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.pit.disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.pit-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+}
+
+.pit-count {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.stones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-width: 84px;
+}
+
+.stone {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #6f8f9f, #35505c);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.computer-row .stone {
+  background: radial-gradient(circle at 30% 30%, #ffb09a, var(--coral));
+}
+
+.pit.sowing {
+  border-color: var(--cream);
+  background: #fff8e6;
+  transform: scale(1.06);
+}
+
+.pit.just-sowed {
+  border-color: var(--coral);
+}
+
+.pit.capture-flash {
+  border-color: var(--lavender);
+  background: #f4ecff;
+  animation: capture-pop 0.45s ease;
+}
+
+@keyframes capture-pop {
+  0% { transform: scale(1.12); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+.store {
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 110px;
+  padding: 14px 16px;
+  border: 3px solid rgba(76, 111, 128, 0.2);
+  border-radius: 26px;
+  background: var(--white);
+  font-size: 1.4rem;
+}
+
+.player-store-box {
+  background: linear-gradient(180deg, #eaf6ff, var(--white));
+  border-color: var(--sky);
+}
+
+.cpu-store-box {
+  background: linear-gradient(180deg, #fff0e8, var(--white));
+  border-color: var(--coral);
+}
+
+.store-count {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.turn-hint {
+  font-family: var(--font);
+  margin: 12px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .mancala-board { padding: 12px; }
+  .pit { width: 74px; min-height: 74px; border-radius: 18px; }
+  .stones { max-width: 64px; }
+  .stone { width: 11px; height: 11px; }
+  .store { min-width: 92px; font-size: 1.15rem; padding: 10px 12px; }
+  .row { gap: 8px; }
+}

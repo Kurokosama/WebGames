@@ -1,0 +1,8 @@
+/* Duck Hunt */
+.game-area canvas {
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  touch-action: none;
+  cursor: crosshair;
+  display: block;
+}

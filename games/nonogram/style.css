@@ -1,0 +1,100 @@
+/* ============================================================
+   Nonogram (Picross) 🎨 — game styles
+   ============================================================ */
+.nonogram {
+  --cell-size: 44px;
+  --clue-size: 34px;
+  display: grid;
+  gap: 4px;
+  background: var(--cream-light, var(--cream));
+  padding: 12px;
+  border-radius: 16px;
+  border: 3px solid var(--cream);
+  box-shadow: var(--shadow);
+}
+
+/* Top-left corner spacer */
+.corner {
+  width: var(--clue-size);
+  height: var(--clue-size);
+}
+
+/* Clue headers */
+.clue {
+  width: var(--clue-size);
+  min-height: var(--clue-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.clue.satisfied {
+  color: #1a9d6a;
+  background: rgba(6, 214, 160, 0.18);
+}
+
+/* Cells */
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border: 2px solid rgba(76, 111, 128, 0.25);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.cell:hover { transform: scale(1.06); border-color: var(--lavender); }
+
+.cell.filled {
+  background: var(--lavender);
+  border-color: var(--lavender);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+.cell.marked {
+  background: rgba(246, 196, 83, 0.25);
+  border-color: var(--cream);
+}
+
+/* Grid guide lines every 5 cells (classic picross style) */
+.cell.edge-right { border-right: 3px solid rgba(76, 111, 128, 0.45); }
+.cell.edge-bottom { border-bottom: 3px solid rgba(76, 111, 128, 0.45); }
+.clue.edge-right { outline: 3px solid rgba(76, 111, 128, 0.45); }
+.clue.edge-bottom { outline: 3px solid rgba(76, 111, 128, 0.45); }
+
+/* Reveal celebration */
+.nonogram.solved {
+  border-color: var(--mint);
+  animation: nonogram-pop 0.4s ease;
+}
+@keyframes nonogram-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 680px) {
+  .nonogram {
+    --cell-size: 34px;
+    --clue-size: 26px;
+    gap: 3px;
+    padding: 8px;
+  }
+  .clue { font-size: 0.72rem; }
+  .cell { font-size: 0.85rem; }
+}

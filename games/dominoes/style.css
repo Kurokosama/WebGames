@@ -1,0 +1,186 @@
+/* Dominoes — game-specific visuals (shared classes come from common.css / games.css) */
+
+.message {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+}
+
+.cpu-row {
+  margin: 0 0 14px;
+  padding: 10px 16px;
+  background: var(--lavender);
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* Open ends */
+.ends {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.end-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--sky);
+  border-radius: 999px;
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.end-chip .pip-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 10px);
+  grid-template-rows: repeat(3, 10px);
+  gap: 2px;
+  background: var(--white);
+  padding: 4px;
+  border-radius: 10px;
+}
+
+/* Chain */
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 8px;
+  min-height: 120px;
+  padding: 16px;
+  background: var(--mint);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.chain-empty {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* Domino tile (shared shape for chain + hand) */
+.domino {
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 2px solid var(--ink-soft);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.chain .domino {
+  animation: tile-drop 0.35s ease;
+}
+
+@keyframes tile-drop {
+  from { transform: translateY(-12px) scale(0.8); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.domino .half {
+  display: grid;
+  grid-template-columns: repeat(3, 12px);
+  grid-template-rows: repeat(3, 12px);
+  gap: 2px;
+  padding: 4px;
+}
+
+.domino .divider {
+  width: 2px;
+  height: 44px;
+  background: var(--ink-soft);
+  border-radius: 2px;
+}
+
+.pip-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.pip-cell.pip {
+  background: var(--ink);
+}
+
+/* Hand */
+.hand-title {
+  margin: 18px 0 10px;
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+.hand-title small {
+  display: block;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hand .tile {
+  cursor: default;
+  opacity: 0.55;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hand .tile.playable {
+  opacity: 1;
+  cursor: pointer;
+  border-color: var(--coral);
+  box-shadow: 0 4px 12px rgba(255, 126, 103, 0.35);
+}
+
+.hand .tile.playable:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.hand .tile.playable .pip-cell.pip {
+  background: var(--coral);
+}
+
+.hand-empty-note {
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .domino .half {
+    grid-template-columns: repeat(3, 10px);
+    grid-template-rows: repeat(3, 10px);
+  }
+  .pip-cell { width: 10px; height: 10px; }
+  .domino .divider { height: 36px; }
+  .chain, .hand { padding: 10px; }
+}

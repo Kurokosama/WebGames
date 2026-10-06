@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eafaf4"/>
+      <stop offset="50%" stop-color="#eaf3ff"/>
+      <stop offset="100%" stop-color="#fff6e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g opacity="0.5" font-size="54">
+    <text x="70" y="110">☁️</text>
+    <text x="1010" y="90">⭐</text>
+    <text x="900" y="560">🌟</text>
+    <text x="130" y="560">🍀</text>
+  </g>
+  <text x="600" y="250" text-anchor="middle" font-family="Baloo 2, Comic Sans MS, sans-serif" font-size="96" font-weight="800" fill="#33505e">🎮 Kids Game Land</text>
+  <text x="600" y="350" text-anchor="middle" font-family="Baloo 2, Comic Sans MS, sans-serif" font-size="52" font-weight="700" fill="#4caf9b">118 Classic Games</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Baloo 2, Comic Sans MS, sans-serif" font-size="34" font-weight="600" fill="#5b7a86">Free to play in your browser · No ads · No sign-ups</text>
+  <g font-size="46" text-anchor="middle">
+    <text x="220" y="520">🐍</text><text x="320" y="520">🧩</text>
+    <text x="420" y="520">🎯</text><text x="520" y="520">♟️</text>
+    <text x="620" y="520">🃏</text><text x="720" y="520">🚀</text>
+    <text x="820" y="520">🧠</text><text x="920" y="520">🏓</text>
+  </g>
+</svg>

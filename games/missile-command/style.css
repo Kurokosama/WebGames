@@ -1,0 +1,9 @@
+/* Missile Command — night sky defence */
+.game-area canvas {
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  background: linear-gradient(180deg, #0b1026 0%, #1b2350 70%, #2b2b4a 100%);
+  touch-action: none;
+  cursor: crosshair;
+  display: block;
+}

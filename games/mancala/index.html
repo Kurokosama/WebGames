@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mancala · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400,600,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/mancala/">
+<meta name="description" content="Classic seed-sowing game — capture more stones!">
+<meta property="og:title" content="Mancala · Kids Game Land">
+<meta property="og:description" content="Classic seed-sowing game — capture more stones!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/mancala/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🥣 Mancala</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your store: <b id="my-store">0</b></div>
+    <div class="stat">Computer store: <b id="cpu-store">0</b></div>
+    <div class="stat">Turn: <b id="turn-name">You</b></div>
+    <div class="stat">Best win: <b id="best-score">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="mancala-board">
+      <div class="row computer-row">
+        <div class="store cpu-store-box" id="cpu-store-box">🥣<span class="store-count" id="cpu-store-visual">0</span></div>
+        <div class="pits" id="computer-pits"></div>
+      </div>
+      <div class="row player-row">
+        <div class="pits" id="player-pits"></div>
+        <div class="store player-store-box" id="player-store-box">🥣<span class="store-count" id="my-store-visual">0</span></div>
+      </div>
+    </div>
+    <p class="turn-hint" id="turn-hint">Your turn — click one of your pits to sow.</p>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Click one of your pits and drop one stone into each pit as you go counterclockwise, saving one in your store 🥣. If your LAST stone lands in an empty pit on your side, you capture the stones in the pit straight across from it. First to 13 stones wins!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

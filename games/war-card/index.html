@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>War (Card Game) · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/war-card/">
+<meta name="description" content="Classic card game War — win more tricks than the computer!">
+<meta property="og:title" content="War (Card Game) · Kids Game Land">
+<meta property="og:description" content="Classic card game War — win more tricks than the computer!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/war-card/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">⚔️ War (Card Game)</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your tricks: <b id="player-tricks">0</b></div>
+    <div class="stat">Computer tricks: <b id="cpu-tricks">0</b></div>
+    <div class="stat">Best win: <b id="best">—</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="war-table">
+      <div class="side cpu-side">
+        <div class="side-head">🤖 Computer <span class="deck-count" id="cpu-count">26 cards</span></div>
+        <div class="slot" id="cpu-slot"></div>
+      </div>
+
+      <div class="pot" id="pot">
+        <div class="pot-label" id="pot-label">Tap Flip to start the battle!</div>
+      </div>
+
+      <div class="side player-side">
+        <div class="side-head">🙂 You <span class="deck-count" id="player-count">26 cards</span></div>
+        <div class="slot" id="player-slot"></div>
+      </div>
+
+      <button class="btn flip-btn" id="flip-btn">▶ Flip cards</button>
+      <div class="log" id="log">The deck is split — 26 cards each. Good luck!</div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Tap <b>Flip</b> to play your top card against the computer's. The higher card wins the trick and takes both cards. If the cards tie it is WAR — each side puts one card face-down and one face-up, and the winner takes all 6 cards! First player to collect 26+ cards wins the game.</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

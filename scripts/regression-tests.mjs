@@ -5,7 +5,7 @@
  * tiny DOM facade, then calls their actual game functions and inspects state.
  */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import vm from 'node:vm';
 
@@ -28,6 +28,7 @@ class FakeElement {
   constructor() {
     this.children = [];
     this.dataset = {};
+    this.attributes = {};
     this.style = { setProperty() {} };
     this.classList = new FakeClassList(this);
     this._className = '';
@@ -46,16 +47,38 @@ class FakeElement {
   addEventListener() {}
   focus() {}
   remove() {}
+  setAttribute(name, value) {
+    this.attributes[name] = String(value);
+    // data-* attributes are reflected on dataset in the real DOM
+    const m = /^data-(.+)$/.exec(name);
+    if (m) this.dataset[m[1]] = String(value);
+  }
+  getAttribute(name) { return name in this.attributes ? this.attributes[name] : null; }
+  removeAttribute(name) { delete this.attributes[name]; }
+  hasAttribute(name) { return name in this.attributes; }
+  insertBefore(child) { this.children.unshift(child); return child; }
+  replaceChildren(...nodes) { this.children = nodes; }
+  querySelector() { return new FakeElement(); }
+  querySelectorAll() { return []; }
+  closest() { return null; }
+  click() {}
   getBoundingClientRect() {
     return { left: 0, top: 0, width: this.clientWidth, height: this.clientHeight, right: this.clientWidth, bottom: this.clientHeight };
   }
   getContext() {
-    return new Proxy({}, {
-      get(target, property) {
-        if (!(property in target)) target[property] = () => {};
-        return target[property];
+    const gradient = { addColorStop() {} };
+    const target = {
+      createLinearGradient: () => gradient,
+      createRadialGradient: () => gradient,
+      createPattern: () => ({ setTransform() {} }),
+      measureText: () => ({ width: 10 })
+    };
+    return new Proxy(target, {
+      get(t, property) {
+        if (!(property in t)) t[property] = () => {};
+        return t[property];
       },
-      set(target, property, value) { target[property] = value; return true; }
+      set(t, property, value) { t[property] = value; return true; }
     });
   }
 }
@@ -89,10 +112,13 @@ function makeHarness(slug) {
     removeEventListener() {},
     document: {
       createElement: () => new FakeElement(),
+      createElementNS: (_ns, tag) => { const el = new FakeElement(); el.tagName = tag; return el; },
       addEventListener() {},
       body: new FakeElement()
     },
     window: {},
+    matchMedia: () => ({ matches: false, addEventListener() {}, addListener() {} }),
+    createElementNS: (_ns, tag) => { const el = new FakeElement(); el.tagName = tag; return el; },
     setTimeout: () => { const id = ++timerId; activeTimers.add(id); return id; },
     clearTimeout: (id) => activeTimers.delete(id),
     setInterval: () => { const id = ++timerId; activeTimers.add(id); return id; },
@@ -122,6 +148,7 @@ function makeHarness(slug) {
   };
   context.Math.random = random;
   context.window = context;
+  context.matchMedia = () => ({ matches: false, addEventListener() {}, addListener() {} });
   vm.createContext(context);
   const source = readFileSync(join(root, 'games', slug, 'game.js'), 'utf8');
   vm.runInContext(source, context, { filename: `games/${slug}/game.js` });
@@ -148,7 +175,10 @@ test('all game scripts initialize without runtime errors', () => {
   // structure and no game.js — they are smoke-tested in the browser instead.
   const standalone = ['adarkroom', 'tower-defense', 'battle-city', 'xiangqi', 'doudizhu', 'klotski', 'nes-emulator', 'monopoly', 'mahjong', 'ludo', 'cluedo', 'spider-solitaire', 'checkers', 'sudoku', 'retro-racers', 'dungeon-crawl', 'blackjack', 'backgammon', '8-ball-pool', 'gin-rummy', 'darts', 'bowling', 'crimson-tide', 'plants-vs-zombies', 'minecraft', 'genesis-emulator'];
   const toTest = games.filter((slug) => !standalone.includes(slug));
-  assert.equal(toTest.length, 46);
+  // Every non-standalone game must ship a game.js that the harness can execute.
+  const withoutScript = toTest.filter((slug) => !existsSync(join(root, 'games', slug, 'game.js')));
+  assert.deepEqual(withoutScript, [], `games missing game.js: ${withoutScript.join(', ')}`);
+  assert.ok(toTest.length > 0, 'no games to smoke-test');
   for (const slug of toTest) makeHarness(slug);
 });
 
@@ -262,6 +292,93 @@ test('every Sokoban level has a reachable solution', () => {
       }
     }
     assert.equal(solved, true, `Sokoban level ${level + 1} should be solvable`);
+  }
+});
+
+/* ---------------------------------------------------------------------------
+ * Regressions for bugs found during the full-catalog QA pass.
+ * Each one locks in a fix that was previously broken on disk.
+ * ------------------------------------------------------------------------- */
+
+test('nonogram mounts its grid cells into the board', () => {
+  const { context, elements } = makeHarness('nonogram');
+  const board = elements.get('nonogram');
+  assert.ok(board, 'nonogram board element should exist');
+  // The cells used to be created and pushed into an array but never appended,
+  // which left the puzzle with no clickable squares at all.
+  const cells = board.children.filter((el) => el.classList.contains('cell'));
+  assert.ok(cells.length > 0, 'nonogram must render clickable cells');
+  const clues = board.children.filter((el) => el.classList.contains('clue'));
+  assert.ok(clues.length > 0, 'nonogram must render clue boxes');
+});
+
+test('slitherlink starts from an empty grid, not a solved puzzle', () => {
+  const { context, elements } = makeHarness('slitherlink');
+  // The generated loop was being assigned straight to the player's H/V arrays,
+  // so every puzzle opened already complete.
+  const on = run(context, `(() => {
+    let n = 0;
+    for (let r = 0; r <= ${5}; r++) for (let c = 0; c < ${5}; c++) if (H[r][c]) n++;
+    for (let r = 0; r < ${5}; r++) for (let c = 0; c <= ${5}; c++) if (V[r][c]) n++;
+    return n;
+  })()`);
+  assert.equal(on, 0, 'slitherlink should start with no lines drawn');
+  const clues = run(context, 'clues.flat().filter((n) => n > 0).length');
+  assert.ok(clues > 0, 'slitherlink should still generate clues');
+});
+
+test('bomberman starts with a full set of lives', () => {
+  const { context } = makeHarness('bomberman');
+  // Enemies used to be able to spawn on the player's tile, so the game hit
+  // game-over on the first frame with zero lives.
+  assert.equal(run(context, 'lives'), 3, 'bomberman should start with 3 lives');
+  const overlaps = run(context, `enemies.filter((e) => e.c === player.c && e.r === player.r).length`);
+  assert.equal(overlaps, 0, 'no enemy may spawn on the player tile');
+});
+
+test('zuma never grows its chain when a shot misses a match', () => {
+  const { context } = makeHarness('zuma');
+  const start = run(context, 'chain.length');
+  assert.ok(start > 0, 'zuma should start with marbles');
+  // Fire a marble that cannot match (colour forced to differ from both neighbours).
+  const after = run(context, `(() => {
+    const before = chain.length;
+    chain[0].c = '#ff6b6b'; chain[1].c = '#4dabf7'; chain[2].c = '#ffd43b';
+    insertBall(1);
+    return { before, after: chain.length };
+  })()`);
+  assert.ok(after.after <= after.before,
+    `chain must not grow on a non-matching insert (was ${after.before}, now ${after.after})`);
+});
+
+test('farkle scores the standard combinations', () => {
+  const { context } = makeHarness('farkle');
+  const cases = [
+    [[1], 100], [[5], 50], [[1, 5], 150], [[2], 0],
+    [[1, 1, 1], 1000], [[2, 2, 2], 200], [[3, 3, 3, 3], 1000],
+    [[5, 5, 5, 5, 5], 2000], [[1, 1, 1, 1, 1, 1], 3000],
+    [[1, 2, 3, 4, 5, 6], 1500], [[1, 1, 2, 2, 3, 3], 1500],
+    [[1, 1, 1, 2, 2, 2], 2500], [[2, 3, 4, 6], 0]
+  ];
+  for (const [dice, expected] of cases) {
+    const got = run(context, `scoreHand(${JSON.stringify(dice)})`);
+    assert.equal(got, expected, `scoreHand(${dice.join('')}) should be ${expected}, got ${got}`);
+  }
+});
+
+test('every page ships exactly one title, description and canonical', () => {
+  const pages = ['index.html', 'retro-games.html'];
+  for (const dir of readdirSync(join(root, 'games'), { withFileTypes: true })) {
+    if (dir.isDirectory()) pages.push(join('games', dir.name, 'index.html'));
+  }
+  for (const rel of pages) {
+    const p = join(root, rel);
+    if (!existsSync(p)) continue;
+    const html = readFileSync(p, 'utf8');
+    const count = (re) => (html.match(re) || []).length;
+    assert.equal(count(/<title>/g), 1, `${rel} should have exactly one <title>`);
+    assert.equal(count(/<meta\s+name="description"/g), 1, `${rel} should have exactly one description`);
+    assert.equal(count(/rel="canonical"/g), 1, `${rel} should have exactly one canonical link`);
   }
 });
 

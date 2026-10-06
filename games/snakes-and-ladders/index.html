@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snakes &amp; Ladders · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400,600,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/snakes-and-ladders/">
+<meta name="description" content="Roll the dice, climb ladders, dodge the snakes!">
+<meta property="og:title" content="Snakes &amp;amp; Ladders · Kids Game Land">
+<meta property="og:description" content="Roll the dice, climb ladders, dodge the snakes!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/snakes-and-ladders/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🐍 Snakes &amp; Ladders</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Turn: <b id="turn">You</b></div>
+    <div class="stat">Dice: <b id="dice">—</b></div>
+    <div class="stat">Your square: <b id="player-square">Start</b></div>
+    <div class="stat">Computer square: <b id="computer-square">Start</b></div>
+    <div class="stat">Best rolls: <b id="best">—</b></div>
+  </div>
+  <div class="game-area">
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+      <svg class="board-overlay" id="overlay" viewBox="0 0 10 10" aria-hidden="true"></svg>
+    </div>
+    <div class="side-panel">
+      <div class="legend">
+        <div class="legend-item"><span class="token you-token">🐵</span> You</div>
+        <div class="legend-item"><span class="token cpu-token">🤖</span> Computer</div>
+        <div class="legend-item">🪜 Ladder — climb up!</div>
+        <div class="legend-item">🐍 Snake — slide down!</div>
+      </div>
+      <div class="dice-display" id="dice-display">🎲</div>
+      <button class="btn roll-btn" id="roll-btn">Roll the dice!</button>
+      <p class="message" id="message">Your turn — tap Roll to move!</p>
+    </div>
+  </div>
+  <p class="how-to-play">💡 How to play: Take turns rolling the dice with the computer. Ladders 🪜 carry you up, snakes 🐍 slide you down! You must land exactly on square 100 to win — rolling too far bounces you back. Fewest rolls wins, and your best is saved.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Air Hockey — ice rink, paddles and puck */
+.game-area canvas {
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  background: linear-gradient(180deg, #eaf6ff 0%, #d6ecff 100%);
+  touch-action: none;
+  display: block;
+}

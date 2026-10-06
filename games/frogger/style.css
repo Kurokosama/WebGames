@@ -1,0 +1,34 @@
+/* Frogger — traffic lanes, frog and safe pads */
+.game-area canvas {
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  touch-action: manipulation;
+  display: block;
+}
+
+.dpad {
+  display: none;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(2, 56px);
+  gap: 8px;
+  margin-top: 18px;
+  justify-content: center;
+}
+.pad-btn {
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 16px;
+  background: var(--sky);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+.pad-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15); }
+.pad-btn.up { grid-column: 2; grid-row: 1; }
+.pad-btn.left { grid-column: 1; grid-row: 2; }
+.pad-btn.down { grid-column: 2; grid-row: 2; }
+.pad-btn.right { grid-column: 3; grid-row: 2; }
+
+@media (pointer: coarse), (max-width: 680px) {
+  .dpad { display: grid; }
+}

@@ -1,0 +1,124 @@
+/* Bingo — game-specific visuals */
+
+.caller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(520px, 94vw);
+}
+
+.last-call {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--white), var(--cream));
+  box-shadow: var(--shadow), inset 0 -6px 10px rgba(0, 0, 0, 0.08);
+  display: grid;
+  place-items: center;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  border: 4px solid var(--coral);
+}
+.last-call.pop {
+  animation: call-pop 0.45s ease;
+}
+@keyframes call-pop {
+  0% { transform: scale(0.6); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.call-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.call-btn {
+  background: var(--coral);
+  color: var(--white);
+}
+
+.toggle-btn {
+  background: var(--lavender);
+  color: var(--ink);
+}
+.toggle-btn.on {
+  background: var(--mint);
+  color: var(--ink);
+}
+
+.bingo-letters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: min(480px, 92vw);
+}
+.bingo-letters span {
+  aspect-ratio: 1.4;
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--white);
+  box-shadow: var(--shadow);
+}
+.bingo-letters span:nth-child(1) { background: #ff7e67; }
+.bingo-letters span:nth-child(2) { background: #4cc9f0; }
+.bingo-letters span:nth-child(3) { background: #06d6a0; }
+.bingo-letters span:nth-child(4) { background: #9b7edb; }
+.bingo-letters span:nth-child(5) { background: #f47ba1; }
+
+.bingo-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: min(480px, 92vw);
+  background: var(--white);
+  padding: 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  user-select: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.cell.marked {
+  background: var(--mint);
+  transform: scale(1.04);
+}
+.cell.marked::after {
+  content: "✓";
+  position: absolute;
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+.cell { position: relative; }
+.cell.free {
+  background: var(--pink);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.cell.line-complete {
+  background: var(--lavender);
+  box-shadow: 0 0 0 3px var(--coral);
+}
+
+@media (max-width: 480px) {
+  .last-call { width: 88px; height: 88px; font-size: 2rem; }
+  .cell { font-size: 0.95rem; }
+  .bingo-letters span { font-size: 1.4rem; }
+}

@@ -1,0 +1,151 @@
+/* ============================================================
+   Crossword — game-specific visuals (kid-friendly, rounded)
+   ============================================================ */
+.crossword-wrap {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---------- Board ---------- */
+.crossword-board {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: #f7fbfd;
+  border: 2px solid rgba(76, 111, 128, 0.16);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.cell .num {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1;
+}
+
+.cell .letter {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.cell.black {
+  background: var(--ink);
+  border-color: var(--ink);
+  cursor: default;
+}
+
+.cell.in-word { background: rgba(155, 126, 219, 0.16); }
+
+.cell.active {
+  background: var(--sky);
+  border-color: var(--sky);
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(76, 111, 128, 0.25);
+}
+.cell.active .letter,
+.cell.active .num { color: #fff; }
+
+.cell.correct {
+  background: var(--mint);
+  border-color: var(--mint);
+  animation: pop-letter 0.25s ease;
+}
+.cell.correct .letter { color: #fff; }
+
+.cell.wrong {
+  background: var(--coral);
+  border-color: var(--coral);
+  animation: shake-letter 0.3s ease;
+}
+.cell.wrong .letter { color: #fff; }
+
+@keyframes pop-letter {
+  from { transform: scale(0.85); }
+  to { transform: scale(1.06); }
+}
+@keyframes shake-letter {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* ---------- Clues ---------- */
+.clues {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.clue-col {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.clue-col h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--ink); }
+.clue-col ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.clue {
+  padding: 7px 10px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.clue:hover { background: rgba(76, 111, 128, 0.08); }
+.clue .n { font-weight: 800; color: var(--coral); margin-right: 6px; }
+.clue.active { background: var(--lavender); color: var(--ink); font-weight: 700; }
+
+/* ---------- On-screen letter pad ---------- */
+.letter-pad { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.letter-btn {
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 800;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 10px;
+  background: var(--sky);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+.letter-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.letter-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12); }
+.letter-btn.del { background: var(--pink); width: 44px; }
+
+.check-btn { background: var(--lavender); color: var(--ink); align-self: center; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 680px) {
+  .crossword-board { gap: 4px; padding: 10px; }
+  .cell { border-radius: 9px; border-width: 1.5px; }
+  .cell .num { font-size: 0.55rem; top: 2px; left: 4px; }
+  .cell .letter { font-size: 0.95rem; }
+  .clues { grid-template-columns: 1fr; }
+  .clue { font-size: 0.9rem; }
+  .letter-btn { width: 30px; height: 30px; font-size: 0.85rem; }
+  .letter-btn.del { width: 40px; }
+}

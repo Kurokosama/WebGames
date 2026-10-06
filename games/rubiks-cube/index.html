@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧊 Rubik's Cube · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/rubiks-cube/">
+<meta name="description" content="Twist the faces and solve the classic puzzle cube!">
+<meta property="og:title" content="🧊 Rubik&#39;s Cube · Kids Game Land">
+<meta property="og:description" content="Twist the faces and solve the classic puzzle cube!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/rubiks-cube/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🧊 Rubik's Cube</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Moves: <b id="moves">0</b></div>
+    <div class="stat">Best (10-turn scramble): <b id="best">0</b></div>
+    <div class="stat">Turns to go: <b id="t2go">—</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="cube-wrap">
+      <div class="cube" id="cube"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn turn-btn" data-m="U">↑</button>
+    <button class="btn turn-btn" data-m="D">↓</button>
+    <button class="btn turn-btn" data-m="L">←</button>
+    <button class="btn turn-btn" data-m="R">→</button>
+    <button class="btn turn-btn" data-m="F">⟳ F</button>
+    <button class="btn turn-btn" data-m="B">⟲ B</button>
+    <button class="btn play-btn" id="scramble-btn">🎲 Scramble</button>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Twist the faces with the buttons (hold <b>Shift</b> to turn the other way) until every side is one solid colour! Keep track of your moves and try to beat your best.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

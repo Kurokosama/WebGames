@@ -1,0 +1,162 @@
+/* ============================================================
+   Nim (Take Stones) — game-specific styles
+   ============================================================ */
+.nim-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.piles {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+}
+
+.pile {
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 3px dashed rgba(76, 111, 128, 0.25);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.pile:nth-child(1) { background: linear-gradient(180deg, #e9fbf4, var(--white)); }
+.pile:nth-child(2) { background: linear-gradient(180deg, #eaf6ff, var(--white)); }
+.pile:nth-child(3) { background: linear-gradient(180deg, #fff4e2, var(--white)); }
+
+.pile:hover:not(.disabled) {
+  transform: translateY(-3px);
+  border-color: var(--coral);
+}
+
+.pile.selected {
+  border-color: var(--coral);
+  border-style: solid;
+  box-shadow: 0 6px 18px rgba(255, 126, 103, 0.35);
+  transform: translateY(-3px);
+}
+
+.pile.disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.pile.empty {
+  cursor: default;
+  opacity: 0.55;
+  border-style: solid;
+}
+
+.pile-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.pile-count {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.stone {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  animation: stone-pop 0.25s ease;
+}
+
+.stone.gone {
+  opacity: 0.18;
+  filter: grayscale(1);
+  animation: none;
+}
+
+@keyframes stone-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Take-how-many panel */
+.take-panel {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.take-panel.hidden { display: none; }
+
+.take-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.take-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.take-btn {
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--lavender);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.take-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.take-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12); }
+
+.take-btn.all { background: var(--pink); }
+
+.cancel-btn {
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--cream);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+.turn-hint {
+  margin-top: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.turn-hint.thinking { color: var(--lavender); }
+
+@media (max-width: 680px) {
+  .piles { gap: 10px; }
+  .pile { padding: 10px 12px; }
+  .stone { font-size: 1.35rem; }
+  .take-btn { font-size: 0.9rem; padding: 8px 13px; }
+}

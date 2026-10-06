@@ -1,0 +1,56 @@
+/* Go — wooden 9x9 board */
+.go-board {
+  position: relative;
+  width: min(560px, 94vw);
+  aspect-ratio: 1 / 1;
+  background:
+    linear-gradient(135deg, #e9c58f 0%, #dfae6d 55%, #d29a55 100%);
+  border: 8px solid #a9722f;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin: 0 auto;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.go-board::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(90, 55, 20, 0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(90, 55, 20, 0.55) 1px, transparent 1px);
+  background-size: 11.111% 11.111%;
+  background-position: 5.55% 5.55%;
+}
+
+.pt {
+  position: absolute;
+  width: 8.4%;
+  height: 8.4%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+.pt.black { background: radial-gradient(circle at 32% 28%, #5b6169, #10131a 65%); box-shadow: 0 1px 3px rgba(0,0,0,0.45); }
+.pt.white { background: radial-gradient(circle at 32% 28%, #ffffff, #c8cdd4 70%); box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+
+.go-board.last .pt.last-move::after {
+  content: '';
+  position: absolute;
+  inset: 34%;
+  border-radius: 50%;
+  background: #ff6b6b;
+}
+
+.go-board .marker {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(90, 55, 20, 0.75);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.tools { margin-top: 16px; }

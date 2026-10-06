@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐸 Frogger · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/frogger/">
+<meta name="description" content="Hop across the busy road to the safe pads!">
+<meta property="og:title" content="🐸 Frogger · Kids Game Land">
+<meta property="og:description" content="Hop across the busy road to the safe pads!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/frogger/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🐸 Frogger</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Score: <b id="score">0</b></div>
+    <div class="stat">Lives: <b id="lives">3</b></div>
+    <div class="stat">Pads filled: <b id="pads">0</b>/5</div>
+    <div class="stat">Best: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <canvas id="canvas" width="520" height="520"></canvas>
+  </div>
+
+  <div class="dpad">
+    <button class="pad-btn up" data-dir="up" aria-label="Up">▲</button>
+    <button class="pad-btn left" data-dir="left" aria-label="Left">◀</button>
+    <button class="pad-btn right" data-dir="right" aria-label="Right">▶</button>
+    <button class="pad-btn down" data-dir="down" aria-label="Down">▼</button>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Hop across the busy lanes to the <b>safe pads</b> at the top! Use the <b>arrow keys</b>, tap the <b>grid</b>, or the on-screen arrows. Get hit by a car and you lose a life — fill all <b>5 pads</b> to win!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

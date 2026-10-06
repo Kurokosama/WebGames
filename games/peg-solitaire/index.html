@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peg Solitaire · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/peg-solitaire/">
+<meta name="description" content="Hop the pegs until only one is left on the board!">
+<meta property="og:title" content="Peg Solitaire · Kids Game Land">
+<meta property="og:description" content="Hop the pegs until only one is left on the board!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/peg-solitaire/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">📕 Peg Solitaire</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Pegs left: <b id="pegs-left">33</b></div>
+    <div class="stat">Best: <b id="best">—</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="wood-board" id="board" role="grid" aria-label="Peg Solitaire board"></div>
+    <div class="board-tools">
+      <button class="btn undo-btn" id="undo-btn">↩️ Undo</button>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Tap a peg, then tap a hole two squares away — the peg jumps over its neighbour and the jumped peg disappears! The board starts with one empty hole in the middle. Clear every peg except one to win. Fewer jumps is better!</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

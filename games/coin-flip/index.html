@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Flip · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/coin-flip/">
+<meta name="description" content="Call heads or tails and beat the coin!">
+<meta property="og:title" content="Coin Flip · Kids Game Land">
+<meta property="og:description" content="Call heads or tails and beat the coin!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/coin-flip/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🪙 Coin Flip</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your wins: <b id="player-wins">0</b></div>
+    <div class="stat">Coin wins: <b id="coin-wins">0</b></div>
+    <div class="stat">Streak: <b id="streak">0</b></div>
+    <div class="stat">Best streak: <b id="best-streak">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="coin-stage">
+      <div class="coin-wrap" id="coin-wrap">
+        <div class="coin" id="coin">
+          <div class="coin-face heads">
+            <span class="face-emoji">👑</span>
+            <span class="face-letter">H</span>
+          </div>
+          <div class="coin-face tails">
+            <span class="face-emoji">⭐</span>
+            <span class="face-letter">T</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="coin-message" id="message">Call Heads or Tails, then flip the coin!</p>
+
+      <div class="call-buttons">
+        <button class="btn call-btn call-heads" id="call-heads">👑 Heads</button>
+        <button class="btn call-btn call-tails" id="call-tails">⭐ Tails</button>
+      </div>
+
+      <div class="round-label" id="round-label">Round 0 / 10</div>
+      <div class="history" id="history"></div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Pick Heads or Tails and flip the coin. You win the round if the coin lands on your call. First to 7 wins wins the match! Green chips are your wins, orange chips are the coin's.</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

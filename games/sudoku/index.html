@@ -425,7 +425,6 @@ body {
     color: var(--text-secondary);
 }
 
-
 #difficulty-label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -864,8 +863,6 @@ body {
     #toolbar-actions { gap: 8px; padding: 4px 16px; }
 }
 
-
-
 .num-btn.note-highlight {
     background: var(--highlight-selected);
     border-color: var(--num-user);
@@ -887,7 +884,6 @@ body {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.08); }
 }
-
 
 #hint-backdrop {
     display: none;
@@ -1008,7 +1004,6 @@ body {
     }
 }
 
-
 #hearts-display {
     font-size: 1.2rem;
     letter-spacing: 1px;
@@ -1025,7 +1020,6 @@ body {
     color: var(--num-error);
     margin: 8px 0;
 }
-
 
 #level-screen {
     flex: 1;
@@ -1123,6 +1117,13 @@ body {
 .start-random-btn:hover { background: var(--highlight-selected); }
 
 </style>
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/sudoku/">
+<meta name="description" content="Classic Sudoku with six difficulty levels!">
+<meta property="og:title" content="数独 - Sudoku Pure">
+<meta property="og:description" content="Classic Sudoku with six difficulty levels!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/sudoku/">
+<!--/seo:games-->
 </head>
 <body>
 
@@ -1438,7 +1439,6 @@ class Validator {
     }
 }
 
-
 // === js/core/solver.js ===
 // import removed
 
@@ -1533,7 +1533,6 @@ class Solver {
         return count;
     }
 }
-
 
 // === hint engine: technique-based hint with explanation ===
 class HintEngine {
@@ -2354,8 +2353,6 @@ class HintEngine {
     }
 }
 
-
-
 // === seeded RNG ===
 class SeededRNG {
     constructor(seed) { this.s = this._hash(seed); }
@@ -2494,7 +2491,6 @@ class Generator {
         return puzzle;
     }
 }
-
 
 const LEVEL_PACK = {
     easy: [
@@ -3270,7 +3266,6 @@ class Board {
     }
 }
 
-
 // === js/game/history.js ===
 class History {
     constructor() {
@@ -3318,7 +3313,6 @@ const ActionType = {
     NOTE_TOGGLE: 'note_toggle',
     HINT: 'hint',
 };
-
 
 // === js/game/timer.js ===
 class Timer {
@@ -3375,7 +3369,6 @@ class Timer {
         }
     }
 }
-
 
 // === level manager ===
 class LevelManager {
@@ -3590,7 +3583,6 @@ class Hints {
     load() {}
 }
 
-
 // === js/ui/sound.js ===
 class SoundManager {
     constructor() {
@@ -3609,7 +3601,7 @@ class SoundManager {
 
         const promises = names.map(name => {
             return new Promise((resolve) => {
-                const audio = new Audio(`assets/sounds/${name}.mp3`);
+                const audio = new Audio(`assets/sounds/${name}.wav`);  // shipped assets are .wav
                 audio.preload = 'auto';
                 audio.addEventListener('canplaythrough', () => resolve(), { once: true });
                 audio.addEventListener('error', () => resolve(), { once: true });
@@ -3645,7 +3637,6 @@ class SoundManager {
         return this.muted;
     }
 }
-
 
 // === js/ui/renderer.js ===
 class Renderer {
@@ -4073,7 +4064,6 @@ class Renderer {
     }
 }
 
-
 // === js/ui/animations.js ===
 class Animations {
     static celebrate(canvas) {
@@ -4149,7 +4139,6 @@ class Animations {
     }
 }
 
-
 // === js/ui/dialogs.js ===
 class Dialogs {
     constructor() {
@@ -4199,7 +4188,6 @@ class Dialogs {
         this.show('dialog-confirm');
     }
 }
-
 
 // === js/ui/input.js ===
 class InputHandler {
@@ -4462,7 +4450,6 @@ class InputHandler {
     }
 }
 
-
 // === js/data/storage.js ===
 class Storage {
     static save(key, data) {
@@ -4495,7 +4482,6 @@ class Storage {
         } catch (e) {}
     }
 }
-
 
 // === js/data/stats.js ===
 class Stats {
@@ -4580,7 +4566,6 @@ class Stats {
         return !best || timeSeconds < best;
     }
 }
-
 
 // === js/data/i18n.js ===
 const texts = {
@@ -4685,7 +4670,6 @@ function setLang(lang) {
 function getLang() {
     return currentLang;
 }
-
 
 // === js/app.js ===
 // import removed

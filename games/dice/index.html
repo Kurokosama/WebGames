@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dice Guess · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/dice/">
+<meta name="description" content="Guess the dice sum before the roll and score points!">
+<meta property="og:title" content="Dice Guess · Kids Game Land">
+<meta property="og:description" content="Guess the dice sum before the roll and score points!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/dice/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🎲 Dice Guess</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Score: <b id="score">0</b></div>
+    <div class="stat">Best: <b id="best">0</b></div>
+    <div class="stat">Round: <b id="round">1</b> / 10</div>
+  </div>
+  <div class="game-area">
+    <div class="dice-stage">
+      <div class="dice-row">
+        <div class="die" id="die-1" data-face="1"></div>
+        <div class="die" id="die-2" data-face="1"></div>
+      </div>
+      <p class="roll-total" id="roll-total">Roll total: <b>—</b></p>
+
+      <div class="guess-panel">
+        <h2 class="guess-title">Pick your guess</h2>
+        <div class="guess-grid" id="guess-grid"></div>
+        <button class="btn surprise-btn" id="surprise-btn">🎲 Surprise me</button>
+      </div>
+
+      <button class="btn roll-btn" id="roll-btn" disabled>Roll the dice!</button>
+      <p class="feedback" id="feedback">Choose a number, then roll the dice!</p>
+      <div class="history" id="history"></div>
+    </div>
+  </div>
+  <p class="how-to-play">💡 How to play: Pick the total you think the two dice will add up to, then roll! Exact guess = 10 points, off by 1 = 5 points, off by 2 = 2 points. Play 10 rounds and try to beat your best score.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

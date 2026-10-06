@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hex · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/hex/">
+<meta name="description" content="Connect your two sides of the board before the computer!">
+<meta property="og:title" content="Hex · Kids Game Land">
+<meta property="og:description" content="Connect your two sides of the board before the computer!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/hex/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">⬡ Hex</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your cells: <b id="you">0</b></div>
+    <div class="stat">Computer cells: <b id="computer">0</b></div>
+    <div class="stat">Turn: <b id="turn">You</b></div>
+    <div class="stat">Best: <b id="best">—</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="hex-board" id="hex-board" role="grid" aria-label="Hex board"></div>
+    <p class="legend"><span class="dot you"></span> You connect <b>top → bottom</b> · <span class="dot cpu"></span> Computer connects <b>left → right</b></p>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Tap an empty hexagon to claim it. You win by building an unbroken chain of your cells from the <b>top edge</b> to the <b>bottom edge</b>. The computer tries to connect <b>left to right</b>. Think ahead — the first player to link both sides wins!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

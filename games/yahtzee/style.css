@@ -1,0 +1,119 @@
+/* ============================================================
+   Yahtzee — dice pips, roll button and kid scorecard
+   ============================================================ */
+.yahtzee-stage {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Dice ---------- */
+.dice-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+.die {
+  width: 92px;
+  height: 92px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  padding: 9px;
+  background: var(--white);
+  border: 3px solid var(--lavender);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.die:hover { transform: translateY(-3px); }
+
+.die .cell { display: grid; place-items: center; }
+.die .pip { width: 18px; height: 18px; border-radius: 50%; background: transparent; }
+.die .cell.on .pip {
+  background: var(--ink);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+  animation: pip-pop 0.25s ease;
+}
+
+.die.kept {
+  border-color: var(--coral);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow), 0 0 0 4px rgba(255, 126, 103, 0.35);
+}
+.die.kept .cell.on .pip { background: var(--coral); }
+
+.die.rolling { animation: dice-shake 0.3s ease-in-out infinite; }
+.die.settled { animation: dice-land 0.3s ease; }
+
+@keyframes pip-pop { from { transform: scale(0.4); } to { transform: scale(1); } }
+@keyframes dice-shake {
+  0% { transform: rotate(-7deg) translateY(0); }
+  50% { transform: rotate(7deg) translateY(-6px); }
+  100% { transform: rotate(-7deg) translateY(0); }
+}
+@keyframes dice-land { from { transform: scale(1.1); } to { transform: scale(1); } }
+
+/* ---------- Roll button + hints ---------- */
+.roll-btn { background: var(--sky); font-size: 1.15rem; padding: 12px 26px; }
+.roll-btn:disabled { filter: grayscale(0.4); opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.rolls-left {
+  margin: 0; font-size: 1rem; font-weight: 600; color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.7); border-radius: 999px; padding: 8px 18px;
+}
+.rolls-left b { color: var(--coral); font-weight: 800; }
+
+.feedback { margin: 0; min-height: 1.4em; font-weight: 700; color: var(--ink-soft); text-align: center; }
+.feedback.good { color: #2f9e6f; }
+.feedback.bad { color: var(--coral); }
+
+/* ---------- Scorecard ---------- */
+.scorecard {
+  width: min(520px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.score-row {
+  font-family: var(--font);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "name points" "hint points";
+  gap: 2px 10px;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--white);
+  border: 3px solid transparent;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+.score-row:hover:not(.used):not(:disabled) { border-color: var(--mint); transform: translateY(-2px); }
+.score-row:disabled { cursor: default; }
+
+.cat-name { grid-area: name; font-weight: 800; color: var(--ink); }
+.cat-hint { grid-area: hint; font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); }
+.cat-points {
+  grid-area: points;
+  font-size: 1.15rem; font-weight: 800; color: var(--coral);
+  background: rgba(255, 126, 103, 0.12);
+  border-radius: 10px; padding: 4px 10px; min-width: 34px; text-align: center;
+}
+
+.score-row.used { opacity: 0.55; }
+.score-row.used .cat-points { background: rgba(76, 201, 240, 0.18); color: var(--ink-soft); }
+.score-row.zero:not(.used) .cat-points { opacity: 0.6; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 520px) {
+  .die { width: 68px; height: 68px; padding: 7px; }
+  .die .pip { width: 13px; height: 13px; }
+  .scorecard { grid-template-columns: 1fr; }
+  .roll-btn { font-size: 1rem; padding: 10px 20px; }
+}

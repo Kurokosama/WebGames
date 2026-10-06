@@ -1,0 +1,33 @@
+/* TriPeaks */
+.board-area { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.tripeaks { position: relative; width: 420px; height: 300px; }
+.peak { position: absolute; width: 56px; height: 80px; }
+.pcard {
+  position: absolute;
+  width: 56px; height: 80px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.12);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 4px 6px; font-weight: 800; font-size: 0.9rem;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.pcard.red { color: #e03131; }
+.pcard:hover { transform: translateY(-3px); z-index: 99; }
+
+.bottom-row { display: flex; align-items: flex-end; gap: 24px; }
+.stock-box { text-align: center; }
+.pile-label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink-soft); margin-top: 6px; }
+.stack, .current-card {
+  width: 56px; height: 80px;
+  border-radius: 8px;
+  border: 2px dashed rgba(91,122,134,0.4);
+  background: rgba(255,255,255,0.45);
+  display: flex; align-items: flex-start; justify-content: center;
+  cursor: pointer;
+}
+.stack .pcard, .current-card .pcard { position: absolute; }
+@media (max-width: 560px) {
+  .tripeaks { transform: scale(0.8); transform-origin: top center; margin-bottom: -60px; }
+}

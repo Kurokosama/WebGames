@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🃓 Durak · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/durak/">
+<meta name="description" content="The classic Russian card game — attack and defend!">
+<meta property="og:title" content="🃓 Durak · Kids Game Land">
+<meta property="og:description" content="The classic Russian card game — attack and defend!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/durak/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🃓 Durak</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your cards: <b id="your-cards">6</b></div>
+    <div class="stat">Computer: <b id="cpu-cards">6</b></div>
+    <div class="stat">Deck: <b id="deck">24</b></div>
+    <div class="stat">Trump: <b id="trump">♠</b></div>
+    <div class="stat">Wins: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="game-table">
+      <div class="table-row">
+        <span class="label">🤖 Computer</span>
+        <div class="hand" id="cpu-hand"></div>
+      </div>
+      <div class="message" id="message">You attack first!</div>
+      <div class="table-row">
+        <span class="label">🙋 You</span>
+        <div class="hand" id="you-hand"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools">
+    <button class="btn attack-btn" id="attack-btn">⚔️ Attack</button>
+    <button class="btn defend-btn" id="defend-btn">🛡️ Defend / Pick up</button>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Attack by playing any card onto the table. The computer must beat it with a higher card of the same suit, or with the <b>trump</b> suit. If it can't, it picks up the pile. First to empty your hand wins — the loser is the "durak" (fool)!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

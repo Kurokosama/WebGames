@@ -1,0 +1,92 @@
+/* SameGame (Star Pop) — game-specific visuals */
+
+.star-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  width: min(520px, 100%);
+  padding: 12px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(14px, 2.6vw, 22px);
+  line-height: 1;
+  user-select: none;
+}
+
+.cell.empty {
+  background: rgba(51, 80, 94, 0.06);
+}
+
+.cell.tile {
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(51, 80, 94, 0.18);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.cell.tile:hover { transform: translateY(-2px); }
+
+/* Kid-friendly palette */
+.cell.c0 { background: var(--coral); }
+.cell.c1 { background: #ffd166; }
+.cell.c2 { background: var(--mint); }
+.cell.c3 { background: var(--sky); }
+.cell.c4 { background: var(--lavender); }
+.cell.c5 { background: var(--pink); }
+
+/* Hovered / armed group */
+.cell.hl {
+  filter: brightness(1.18);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 4px 10px rgba(51, 80, 94, 0.25);
+}
+
+/* Pop animation */
+.cell.pop {
+  animation: star-pop 0.26s ease forwards;
+}
+
+@keyframes star-pop {
+  0% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1.25) rotate(12deg); opacity: 0.8; }
+  100% { transform: scale(0.2) rotate(-20deg); opacity: 0; }
+}
+
+/* Single star shake when it cannot be popped */
+.cell.no-group { animation: nope 0.3s ease; }
+
+@keyframes nope {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px) rotate(-6deg); }
+  75% { transform: translateX(4px) rotate(6deg); }
+}
+
+.pop-hint {
+  margin-top: 12px;
+  text-align: center;
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.05rem;
+  min-height: 1.4em;
+}
+
+.pop-hint.scored { color: var(--coral); }
+
+@media (max-width: 680px) {
+  .star-board {
+    gap: 4px;
+    padding: 8px;
+    width: 100%;
+  }
+  .cell { border-radius: 9px; font-size: 14px; }
+  .cell.tile { box-shadow: 0 2px 0 rgba(51, 80, 94, 0.18); }
+}

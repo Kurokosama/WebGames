@@ -1,0 +1,121 @@
+/* ============================================================
+   Emoji Jigsaw — game-specific styles
+   ============================================================ */
+
+.jigsaw-wrap {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* ---------- Puzzle board ---------- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: min(440px, 100%);
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.tile {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: clamp(30px, 6vw, 46px);
+  background: var(--cream-light, #fff6d9);
+  border: 3px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.tile:hover { transform: scale(1.06); }
+.tile:active { transform: scale(0.97); }
+
+.tile.selected {
+  border-color: var(--coral);
+  background: var(--cream-light, #fff6d9);
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(255, 126, 103, 0.35);
+}
+
+.tile.correct {
+  border-color: var(--mint);
+  background: #eafff4;
+}
+
+.tile.just-swapped {
+  animation: tile-pop 0.25s ease;
+}
+@keyframes tile-pop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Reference thumbnail ---------- */
+.reference {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+  text-align: center;
+}
+.reference h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  width: 150px;
+  margin: 0 auto;
+  background: var(--lavender);
+  border-radius: 12px;
+  padding: 8px;
+}
+.ref-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 6px;
+}
+.ref-caption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 680px) {
+  .jigsaw-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .board {
+    width: 100%;
+    max-width: 340px;
+    gap: 8px;
+    padding: 10px;
+  }
+  .tile { font-size: clamp(26px, 7vw, 38px); border-radius: 12px; }
+  .ref-grid { width: 120px; }
+  .ref-cell { font-size: 15px; }
+}

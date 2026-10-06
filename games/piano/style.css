@@ -1,0 +1,116 @@
+.piano-wrap {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Melody progress dots */
+.melody-track {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+.melody-track.hidden { display: none; }
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid rgba(76, 111, 128, 0.18);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.dot.done { background: var(--mint); border-color: var(--mint); }
+.dot.next { background: var(--pink); border-color: var(--pink); transform: scale(1.25); }
+
+/* Keyboard */
+.piano {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.key {
+  flex: 1 1 0;
+  min-width: 44px;
+  max-width: 62px;
+  height: 150px;
+  border: none;
+  border-radius: 12px 12px 16px 16px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 10px 4px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff 0%, #f3f7fb 100%);
+  box-shadow: 0 6px 0 rgba(76, 111, 128, 0.22);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.key .note { font-size: 1.05rem; }
+.key .hint {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: rgba(76, 111, 128, 0.1);
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+.key:hover { transform: translateY(-2px); filter: brightness(1.03); }
+.key.pressed {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 rgba(76, 111, 128, 0.22);
+  filter: brightness(1.08);
+}
+
+/* Kid-friendly rainbow key tints */
+.key[data-i="0"] { background: linear-gradient(180deg, #d8f7e6, #b6ecd4); }
+.key[data-i="1"] { background: linear-gradient(180deg, #d7ecfb, #b3dcf5); }
+.key[data-i="2"] { background: linear-gradient(180deg, #fff3cf, #ffe4a3); }
+.key[data-i="3"] { background: linear-gradient(180deg, #ffdcd3, #ffb9a8); }
+.key[data-i="4"] { background: linear-gradient(180deg, #e6dcf7, #cbb6ea); }
+.key[data-i="5"] { background: linear-gradient(180deg, #fbd9e6, #f2b8cd); }
+.key[data-i="6"] { background: linear-gradient(180deg, #d9f3ef, #b2e3d9); }
+.key[data-i="7"] { background: linear-gradient(180deg, #e2f0d9, #c3e2b4); }
+
+/* The glowing "next key" in Follow the Lights */
+.key.glow {
+  animation: key-glow 1.1s ease-in-out infinite;
+  outline: 3px solid var(--pink);
+}
+@keyframes key-glow {
+  0%, 100% { box-shadow: 0 6px 0 rgba(76, 111, 128, 0.22), 0 0 0 0 rgba(244, 123, 161, 0.5); }
+  50% { box-shadow: 0 6px 0 rgba(76, 111, 128, 0.22), 0 0 18px 6px rgba(244, 123, 161, 0.65); }
+}
+
+.key.wrong { animation: key-shake 0.35s ease; }
+@keyframes key-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@media (max-width: 680px) {
+  .piano { padding: 10px; gap: 5px; }
+  .key { min-width: 34px; height: 118px; border-radius: 10px; }
+  .key .note { font-size: 0.85rem; }
+  .key .hint { font-size: 0.62rem; }
+  .melody-track { padding: 10px; gap: 6px; }
+  .dot { width: 14px; height: 14px; }
+}

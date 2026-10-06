@@ -1,0 +1,15 @@
+/* Slitherlink */
+.slither {
+  width: min(460px, 94vw);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.slither .cell-bg { fill: #f8f9fa; }
+.slither .clue { font-size: 13px; font-weight: 800; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+.slither .clue.met { fill: #2f9e44; }
+.slither .dot { fill: #adb5bd; }
+.slither .edge { stroke: #dee2e6; stroke-width: 12; stroke-linecap: round; }
+.slither .edge.on { stroke: var(--coral); stroke-width: 5; }

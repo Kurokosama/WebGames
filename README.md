@@ -1,15 +1,15 @@
 # 🎮 Kids Game Land
 
-A little collection of **72 browser games** — 36 classic mini-games for kids, plus 28 retro 90s classics and 8 bigger, deeper games. All playable right in the browser.
+A little collection of **118 browser games** — 118 classic games for kids and grown-ups, plus a curated retro menu of 90s classics and bigger, deeper games. All playable right in the browser.
 
 **No ads. No sign-ups. No tracking. Just games.** 💚
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Games](https://img.shields.io/badge/Games-72-brightgreen)](#-the-games)
+[![Games](https://img.shields.io/badge/Games-118-brightgreen)](#-the-games)
 
 ## What is this?
 
-A hobby project — a clean, simple place for kids to play classics like Tetris, Snake, 2048, Minesweeper, and Gomoku (and 31 more!), plus a retro menu of 90s classics and a menu of bigger games like Minecraft, a Sega MD emulator, and a text-adventure RPG. It's plain HTML/CSS/JS that runs 100% in the browser, with no build tools, no frameworks, and nothing to install. Free to use, free to copy, free to change.
+A hobby project — a clean, simple place for kids to play classics like Tetris, Snake, 2048, Minesweeper, and Gomoku (and 113 more!), plus a retro menu of 90s classics and bigger games like Minecraft, a Sega MD emulator, and a text-adventure RPG. It's plain HTML/CSS/JS that runs 100% in the browser, with no build tools, no frameworks, and nothing to install. Free to use, free to copy, free to change.
 
 ## For parents & teachers 👨‍👩‍👧‍👦
 
@@ -21,46 +21,128 @@ A hobby project — a clean, simple place for kids to play classics like Tetris,
 
 ## 🎮 The Games
 
-All games live under [`games/`](games/) — one folder per game.
+All games live under [`games/`](games/) — one folder per game. Every one is listed in the lobby at [`index.html`](index.html).
 
 | # | Game | Type | Folder | Description |
 |---|------|------|--------|-------------|
-| 1 | 🧠 Memory Match | Memory | `games/memory-match` | Flip cards and find matching pairs |
-| 2 | ⭕ Tic-Tac-Toe | Strategy | `games/tic-tac-toe` | Get three in a row vs the computer |
-| 3 | ✊ Rock Paper Scissors | Classic | `games/rock-paper-scissors` | Beat the computer, first to 5 wins |
-| 4 | 🔢 Guess the Number | Logic | `games/guess-the-number` | Find the secret number with hints |
-| 5 | ➕ Math Quiz | Education | `games/math-quiz` | Solve math problems, build a streak |
-| 6 | 🔤 Word Scramble | Word | `games/word-scramble` | Unscramble the letters to spell words |
-| 7 | 🙈 Hangman | Word | `games/hangman` | Guess the word before losing hearts |
-| 8 | ⚡ Reaction Test | Reflex | `games/reaction-test` | Click fast when it turns green |
-| 9 | 🐍 Snake | Arcade | `games/snake` | Eat food, grow, don't hit yourself |
-| 10 | 🧩 Tetris | Puzzle | `games/tetris` | Stack blocks and clear full lines |
-| 11 | 🎯 2048 | Puzzle | `games/2048` | Merge tiles to reach 2048 |
-| 12 | 🍎 Pair Link | Puzzle | `games/pair-link` | Connect matching pairs with a path |
-| 13 | 🔨 Whack-a-Mole | Action | `games/whack-a-mole` | Whack the moles before they hide |
-| 14 | 🗼 Tower of Hanoi | Puzzle | `games/tower-of-hanoi` | Move all disks to the last peg |
-| 15 | 🧊 Sliding Puzzle | Puzzle | `games/sliding-puzzle` | Put the numbers in order |
-| 16 | 🍓 Fruit Catch | Arcade | `games/fruit-catch` | Catch the falling fruit |
-| 17 | 🎵 Simon Says | Memory | `games/simon-says` | Repeat the color pattern |
-| 18 | 🎈 Balloon Pop | Arcade | `games/balloon-pop` | Pop balloons before time runs out |
-| 19 | 🌈 Color Match | Reflex | `games/color-match` | Click the matching color |
-| 20 | 🌀 Maze | Puzzle | `games/maze` | Find your way to the flag |
-| 21 | 🎱 Gomoku | Strategy | `games/gomoku` | Five in a row vs the computer |
-| 22 | 🧱 Breakout | Arcade | `games/breakout` | Bounce the ball and smash bricks |
-| 23 | 🏓 Pong | Arcade | `games/pong` | Classic ping-pong, first to 5 |
-| 24 | 💣 Minesweeper | Logic | `games/minesweeper` | Find safe tiles, avoid the bombs |
-| 25 | 🔴 Connect Four | Strategy | `games/connect-four` | Drop discs, get four in a row |
-| 26 | 📦 Sokoban | Puzzle | `games/sokoban` | Push boxes onto the targets |
-| 27 | 🐦 Flappy Bird | Arcade | `games/flappy-bird` | Flap through the pipe gaps |
-| 28 | ✏️ Dots & Boxes | Strategy | `games/dots-and-boxes` | Draw lines, make more boxes |
-| 29 | ⌨️ Typing Race | Word | `games/typing-race` | Type the falling words |
-| 30 | 🍬 Match Three | Puzzle | `games/match-three` | Swap treats to match three |
-| 31 | 🫧 Bubble Shooter | Arcade | `games/bubble-shooter` | Aim and pop 3+ matching bubbles |
-| 32 | 🐸 Doodle Jump | Arcade | `games/doodle-jump` | Bounce up the platforms, climb high |
-| 33 | 👻 Pac-Man | Arcade | `games/pac-man` | Eat all the dots, dodge the ghosts |
-| 34 | 👾 Space Invaders | Arcade | `games/space-invaders` | Shoot down the invading aliens |
-| 35 | 🟩 Wordle | Word | `games/wordle` | Guess the secret 5-letter word |
-| 36 | ♟️ Chess | Strategy | `games/chess` | Full chess rules vs the computer |
+| 1 | 🧠 Memory Match | Arcade | `games/memory-match` | Flip the cards and find all matching pairs! |
+| 2 | ⭕ Tic-Tac-Toe | Arcade | `games/tic-tac-toe` | Get three in a row before the computer does! |
+| 3 | ✊ Rock Paper Scissors | Arcade | `games/rock-paper-scissors` | Can you beat the computer? Rock, paper, scissors! |
+| 4 | 🔢 Guess the Number | Arcade | `games/guess-the-number` | Find my secret number with clever guessing! |
+| 5 | ➕ Math Quiz | Arcade | `games/math-quiz` | Solve quick math problems and build a streak! |
+| 6 | 🔤 Word Scramble | Arcade | `games/word-scramble` | Unscramble the letters and build the word! |
+| 7 | 🙈 Hangman | Arcade | `games/hangman` | Guess the secret word before you lose your hearts! |
+| 8 | ⚡ Reaction Test | Arcade | `games/reaction-test` | Click as fast as you can when the light turns green! |
+| 9 | 🐍 Snake | Arcade | `games/snake` | Eat the food, grow long, and do not bump into yourself! |
+| 10 | 🧩 Tetris | Strategy | `games/tetris` | Stack the blocks and clear full lines! |
+| 11 | 🎯 2048 | Arcade | `games/2048` | Merge the tiles and reach the number 2048! |
+| 12 | 🍎 Pair Link | Strategy | `games/pair-link` | Connect matching pairs with a path to clear them! |
+| 13 | 🔨 Whack-a-Mole | Arcade | `games/whack-a-mole` | Whack the moles before they disappear! |
+| 14 | 🗼 Tower of Hanoi | Strategy | `games/tower-of-hanoi` | Move all the disks to the last peg — one at a time! |
+| 15 | 🧊 Sliding Puzzle | Strategy | `games/sliding-puzzle` | Slide the tiles and put the numbers in order! |
+| 16 | 🍓 Fruit Catch | Arcade | `games/fruit-catch` | Move your basket and catch the falling fruit! |
+| 17 | 🎵 Simon Says | Arcade | `games/simon-says` | Watch the colors, then repeat the pattern! |
+| 18 | 🎈 Balloon Pop | Arcade | `games/balloon-pop` | Pop as many balloons as you can before time runs out! |
+| 19 | 🌈 Color Match | Arcade | `games/color-match` | Read the word and click the matching color! |
+| 20 | 🌀 Maze | Strategy | `games/maze` | Find your way through the maze to reach the flag! |
+| 21 | 🎱 Gomoku | Strategy | `games/gomoku` | Five in a row wins! Can you beat the computer? |
+| 22 | 🧱 Breakout | Arcade | `games/breakout` | Bounce the ball and smash every brick! |
+| 23 | 🏓 Pong | Arcade | `games/pong` | Classic ping-pong — first to 5 points wins! |
+| 24 | 💣 Minesweeper | Strategy | `games/minesweeper` | Find the safe tiles and avoid the bombs! |
+| 25 | 🔴 Connect Four | Arcade | `games/connect-four` | Drop the discs and get four in a row! |
+| 26 | 📦 Sokoban | Strategy | `games/sokoban` | Push the boxes onto the targets! |
+| 27 | 🐦 Flappy Bird | Arcade | `games/flappy-bird` | Tap to flap through the gaps — don’t fall! |
+| 28 | ✏️ Dots & Boxes | Arcade | `games/dots-and-boxes` | Draw lines to make more boxes than the computer! |
+| 29 | ⌨️ Typing Race | Arcade | `games/typing-race` | Type the falling words before they reach the ground! |
+| 30 | 🍬 Match Three | Arcade | `games/match-three` | Swap the treats to match three in a row! |
+| 31 | 🫧 Bubble Shooter | Arcade | `games/bubble-shooter` | Aim and shoot to pop 3 matching bubbles! |
+| 32 | 🐸 Doodle Jump | Arcade | `games/doodle-jump` | Bounce up the platforms and climb as high as you can! |
+| 33 | 👻 Pac-Man | Arcade | `games/pac-man` | Eat all the dots and dodge the ghosts! |
+| 34 | 👾 Space Invaders | Arcade | `games/space-invaders` | Stop the invaders before they reach you! |
+| 35 | 🟩 Wordle | Arcade | `games/wordle` | Guess the secret 5-letter word in 6 tries! |
+| 36 | ♟️ Chess | Strategy | `games/chess` | Classic chess with full rules — beat the computer! |
+| 37 | 💡 Lights Out | Strategy | `games/lights-out` | Turn off every bulb — each click flips its neighbors! |
+| 38 | ⭐ SameGame | Arcade | `games/samegame` | Pop groups of same-colored blocks and clear the board! |
+| 39 | 🎨 Nonogram | Strategy | `games/nonogram` | Logic picture puzzles — solve the number clues! |
+| 40 | 🔍 Word Search | Arcade | `games/word-search` | Find the hidden words in the letter grid! |
+| 41 | 📝 Crossword | Arcade | `games/crossword` | A small kid crossword — fill in all the words! |
+| 42 | 🔎 Spot the Difference | Arcade | `games/spot-the-difference` | Find the 5 differences between the two pictures! |
+| 43 | 🧩 Emoji Jigsaw | Arcade | `games/jigsaw` | Swap the tiles and restore the hidden picture! |
+| 44 | ✏️ Connect the Dots | Arcade | `games/connect-the-dots` | Click the dots in order and reveal the secret picture! |
+| 45 | 🖍️ Coloring Book | Arcade | `games/coloring` | Pick crayon colors and fill in the picture! |
+| 46 | 🖌️ Drawing Pad | Arcade | `games/drawing` | Draw anything you like with bright colors! |
+| 47 | 🎹 Piano | Arcade | `games/piano` | Play real notes on a mini piano — follow the lights! |
+| 48 | 🪙 Coin Flip | Arcade | `games/coin-flip` | Call heads or tails and beat the coin! |
+| 49 | 🎲 Dice Guess | Arcade | `games/dice` | Guess the dice sum before the roll and score points! |
+| 50 | 🎴 Higher or Lower | Arcade | `games/higher-lower` | Guess if the next card is higher or lower — build a streak! |
+| 51 | ⚔️ War (Card Game) | Arcade | `games/war-card` | Classic card game War — win more tricks than the computer! |
+| 52 | 👻 Old Maid | Arcade | `games/old-maid` | Don’t be the one stuck holding the Queen! |
+| 53 | 🐟 Go Fish | Arcade | `games/go-fish` | Ask for cards, collect books — classic Go Fish! |
+| 54 | 🃏 FreeCell | Strategy | `games/freecell` | Classic FreeCell solitaire — every deal can be solved! |
+| 55 | 🎉 Bingo | Arcade | `games/bingo` | Mark your BINGO card and get three lines! |
+| 56 | 🐍 Snakes & Ladders | Arcade | `games/snakes-and-ladders` | Roll the dice, climb ladders, dodge the snakes! |
+| 57 | 🎯 Yahtzee | Strategy | `games/yahtzee` | Roll five dice and fill your scorecard! |
+| 58 | 🪨 Nim | Strategy | `games/nim` | Take stones — the player who takes the last one loses! |
+| 59 | 🥣 Mancala | Strategy | `games/mancala` | Classic seed-sowing game — capture more stones! |
+| 60 | ⚫ Othello | Strategy | `games/othello` | Classic Reversi — flip your opponent’s stones! |
+| 61 | ⚪ Go (9×9) | Deep | `games/go` | Surround territory and capture stones on a small Go board! |
+| 62 | 🏒 Air Hockey | Arcade | `games/air-hockey` | Air hockey vs the computer — first to 7 goals! |
+| 63 | 🚀 Asteroids | Strategy | `games/asteroids` | Classic arcade — shoot the asteroids, don’t get hit! |
+| 64 | 🐸 Frogger | Arcade | `games/frogger` | Hop across the busy road to the safe pads! |
+| 65 | 🚀 Missile Command | Strategy | `games/missile-command` | Defend your cities from the falling missiles! |
+| 66 | 💣 Bomberman | Strategy | `games/bomberman` | Place bombs, break bricks, find the exit! |
+| 67 | 🧊 Rubik's Cube | Strategy | `games/rubiks-cube` | Twist the faces and solve the classic puzzle cube! |
+| 68 | 📕 Peg Solitaire | Strategy | `games/peg-solitaire` | Hop the pegs until only one is left on the board! |
+| 69 | ⬡ Hex | Strategy | `games/hex` | Connect your two sides of the board before the computer! |
+| 70 | 🎌 Shogi | Deep | `games/shogi` | The game of the samurai — Japanese chess vs the computer! |
+| 71 | 🔢 Slitherlink | Strategy | `games/slitherlink` | Draw one closed loop that matches all the numbers! |
+| 72 | 🁣 Dominoes | Arcade | `games/dominoes` | Match the pips and empty your hand before the computer! |
+| 73 | 🃓 Durak | Strategy | `games/durak` | The classic Russian card game — attack and defend! |
+| 74 | 8️⃣ Crazy Eights | Arcade | `games/crazy-eights` | Match the suit or number — an 8 is wild! |
+| 75 | 🌱 Cribbage | Strategy | `games/cribbage` | Score 15s, pairs and runs — first to 61 points! |
+| 76 | 🔺 Pyramid Solitaire | Strategy | `games/pyramid-solitaire` | Remove pairs of free cards that add up to 13! |
+| 77 | ⛰️ TriPeaks | Strategy | `games/tripeaks` | Clear three peaks by picking the next card up or down! |
+| 78 | 🦆 Duck Hunt | Arcade | `games/duck-hunt` | Shoot the flying ducks before they escape! |
+| 79 | 🐍 Zuma | Strategy | `games/zuma` | Shoot marbles to pop groups of three! |
+| 80 | 🐦 Slingshot Birds | Arcade | `games/angry-birds` | Launch the bird and pop all the pigs! |
+| 81 | 🏀 Basketball Shoot | Arcade | `games/basketball` | Set the angle and power — sink the baskets! |
+| 82 | 🎲 Farkle | Strategy | `games/farkle` | Roll the dice and race to 1000 points! |
+| 83 | 🀄 Mahjong Tiles | Arcade | `games/mahjong` | Match and clear all the free mahjong tiles! |
+| 84 | ⚫ Checkers | Strategy | `games/checkers` | Classic checkers — jump, capture, and crown your pieces! |
+| 85 | 🎲 Backgammon | Strategy | `games/backgammon` | Roll, move, and bear off against the computer! |
+| 86 | 🚢 Battleship | Strategy | `games/battleship` | Place your fleet and battle the computer at sea! |
+| 87 | 🔍 Cluedo | Strategy | `games/cluedo` | Who did it? With what? Where? Detective game! |
+| 88 | 🎲 Ludo | Arcade | `games/ludo` | Roll the dice and race your tokens home! |
+| 89 | ⭐ Chinese Checkers | Arcade | `games/chinese-checkers` | Hop your marbles across the star board! |
+| 90 | 🏠 Monopoly | Strategy | `games/monopoly` | Buy land, build houses — classic board game fun! |
+| 91 | 🐉 Chinese Chess | Strategy | `games/xiangqi` | Cross the river and checkmate the general! |
+| 92 | 🔢 Sudoku | Strategy | `games/sudoku` | Classic Sudoku with six difficulty levels! |
+| 93 | 💣 Minesweeper Classic | Strategy | `games/minesweeper-classic` | The classic Windows Minesweeper — flag the mines! |
+| 94 | 🧩 Klotski | Strategy | `games/klotski` | Slide the blocks and let Cao Cao escape! |
+| 95 | ⚫ Gomoku Classic | Strategy | `games/gomoku-classic` | Black vs white — five in a row wins! |
+| 96 | 📦 Sokoban Classic | Strategy | `games/sokoban-classic` | The classic warehouse-worker puzzle! |
+| 97 | 🐍 Snake Classic | Arcade | `games/snake-classic` | The original Snake — eat apples, don’t hit walls! |
+| 98 | 🧱 Tetris Classic | Strategy | `games/tetris-classic` | Classic Tetris — clear lines as the speed rises! |
+| 99 | 🃏 Solitaire | Strategy | `games/solitaire` | Classic Klondike solitaire — build the piles A to K! |
+| 100 | 🕷️ Spider Solitaire | Strategy | `games/spider-solitaire` | Classic Spider Solitaire — clear all 104 cards! |
+| 101 | 🎴 Gin Rummy | Strategy | `games/gin-rummy` | Make runs and sets — classic Gin Rummy! |
+| 102 | 🂡 Blackjack | Strategy | `games/blackjack` | Hit, stand, double — beat the dealer to 21! |
+| 103 | 🎴 Fight the Landlord | Strategy | `games/doudizhu` | Classic three-player card game! |
+| 104 | 🎯 Pinball | Strategy | `games/pinball` | Flip the flippers and pop the bumpers! |
+| 105 | 🎮 Battle City | Strategy | `games/battle-city` | Classic FC tanks — defend your base! |
+| 106 | 🍉 Fruit Ninja | Arcade | `games/fruit-ninja` | Slice the fruit, dodge the bombs! |
+| 107 | 🏎️ Retro Racers | Strategy | `games/retro-racers` | Top-down two-player racing with drift and boost! |
+| 108 | 🎯 Darts | Strategy | `games/darts` | Classic 501 darts — reach zero first! |
+| 109 | 🎳 Bowling | Arcade | `games/bowling` | Pixel bowling — aim, throw, strike! |
+| 110 | 🎱 8-Ball Pool | Strategy | `games/8-ball-pool` | 8-ball pool with real physics — clear the table! |
+| 111 | ⚔️ Dungeon Crawl | Strategy | `games/dungeon-crawl` | Explore generated dungeons and fight monsters! |
+| 112 | 🗼 Tower Defense | Strategy | `games/tower-defense` | Build towers and stop the waves of enemies! |
+| 113 | 🏕️ A Dark Room | Strategy | `games/adarkroom` | A deep text adventure — start at a campfire! |
+| 114 | 🌻 Plants vs Zombies | Strategy | `games/plants-vs-zombies` | Plant defenders vs the zombie waves! |
+| 115 | 🌊 Crimson Tide | Deep | `games/crimson-tide` | Big RTS battle — base, army, campaign! |
+| 116 | 🟫 Minecraft | Deep | `games/minecraft` | Full Minecraft 1.5.2 — mine, build, explore! |
+| 117 | 📼 NES Emulator | Strategy | `games/nes-emulator` | Upload a NES ROM and play classic games! |
+| 118 | 🦔 Genesis Emulator | Strategy | `games/genesis-emulator` | Upload a Sega Genesis ROM — Sonic and more! |
 
 ## 🕹️ 怀旧游戏 · 大孩子 &amp; 成年人 (Retro Games)
 
@@ -124,7 +206,7 @@ Then open **http://localhost:8000** in your browser and pick a game!
 
 ```
 WebGames/
-├── index.html        # The lobby — lists all 36 games
+├── index.html        # The lobby — lists all 118 games
 ├── retro-games.html  # 怀旧游戏 menu — 36 games for older kids & adults
 ├── css/              # Shared styles (common.css + games.css)
 ├── js/common.js      # Shared helpers (game frame, modal, confetti, utils)

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spot the Difference · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/spot-the-difference/">
+<meta name="description" content="Find the 5 differences between the two pictures!">
+<meta property="og:title" content="Spot the Difference · Kids Game Land">
+<meta property="og:description" content="Find the 5 differences between the two pictures!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/spot-the-difference/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🔎 Spot the Difference</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Found: <b id="found-count">0</b></div>
+    <div class="stat">Total: <b id="total-count">5</b></div>
+    <div class="stat">Mistakes: <b id="mistakes-count">0</b></div>
+    <div class="stat">Best: <b id="best-count">—</b></div>
+  </div>
+  <div class="game-area">
+    <div class="panels">
+      <section class="panel">
+        <h2 class="panel-label">🖼️ Original</h2>
+        <div class="board" id="left-board"></div>
+      </section>
+      <section class="panel">
+        <h2 class="panel-label">🔎 Find the differences</h2>
+        <div class="board clickable" id="right-board"></div>
+      </section>
+    </div>
+  </div>
+  <p class="how-to-play">💡 How to play: Look at the two pictures. Five tiles are different! Tap the changed tiles on the right picture. Green means you found one. Find all 5 to win!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

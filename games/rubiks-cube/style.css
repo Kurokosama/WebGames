@@ -1,0 +1,26 @@
+/* Rubik's Cube */
+.cube-wrap { display: grid; place-items: center; padding: 10px; }
+.cube {
+  display: grid;
+  grid-template-columns: repeat(3, 62px);
+  grid-template-rows: repeat(3, 62px);
+  gap: 5px;
+  background: #212529;
+  padding: 10px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.cube .sticky {
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.7rem;
+  color: rgba(0,0,0,0.45);
+  transition: transform 0.2s ease;
+}
+.controls { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.turn-btn { background: var(--sky); min-width: 52px; }
+@media (max-width: 480px) {
+  .cube { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); }
+}

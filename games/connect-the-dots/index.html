@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connect the Dots · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/connect-the-dots/">
+<meta name="description" content="Click the dots in order and reveal the secret picture!">
+<meta property="og:title" content="Connect the Dots · Kids Game Land">
+<meta property="og:description" content="Click the dots in order and reveal the secret picture!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/connect-the-dots/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">✏️ Connect the Dots</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Next dot: <b id="next-dot">1</b></div>
+    <div class="stat">Progress: <b id="progress">0/14</b></div>
+    <div class="stat">Mistakes: <b id="mistakes">0</b></div>
+    <div class="stat">Best time: <b id="best">—</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="dots-board">
+      <svg id="board" viewBox="0 0 600 480" role="img" aria-label="Connect-the-dots picture">
+        <polygon id="reveal-shape" class="reveal-shape" points=""></polygon>
+        <g id="segments"></g>
+        <g id="dots"></g>
+      </svg>
+      <p class="message" id="message">A secret picture is hiding! Click dot 1 to start. ✏️</p>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Click the dots in order — 1, then 2, then 3! Every right click draws a thick colourful line. Connect all the dots to reveal the hidden picture. Wrong clicks are okay, just find the right number!</p>
+</main>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

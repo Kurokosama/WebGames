@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎲 Farkle · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/farkle/">
+<meta name="description" content="Roll the dice and race to 1000 points!">
+<meta property="og:title" content="🎲 Farkle · Kids Game Land">
+<meta property="og:description" content="Roll the dice and race to 1000 points!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/farkle/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🎲 Farkle</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your score: <b id="your-score">0</b></div>
+    <div class="stat">Computer: <b id="cpu-score">0</b></div>
+    <div class="stat">Turn points: <b id="turn-points">0</b></div>
+    <div class="stat">Wins: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="game-table">
+      <div class="row"><span class="label">🤖 Computer roll:</span><div class="dice-row" id="cpu-dice"></div></div>
+      <div class="bank-line">🏦 Banked — You: <b id="bank-you">0</b> · Computer: <b id="bank-cpu">0</b></div>
+      <div class="row"><span class="label">🙋 Your roll:</span><div class="dice-row" id="you-dice"></div></div>
+      <p class="farkle-msg" id="message">Your turn — roll to start</p>
+    </div>
+  </div>
+
+  <div class="tools">
+    <button class="btn play-btn" id="roll-btn">🎲 Roll</button>
+    <button class="btn bank-btn" id="bank-btn">🏦 Bank points</button>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Roll up to six dice. <b>1</b> = 100 points, <b>5</b> = 50, three of a kind = that number × 100 (three 1s = 1000!). Keep rolling the rest to build more points — but a roll with <b>no scoring dice</b> is a Farkle and loses your turn points. First to <b>1000</b> wins!</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

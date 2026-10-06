@@ -1,0 +1,181 @@
+/* Snakes & Ladders — game-specific visuals */
+
+.board-wrap {
+  position: relative;
+  width: min(92vw, 520px);
+  margin: 0 auto;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--white);
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--cream) 60%, var(--white));
+  border: 2px solid var(--white);
+}
+
+.cell.alt {
+  background: color-mix(in srgb, var(--mint) 25%, var(--white));
+}
+
+.cell.ladder-cell {
+  background: color-mix(in srgb, var(--mint) 45%, var(--white));
+}
+
+.cell.snake-cell {
+  background: color-mix(in srgb, var(--coral) 30%, var(--white));
+}
+
+.cell.win-cell {
+  background: color-mix(in srgb, var(--lavender) 45%, var(--white));
+}
+
+.cell .jump-mark {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.board-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.board-overlay line {
+  stroke-linecap: round;
+}
+
+.board-overlay .ladder-line {
+  stroke: #2eaf6f;
+  stroke-width: 0.16;
+  opacity: 0.75;
+}
+
+.board-overlay .snake-line {
+  stroke: var(--coral);
+  stroke-width: 0.16;
+  opacity: 0.75;
+}
+
+.token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cell .token {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  animation: token-pop 0.25s ease;
+}
+
+@keyframes token-pop {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+.cell.token-two .token:nth-of-type(2) {
+  bottom: 18px;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  max-width: 520px;
+  margin: 16px auto 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  box-shadow: var(--shadow);
+}
+
+.dice-display {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--white);
+  border: 3px solid var(--lavender);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.dice-display.rolling {
+  animation: dice-shake 0.4s ease;
+}
+
+@keyframes dice-shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-12deg) scale(1.08); }
+  75% { transform: rotate(12deg) scale(1.08); }
+}
+
+.roll-btn {
+  font-size: 18px;
+  padding: 12px 26px;
+  background: var(--sky);
+  color: var(--white);
+  border-radius: var(--radius);
+}
+
+.roll-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  min-height: 24px;
+}
+
+@media (max-width: 600px) {
+  .cell {
+    font-size: 9px;
+    padding: 2px 3px;
+  }
+  .cell .jump-mark { font-size: 11px; }
+  .cell .token { font-size: 14px; }
+  .cell.token-two .token:nth-of-type(2) { bottom: 14px; }
+}

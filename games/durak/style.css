@@ -1,0 +1,27 @@
+/* Durak */
+.game-table {
+  width: min(620px, 96vw);
+  background: linear-gradient(160deg, #2f9e44, #1f7a4d);
+  border: 8px solid #37b24d;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  color: #fff;
+}
+.table-row { margin-bottom: 14px; }
+.label { font-weight: 800; display: block; margin-bottom: 8px; }
+.hand { display: flex; gap: 7px; flex-wrap: wrap; min-height: 78px; }
+.card {
+  width: 54px; height: 74px; border-radius: 9px;
+  background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.95rem; cursor: pointer;
+}
+.card.red { color: #e03131; }
+.card.back { background: linear-gradient(135deg,#4a90c4,#3a6ea5); color: transparent; cursor: default; }
+.message { text-align: center; font-weight: 700; padding: 8px 0; min-height: 1.4em; }
+.tools { display: flex; gap: 12px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+.attack-btn { background: var(--coral); }
+.defend-btn { background: var(--sky); }
+.tools button:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (max-width: 520px) { .card { width: 44px; height: 62px; font-size: 0.8rem; } }

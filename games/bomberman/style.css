@@ -1,0 +1,33 @@
+/* Bomberman — grid arena */
+.game-area canvas {
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  background: #c9a27a;
+  touch-action: none;
+  display: block;
+}
+
+.touch-controls {
+  display: none;
+  gap: 10px;
+  margin-top: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.tc-btn {
+  width: 58px;
+  height: 58px;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 16px;
+  background: var(--sky);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+}
+.tc-btn.bomb { background: var(--coral); border-radius: 50%; }
+.tc-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.18); }
+
+@media (pointer: coarse), (max-width: 680px) {
+  .touch-controls { display: flex; }
+}

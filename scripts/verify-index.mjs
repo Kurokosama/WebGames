@@ -30,17 +30,17 @@ const gameDirs = readdirSync(gamesDir, { withFileTypes: true })
   .map((d) => d.name);
 
 const issues = [];
-if (slugsInIndex.length + slugsInRetro.length !== gameDirs.length) {
-  issues.push(`Count mismatch: lobby lists ${slugsInIndex.length} + retro menu ${slugsInRetro.length} games but games/ has ${gameDirs.length} folders`);
+// The lobby lists every game; retro-games.html is an additional curated view, so
+// a slug may legitimately appear in both. Compare the union against games/.
+const allListed = new Set([...slugsInIndex, ...slugsInRetro]);
+if (allListed.size !== gameDirs.length) {
+  issues.push(`Count mismatch: the menus list ${allListed.size} distinct games but games/ has ${gameDirs.length} folders`);
 }
-for (const slug of slugsInIndex) {
-  if (!gameDirs.includes(slug)) issues.push(`Lobby links to '${slug}' but no folder exists`);
-}
-for (const slug of slugsInRetro) {
-  if (!gameDirs.includes(slug)) issues.push(`Retro menu links to '${slug}' but no folder exists`);
+for (const slug of allListed) {
+  if (!gameDirs.includes(slug)) issues.push(`A menu links to '${slug}' but no folder exists`);
 }
 for (const dir of gameDirs) {
-  if (!slugsInIndex.includes(dir) && !slugsInRetro.includes(dir)) {
+  if (!allListed.has(dir)) {
     issues.push(`Folder '${dir}' exists but is not in the lobby or retro menu`);
   }
 }
@@ -51,5 +51,6 @@ if (issues.length) {
   console.error('');
   process.exit(1);
 } else {
-  console.log(`\n✅ Lobby and games/ are in sync — ${slugsInIndex.length} games.\n`);
+  const overlap = slugsInRetro.filter((slug) => slugsInIndex.includes(slug)).length;
+  console.log(`\n✅ Lobby and games/ are in sync — ${gameDirs.length} games (${slugsInIndex.length} in the lobby, ${slugsInRetro.length} in the retro menu, ${overlap} in both).\n`);
 }

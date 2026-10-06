@@ -1,0 +1,41 @@
+/* Crazy Eights */
+.game-table {
+  width: min(620px, 96vw);
+  background: #1f7a4d;
+  border: 8px solid #2f9e44;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  color: #fff;
+}
+.game-table .label { font-weight: 800; margin-bottom: 8px; font-size: 1.05rem; }
+.opponent, .me { margin-bottom: 18px; }
+.hand { display: flex; gap: 8px; flex-wrap: wrap; min-height: 82px; }
+.hand.back-card { }
+.card {
+  width: 58px; height: 82px; border-radius: 10px;
+  background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.05rem; cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.card.red { color: #e03131; }
+.card:hover { transform: translateY(-8px); }
+.hand:not(:hover) .card.back:not(:last-child) { margin-right: -34px; }
+.card.back { background: linear-gradient(135deg,#4a90c4,#3a6ea5); color: transparent; cursor: default; }
+.card.back:hover { transform: none; }
+.card.back::after { content: '\u2660'; color: #fff; font-size: 1.4rem; position: absolute; }
+.card { position: relative; }
+
+.pile-zone { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 16px 0; }
+.discard {
+  width: 66px; height: 92px; border-radius: 10px;
+  border: 2px dashed rgba(255,255,255,0.5);
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.suit-picker { text-align: center; background: rgba(255,255,255,0.95); color: var(--ink); padding: 12px; border-radius: 12px; }
+.suit-picker.hidden { display: none; }
+.suit-btns { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
+.suit-btn { font-size: 1.6rem; padding: 8px 14px; border-radius: 10px; border: 2px solid var(--mint); background: #fff; cursor: pointer; }
+.score-line { color: var(--cream); font-size: 0.9rem; }
+@media (max-width: 560px) { .card { width: 46px; height: 66px; font-size: 0.85rem; } .hand:not(:hover) .card.back:not(:last-child) { margin-right: -26px; } }

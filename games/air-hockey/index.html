@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏒 Air Hockey · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/air-hockey/">
+<meta name="description" content="Air hockey vs the computer — first to 7 goals!">
+<meta property="og:title" content="🏒 Air Hockey · Kids Game Land">
+<meta property="og:description" content="Air hockey vs the computer — first to 7 goals!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/air-hockey/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">🏒 Air Hockey</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">You: <b id="score-you">0</b></div>
+    <div class="stat">Computer: <b id="score-cpu">0</b></div>
+    <div class="stat">Best streak: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <canvas id="canvas" width="440" height="600"></canvas>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Move your <b>paddle</b> with the mouse or your finger. Score in the red goal at the top to get a point — first to <b>7 goals</b> wins! The computer paddle speeds up every goal.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

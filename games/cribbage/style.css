@@ -1,0 +1,26 @@
+/* Cribbage */
+.game-table {
+  width: min(620px, 96vw);
+  background: linear-gradient(160deg, #1f7a4d, #155e3b);
+  border: 8px solid #2f9e44;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  color: #fff;
+}
+.table-row { margin-bottom: 12px; }
+.label { font-weight: 800; display: block; margin-bottom: 6px; }
+.hand { display: flex; gap: 7px; flex-wrap: wrap; min-height: 74px; }
+.card {
+  width: 52px; height: 72px; border-radius: 9px; background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem; cursor: pointer;
+}
+.card.red { color: #e03131; }
+.card.back { background: linear-gradient(135deg,#4a90c4,#3a6ea5); color: transparent; cursor: default; }
+.play-area { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; margin-bottom: 14px; }
+.starter { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+.played { display: flex; gap: 6px; flex-wrap: wrap; min-height: 72px; }
+.message { margin-top: 8px; font-weight: 700; min-height: 1.3em; }
+@media (max-width: 520px) { .card { width: 42px; height: 58px; font-size: 0.78rem; } }

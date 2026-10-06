@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8️⃣ Crazy Eights · Kids Game Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/games.css">
+<link rel="stylesheet" href="style.css">
+<!--seo:games-->
+<link rel="canonical" href="https://kurokosama.github.io/WebGames/games/crazy-eights/">
+<meta name="description" content="Match the suit or number — an 8 is wild!">
+<meta property="og:title" content="8️⃣ Crazy Eights · Kids Game Land">
+<meta property="og:description" content="Match the suit or number — an 8 is wild!">
+<meta property="og:url" content="https://kurokosama.github.io/WebGames/games/crazy-eights/">
+<!--/seo:games-->
+</head>
+<body class="game-page">
+<header class="game-header">
+  <a class="btn back-btn" href="/">🏠 Home</a>
+  <h1 class="game-title" id="game-title">8️⃣ Crazy Eights</h1>
+  <div class="header-controls">
+    <div id="difficulty-wrap"></div>
+    <button class="btn restart-btn" id="restart-btn">🔄 Restart</button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="status-bar">
+    <div class="stat">Your cards: <b id="your-cards">7</b></div>
+    <div class="stat">Computer: <b id="cpu-cards">7</b></div>
+    <div class="stat">Your score: <b id="your-score">0</b></div>
+    <div class="stat">Wins: <b id="best">0</b></div>
+  </div>
+
+  <div class="game-area">
+    <div class="game-table">
+      <div class="opponent">
+        <div class="label">🤖 Computer</div>
+        <div class="hand" id="cpu-hand"></div>
+      </div>
+      <div class="pile-zone">
+        <div class="discard" id="discard"></div>
+        <div class="suit-picker hidden" id="suit-picker">
+          <p>🃏 Which suit comes next?</p>
+          <div class="suit-btns">
+            <button class="suit-btn" data-s="♠">♠</button>
+            <button class="suit-btn" data-s="♥">♥</button>
+            <button class="suit-btn" data-s="♦">♦</button>
+            <button class="suit-btn" data-s="♣">♣</button>
+          </div>
+        </div>
+        <button class="btn play-btn" id="draw-btn">🃏 Draw</button>
+      </div>
+      <div class="me">
+        <div class="label">🙋 You <span class="score-line" id="your-score-line"></span></div>
+        <div class="hand" id="you-hand"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="how-to-play">💡 How to play: Play a card that matches the <b>top card's suit or number</b>. An <b>8</b> is wild — play it and choose the next suit! First to empty your hand wins.</p>
+</main>
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">🎉 You Win!</h2>
+    <p id="modal-text"></p>
+    <button class="btn play-btn" id="modal-btn">Play Again</button>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
